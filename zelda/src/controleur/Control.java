@@ -65,7 +65,7 @@ public class Control {
 
 	private void creationChicken() {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 20; i++) {
 
 			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
 			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;

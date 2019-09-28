@@ -6,7 +6,7 @@ public class MinotaureProjectil  extends Projectil{
 
 
 	
-	public MinotaureProjectil(Coordonnee coordonnee, String direction, int damage) {
+	public MinotaureProjectil(Coordonnee coordonnee, String direction) {
 		super();
 		this.setNom("MinotaureProjectil");
 		this.setExist(true);
@@ -15,6 +15,7 @@ public class MinotaureProjectil  extends Projectil{
 		this.setCurentAction("moving") ;
 		this.setDirection(direction);
 		this.setFrame(0);
+		this.setDamage(0, 0, 0, 0);
 
 	}
 

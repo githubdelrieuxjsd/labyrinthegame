@@ -2,6 +2,7 @@ package model;
 
 public abstract class Block extends Element{
 
+	
 
 	public abstract void deplacer(String direction  , Plateau plateau) ;
 

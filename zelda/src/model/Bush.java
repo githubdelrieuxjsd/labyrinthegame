@@ -25,6 +25,17 @@ public class Bush extends Block {
 	}
 
 	@Override
+	public void perdreVie(Damage damage, Plateau plateau) {
+		// TODO Auto-generated method stub
+		this.life = life - damage.getEpee() ;
+		if (life < 0 ) {
+			this.setCurentAction("dead")  ;
+			this.setNom("Vide");
+		}
+	}
+	
+	
+	@Override
 	public void deplacer(String direction, Plateau plateau) {
 		// TODO Auto-generated method stub
 		
@@ -65,15 +76,7 @@ public class Bush extends Block {
 		return 120;
 	}
 
-	@Override
-	protected void perdreVie(int damage, Plateau plateau) {
-		// TODO Auto-generated method stub
-		this.life = life - damage ;
-		if (life == 0 ) {
-			this.setCurentAction("dead")  ;
-			this.setNom("Vide");
-		}
-	}
+	
 
 
 	

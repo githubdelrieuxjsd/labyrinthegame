@@ -7,14 +7,14 @@ import tool.Tool;
 public class HeroProjectil extends Projectil {
 
 	
-	public HeroProjectil(Coordonnee coordonnee, String direction, int damage ) {
+	public HeroProjectil(Coordonnee coordonnee, String direction ) {
 		super();
 		this.setExist(true);
 		this.setCoordonnee(coordonnee);
 		this.setCurentAction("moving") ;
 		this.setDirection(direction);
 		this.setNom("HeroProjectil");
-		this.setDamage(1);
+		this.setDamage(0,0,0,1);
 		this.setFrame(-2);
 	}
 
@@ -196,10 +196,5 @@ public class HeroProjectil extends Projectil {
 		return 40;
 	}
 
-	@Override
-	protected void perdreVie(int damage, Plateau plateau) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

@@ -75,7 +75,7 @@ public class Plateau {
 			for (int j = 0 ; j<25 ;j++) {
 				int random = (int)(Math.random()* (100+0-1)) + 0;
 				if (random > 95) {
-					listCase.add(new Case(new Vide( new Coordonnee (i,j)), new Bomb() ) ) ;
+					listCase.add(new Case(new Vide( new Coordonnee (i,j)), new Key() ) ) ;
 				}
 				else {
 					listCase.add(new Case(new Vide( new Coordonnee (i,j) ) ) ) ;

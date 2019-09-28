@@ -56,7 +56,7 @@ public class Vide extends Element {
 	}
 
 	@Override
-	protected void perdreVie(int damage, Plateau plateau) {
+	public void perdreVie(Damage damage, Plateau plateau) {
 		// TODO Auto-generated method stub
 		
 	}

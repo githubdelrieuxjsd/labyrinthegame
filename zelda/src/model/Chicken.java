@@ -20,7 +20,7 @@ public class Chicken extends Monstre {
 		this.setDirection("down");
 		this.setNom("Chicken");
 		this.setLife( 2);
-		this.setDamage( 0);
+		this.setDamage(0,0,0,0);
 	}
 
 	public Chicken(int x, int y) {
@@ -32,7 +32,7 @@ public class Chicken extends Monstre {
 		this.setCurentAction("nothing") ;
 		this.setNom("Chicken");
 		this.setLife( 2);
-		this.setDamage( 0);
+		this.setDamage(0,0,0,0);
 		this.setDirection ("down") ;
 	}
 
@@ -40,6 +40,7 @@ public class Chicken extends Monstre {
 	public void deplacer(String direction, Plateau plateau) {
 		// TODO Auto-generated method stub
 		if (this.isAlive()&& this.getCurentAction().equals("nothing")) {
+			
 			this.setDirection(direction);
 			switch (direction) {
 
@@ -113,13 +114,16 @@ public class Chicken extends Monstre {
 		num = Tool.CoordinateToNum(caseApres.getElement().getCoordonnee());
 		plateau.getListCase().get(num).setElement(this);
 		this.setCoordonnee(cordApres);
+		
+		this.setCurentAction("moving");
+
 
 	}
 
 	@Override
-	public void perdreVie(int damage, Plateau p) {
+	public void perdreVie(Damage damage, Plateau p) {
 		if ( ! this.getCurentAction().equals("death")) {
-			this.setLife(this.getLife() - damage);
+			this.setLife(this.getLife() - damage.getEpee() - damage.getFleche() - damage.getBomb() );
 
 			if (getLife() <= 0) {
 				this.setCurentAction("death");
@@ -176,6 +180,14 @@ public class Chicken extends Monstre {
 				
 			}
 			break;
+		case "moving":
+			icon = this.imageNothing();
+			this.setFrame((getFrame() + 1) % 8);
+
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothing");
+			}
+			break;
 		
 		default: 
 			break;
@@ -186,6 +198,7 @@ public class Chicken extends Monstre {
 	}
 
 	
+
 	private String imageNothing() {
 		int num =    this.getFrame() /2 +1;
 		//System.out.println("frame: "+this.getFrame());
@@ -221,14 +234,32 @@ public class Chicken extends Monstre {
 	
 	@Override
 	protected int trouverX() {
-		// TODO Auto-generated method stub
-		return this.getCoordonnee().getX()*40-40;
+		int res = this.getCoordonnee().getX() * 40 -40;
+		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
+			int num =    this.getFrame()    +1;
+			res = res + num * 5 - 40 ;
+		} else if (this.getDirection().equals("left") && this.getCurentAction().equals("moving")) {
+			int num =    this.getFrame() +1;
+			res = res - num * 5 +40 ;
+		}
+		return res;
 	}
 
 	@Override
 	protected int trouverY() {
-		// TODO Auto-generated method stub
-		return this.getCoordonnee().getY()*40-40;
+		int res = this.getCoordonnee().getY() * 40 -40;
+		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
+			int num =    this.getFrame()  /2 +1;
+			res = res - num * 10 +40 ;
+		} else if (this.getDirection().equals("down") && this.getCurentAction().equals("moving")) {
+			int num =    this.getFrame()  /2  +1;
+			res = res + num * 10 - 40;
+		} else if (this.getCurentAction().equals("moving")) {
+			int num =  - ( this.getFrame() -4 )* ( this.getFrame() -4 ) + 10 ;
+			res = res - num  ;
+			//System.out.println(this.getFrame() +","+ (num) );
+		}
+		return res;
 	}
 
 	@Override

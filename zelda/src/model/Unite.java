@@ -9,9 +9,9 @@ public abstract class Unite extends Element{
 
 	private boolean exist ;
 	private int life;
-	private int damage;
+	private Damage damage;
 	
-	
+
 
 	public abstract void deplacer(String direction, Plateau plateau);
 	
@@ -57,12 +57,14 @@ public abstract class Unite extends Element{
 		this.life = life;
 	}
 
-	public int getDamage() {
+	
+	
+	public Damage getDamage() {
 		return damage;
 	}
 
-	public void setDamage(int damage) {
-		this.damage = damage;
+	public void setDamage(int epee,int magie ,int bomb ,int fleche) {
+		this.damage = new Damage (epee , magie , bomb , fleche);
 	}
 
 	public boolean isExist() {

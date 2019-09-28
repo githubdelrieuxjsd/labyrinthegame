@@ -80,8 +80,7 @@ public abstract class Element {
 		this.frame = frame;
 	}
 
-	protected abstract void perdreVie(int damage , Plateau plateau);
-
+	public abstract void perdreVie(Damage damage , Plateau plateau);
 
 	protected abstract int trouverX();
 

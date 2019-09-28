@@ -3,7 +3,7 @@ package model;
 public abstract class Projectil extends Element {
 	
 	private Boolean exist ;
-	private int damage ;
+	private Damage damage ;
 	
 
 
@@ -21,14 +21,14 @@ public abstract class Projectil extends Element {
 
 
 
-	public int getDamage() {
+	public Damage getDamage() {
 		return damage;
 	}
 
 
 
-	public void setDamage(int damage) {
-		this.damage = damage;
+	public void setDamage(int epee,int magie ,int bomb ,int fleche) {
+		this.damage = new Damage (epee , magie , bomb , fleche);
 	}
 
 	

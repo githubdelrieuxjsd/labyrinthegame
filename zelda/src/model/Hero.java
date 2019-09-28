@@ -31,7 +31,7 @@ public class Hero extends Unite {
 		this.setDirection("down");
 
 		this.setLife(5);
-		this.setDamage(2);
+		this.setDamage(2 ,0 ,0 ,0 );
 		this.listProjectil = new ArrayList<Projectil>();
 	}
 
@@ -45,7 +45,7 @@ public class Hero extends Unite {
 		
 		this.setNom("Hero");
 		this.setLife(5);
-		this.setDamage(2);
+		this.setDamage(2,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 		this.setDirection("down");
 
@@ -205,7 +205,7 @@ public class Hero extends Unite {
 		// TODO Auto-generated method stub
 		if (this.isAlive()) {
 			Coordonnee cord = new Coordonnee(this.getCoordonnee());
-			HeroProjectil heroProjectil = new HeroProjectil(cord, getDirection(), getDamage());
+			HeroProjectil heroProjectil = new HeroProjectil(cord, getDirection() );
 
 			// System.out.println(heroProjectil.coordonnee);
 			if (!this.listProjectil.isEmpty()) {
@@ -242,9 +242,9 @@ public class Hero extends Unite {
 	}
 
 	@Override
-	public void perdreVie(int damage, Plateau p) {
+	public void perdreVie(Damage damage, Plateau p) {
 		// TODO Auto-generated method stub
-		this.setLife(this.getLife() - damage);
+		this.setLife(this.getLife() - damage.getBomb() - damage.getEpee() );
 		//System.out.println("life : "+this.getLife());
 		if (getLife() <= 0) {
 			this.mourir(p, 4, 1, true);

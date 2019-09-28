@@ -2,13 +2,13 @@ package model;
 
 public class Spike extends Piege{
 
-	private int damage ;
+	private Damage damage ;
 	private boolean visible ;
 
 	public Spike(boolean visible) {
 		super();
 		this.setNom("Spike");
-		this.damage = 1;
+		this.damage = new Damage (1,0,0,0);
 		this.visible = visible ;
 	} 
 	
@@ -25,7 +25,7 @@ public class Spike extends Piege{
 		case "Hero": ((Hero)m).perdreVie(damage, plateau);
 			this.visible = visible ;
 		break;
-		case "Chicken": ((Chicken)m).perdreVie(0, plateau);
+		case "Chicken": ((Chicken)m).perdreVie(new Damage (0,0,0,0), plateau);
 			break;
 		default :;  
 		}
@@ -35,13 +35,7 @@ public class Spike extends Piege{
 		
 	}
 	
-	public int getDamage() {
-		return damage;
-	}
-
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
+	
 
 	
 }

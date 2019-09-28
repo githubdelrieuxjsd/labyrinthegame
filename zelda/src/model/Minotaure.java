@@ -23,7 +23,7 @@ public class Minotaure extends Monstre{
 		this.setDirection("down");
 		this.setNom("Minotaure");
 		this.setLife( 5);
-		this.setDamage( 3);
+		this.setDamage( 3,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 	}
 
@@ -38,7 +38,7 @@ public class Minotaure extends Monstre{
 		this.setDirection("down");
 		this.setNom("Minotaure");
 		this.setLife( 5);
-		this.setDamage( 3);
+		this.setDamage( 3,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 	}
 
@@ -137,7 +137,7 @@ public class Minotaure extends Monstre{
 
 			}
 
-			
+			/**
 			public void tirer( Plateau plateau) {
 				// TODO Auto-generated method stub
 				if (this.isAlive()) {
@@ -176,7 +176,7 @@ public class Minotaure extends Monstre{
 
 				}
 
-			}
+			}*/
 
 			public List<Projectil> getListProjectil() {
 				return listProjectil;
@@ -198,9 +198,9 @@ public class Minotaure extends Monstre{
 
 
 	@Override
-	public void perdreVie(int damage , Plateau p) {
+	public void perdreVie(Damage damage , Plateau p) {
 		// TODO Auto-generated method stub
-		this.setLife(getLife()-damage);
+		this.setLife(getLife() -damage.getEpee() - damage.getFleche());
 		
 		if (getLife() <= 0) {
 			this.mourir(p, 15, 13, true);

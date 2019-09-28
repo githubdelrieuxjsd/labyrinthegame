@@ -2,6 +2,7 @@ package model;
 
 public class Arbre extends  Block {
 
+	
 	public Arbre(Coordonnee coordonnee) {
 		super();
 		this.setCoordonnee(coordonnee);
@@ -33,31 +34,31 @@ public class Arbre extends  Block {
 	}
 
 	@Override
-	protected int trouverX() {
+	public int trouverX() {
 		// TODO Auto-generated method stub
 		return this.getCoordonnee().getX()*40-40;
 	}
 
 	@Override
-	protected int trouverY() {
+	public int trouverY() {
 		// TODO Auto-generated method stub
 		return this.getCoordonnee().getY()*40-40;
 	}
 
 	@Override
-	protected int trouverlargeur() {
+	public int trouverlargeur() {
 		// TODO Auto-generated method stub
 		return 120;
 	}
 
 	@Override
-	protected int trouverlongeur() {
+	public int trouverlongeur() {
 		// TODO Auto-generated method stub
 		return 120;
 	}
 
 	@Override
-	protected void perdreVie(int damage, Plateau plateau) {
+	public void perdreVie(Damage damage, Plateau plateau) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -6,6 +6,9 @@ import tool.Tool;
 
 public class Rock extends Block{
 
+	private int life ; 
+
+
 	public Rock(Coordonnee coordonnee) {
 		super();
 		this.setCoordonnee(coordonnee);
@@ -14,6 +17,9 @@ public class Rock extends Block{
 		this.setDirection("down");
 		this.setNom("Rock");
 		this.setFrame(0);
+		this.life = 1;
+
+		
 	}
 	
 	
@@ -25,6 +31,7 @@ public class Rock extends Block{
 		this.setDirection("down");
 		this.setNom("Rock");
 		this.setFrame(0);
+		this.life = 1;
 
 	}
 
@@ -150,6 +157,8 @@ public class Rock extends Block{
 						this.setCurentAction("nothing");
 					}
 					break;
+				case "dead": icon = "";
+					break;
 				default:
 					break;
 
@@ -199,9 +208,13 @@ public class Rock extends Block{
 
 
 			@Override
-			protected void perdreVie(int damage, Plateau plateau) {
+			public void perdreVie(Damage damage, Plateau plateau) {
 				// TODO Auto-generated method stub
-				
+				this.life = life - damage.getBomb();
+				if (life < 0 ) {
+					this.setCurentAction("dead")  ;
+					this.setNom("Vide");
+				}				
 			}
 
 

@@ -2,11 +2,11 @@ package model;
 
 public class Bomb extends Item {
 
-	private int damage ;
+	private Damage damage ;
 	
 	public Bomb() {
 		super();
-		this.damage = 2;
+		this.damage = new Damage (0,0,2,0)	;
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setDirection("down");
