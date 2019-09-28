@@ -19,7 +19,7 @@ public class Chicken extends Monstre {
 		this.setCurentAction("nothing") ;
 		this.setDirection("down");
 		this.setNom("Chicken");
-		this.setLife( 1);
+		this.setLife( 2);
 		this.setDamage( 0);
 	}
 
@@ -31,7 +31,7 @@ public class Chicken extends Monstre {
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setNom("Chicken");
-		this.setLife( 1);
+		this.setLife( 2);
 		this.setDamage( 0);
 		this.setDirection ("down") ;
 	}
@@ -118,7 +118,6 @@ public class Chicken extends Monstre {
 
 	@Override
 	public void perdreVie(int damage, Plateau p) {
-		// TODO Auto-generated method stub
 		if ( ! this.getCurentAction().equals("death")) {
 			this.setLife(this.getLife() - damage);
 
@@ -161,11 +160,11 @@ public class Chicken extends Monstre {
 		
 		case "nothing":
 			icon = this.imageNothing();
-			this.setFrame( (getFrame() + 1) % 16 );
+			this.setFrame( (getFrame() + 1) % 8 );
 			break;
 		case "death":
 			int num =  this.getFrame() /2 +1;
-			System.out.println(num);
+			//System.out.println(num);
 			icon = "hyrule/death/"+num+".png";
 			this.setFrame((getFrame() + 1) % 14);
 
@@ -188,27 +187,27 @@ public class Chicken extends Monstre {
 
 	
 	private String imageNothing() {
-		int num =    this.getFrame()  /2  +1;
+		int num =    this.getFrame() /2 +1;
 		//System.out.println("frame: "+this.getFrame());
 
 		//System.out.println("num: "+num);
 		
-		String icon = "hyrule/link/beat/Down1.png" ;
+		String icon = "hyrule/chicken/R"+num+".png" ;
 		switch (this.getDirection()) {
 
 		case "up":
-			icon = "hyrule/link/beat/Down1.png";
+			icon = "hyrule/chicken/R"+num+".png";
 
 			break;
 		case "down":
-			icon = "hyrule/link/beat/Down1.png";
+			icon = "hyrule/chicken/L"+num+".png";
 
 			break;
 		case "left":
-			icon = "hyrule/link/beat/Down1.png";
+			icon = "hyrule/chicken/L"+num+".png";
 			break;
 		case "right":
-			icon = "hyrule/link/beat/Down1.png" ;
+			icon = "hyrule/chicken/R"+num+".png";
 
 			break;
 		default:

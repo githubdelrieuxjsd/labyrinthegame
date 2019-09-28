@@ -2,9 +2,11 @@ package model;
 
 public class Bomb extends Item {
 
+	private int damage ;
+	
 	public Bomb() {
 		super();
-		
+		this.damage = 2;
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setDirection("down");
@@ -12,6 +14,32 @@ public class Bomb extends Item {
 		
 	}
 
+	private void exploser(Plateau plateau, Case c){
+		Coordonnee coord = c.getElement().getCoordonnee() ;
+		Case c1 = plateau.getCase(coord);
+		Case c2 = plateau.getCaseUp(coord);
+		Case c3 = plateau.getCaseUpRight(coord);
+		Case c4 = plateau.getCaseUpLeft(coord);
+		Case c5 = plateau.getCaseDown(coord);
+		Case c6 = plateau.getCaseDownRight(coord);
+		Case c7 = plateau.getCaseDownLeft(coord);
+		Case c8= plateau.getCaseLeft(coord);
+		Case c9= plateau.getCaseRight(coord);
+		
+		c1.getElement().perdreVie(this.damage, plateau);
+		c2.getElement().perdreVie(this.damage, plateau);
+		c3.getElement().perdreVie(this.damage, plateau);
+		c4.getElement().perdreVie(this.damage, plateau);
+		c5.getElement().perdreVie(this.damage, plateau);
+		c6.getElement().perdreVie(this.damage, plateau);
+		c7.getElement().perdreVie(this.damage, plateau);
+		c8.getElement().perdreVie(this.damage, plateau);
+		c9.getElement().perdreVie(this.damage, plateau);
+
+
+	}
+	
+	
 	@Override
 	public String getImage(Plateau plateau, Case c) {
 		String icon = "hyrule/item/bomb.png";
@@ -27,6 +55,9 @@ public class Bomb extends Item {
 			}
 			break;
 		case "exploding":
+			if (this.getFrame() == 1) {
+				this.exploser(plateau, c);
+			}
 			icon = "hyrule/bomb/"+this.getFrame()+".png";
 			this.setFrame((getFrame() + 1) % 12);
 

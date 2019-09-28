@@ -57,6 +57,9 @@ public class PanneauJeux extends JPanel {
 				case KeyEvent.VK_D:
 					control.animationAttackHero();
 					break;
+				case KeyEvent.VK_Q:
+					control.animationPlaceBombHero();
+					break;
 				default:
 					;
 				}

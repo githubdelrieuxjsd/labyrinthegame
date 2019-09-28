@@ -31,7 +31,7 @@ public class Hero extends Unite {
 		this.setDirection("down");
 
 		this.setLife(5);
-		this.setDamage(1);
+		this.setDamage(2);
 		this.listProjectil = new ArrayList<Projectil>();
 	}
 
@@ -45,7 +45,7 @@ public class Hero extends Unite {
 		
 		this.setNom("Hero");
 		this.setLife(5);
-		this.setDamage(1);
+		this.setDamage(2);
 		this.listProjectil = new ArrayList<Projectil>();
 		this.setDirection("down");
 
@@ -245,7 +245,7 @@ public class Hero extends Unite {
 	public void perdreVie(int damage, Plateau p) {
 		// TODO Auto-generated method stub
 		this.setLife(this.getLife() - damage);
-
+		//System.out.println("life : "+this.getLife());
 		if (getLife() <= 0) {
 			this.mourir(p, 4, 1, true);
 		}
@@ -443,6 +443,10 @@ public class Hero extends Unite {
 	protected int trouverlongeur() {
 		int res = 120;
 		return res ;
+	}
+
+	public void placerBomb(Plateau plateau) {
+		plateau.getCase(this.getCoordonnee()).setItem(new Bomb());		
 	}
 
 	

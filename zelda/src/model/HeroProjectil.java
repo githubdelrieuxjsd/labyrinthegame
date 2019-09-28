@@ -9,10 +9,12 @@ public class HeroProjectil extends Projectil {
 	
 	public HeroProjectil(Coordonnee coordonnee, String direction, int damage ) {
 		super();
+		this.setExist(true);
 		this.setCoordonnee(coordonnee);
 		this.setCurentAction("moving") ;
 		this.setDirection(direction);
 		this.setNom("HeroProjectil");
+		this.setDamage(1);
 		this.setFrame(-2);
 	}
 
@@ -94,7 +96,7 @@ public class HeroProjectil extends Projectil {
 
 	private void interactionChicken(Plateau plateau, Case c) {
 		// TODO Auto-generated method stub
-		((Chicken)c.getElement()).perdreVie(getDamage(),plateau);
+		c.getElement().perdreVie(getDamage(),plateau);
 		int num = Tool.CoordinateToNum(getCoordonnee());
 		Vide v = new Vide(getCoordonnee());
 		plateau.getListCase().get(num).setElement(v);

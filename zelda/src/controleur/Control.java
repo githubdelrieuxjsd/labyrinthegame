@@ -65,7 +65,7 @@ public class Control {
 
 	private void creationChicken() {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 1; i++) {
 
 			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
 			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
@@ -214,16 +214,7 @@ public class Control {
 
 	public void deplacerHero(String direction) {
 		// TODO Auto-generated method stub
-		if (this.hero.getCurentAction().equals("nothing")
-				&& (timer%16 == 0 
-				|| timer%16 == 1 || timer%16 == 15 
-				|| timer%16 == 2 || timer%16 == 14 
-				||timer%16 == 3 || timer%16 == 13 
-				|| timer%16 == 4 || timer%16 == 12
-				|| timer%16 == 5 || timer%16 == 11
-				//|| timer%16 == 6 || timer%16 == 10
-				//|| timer%16 == 7 || timer%16 == 9
-				||true				) ) {
+		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
 			this.hero.deplacer(direction, plateau);
 		}else {
 			//System.out.println("timre" + timer%16);
@@ -232,27 +223,19 @@ public class Control {
 
 	public void tirerHero() {
 		// TODO Auto-generated method stub
-		if (this.hero.getCurentAction().equals("nothing") && (
-				timer%16 == 0 
-				|| timer%16 == 1 || timer%16 == 15 
-				|| timer%16 == 2 || timer%16 == 14 
-				||timer%16 == 3 || timer%16 == 13 
-				|| timer%16 == 4 || timer%16 == 12
-				|| timer%16 == 5 || timer%16 == 11
-				||true
-				) ) {
+		if (this.hero.getCurentAction().equals("nothing") && onTheBeat() ) {
 			this.hero.tirer(plateau);
 		}
+	}
+	public void animationPlaceBombHero() {
+		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
+			this.hero.placerBomb(plateau);
+		}		
 	}
 	
 	public void animationAttackHero() {
 		// TODO Auto-generated method stub
-		if (this.hero.getCurentAction().equals("nothing")&& (timer%16 == 0 || timer%16 == 1 || timer%16 == 15 || timer%16 == 14 || timer%16 == 2 
-				 ||timer%16 == 3 || timer%16 == 13 
-				|| timer%16 == 4 || timer%16 == 12
-				|| timer%16 == 5 || timer%16 == 11
-				|| true
-				) ) {
+		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
 			this.hero.setCurentAction("animationAttaque");
 			this.hero.setFrame(0);
 			
@@ -276,6 +259,17 @@ public class Control {
 		this.listBlock = listBlock;
 	}
 
+	
+	private boolean onTheBeat () {
+		if (timer%16 == 0 || timer%16 == 1 || timer%16 == 15 || timer%16 == 14 || timer%16 == 2 
+				 ||timer%16 == 3 || timer%16 == 13 
+				|| timer%16 == 4 || timer%16 == 12
+				|| timer%16 == 5 || timer%16 == 11
+				) {
+			return true ;
+			}
+		return true ;
+		}
 	
 	
 	

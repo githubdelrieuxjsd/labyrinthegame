@@ -9,7 +9,7 @@ public class MinotaureProjectil  extends Projectil{
 	public MinotaureProjectil(Coordonnee coordonnee, String direction, int damage) {
 		super();
 		this.setNom("MinotaureProjectil");
-
+		this.setExist(true);
 		this.setCoordonnee(coordonnee);
 		this.setFrame(0);
 		this.setCurentAction("moving") ;
