@@ -97,7 +97,7 @@ public class MinotaureProjectil  extends Projectil{
 
 		private void interactionChicken(Plateau plateau, Case c) {
 			// TODO Auto-generated method stub
-			((Chicken)c.getElement()).perdreVie(0,plateau);
+			((Chicken)c.getElement()).perdreVie(new Damage (0,0,0,0),plateau);
 			int num = Tool.CoordinateToNum(getCoordonnee());
 			Vide v = new Vide(getCoordonnee());
 			plateau.getListCase().get(num).setElement(v);
@@ -189,8 +189,10 @@ public class MinotaureProjectil  extends Projectil{
 	}
 
 
+
+
 	@Override
-	protected void perdreVie(int damage, Plateau plateau) {
+	public void perdreVie(Damage damage, Plateau plateau) {
 		// TODO Auto-generated method stub
 		
 	}

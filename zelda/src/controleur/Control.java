@@ -203,28 +203,20 @@ public class Control {
 		this.timer++;
 		deplacerProgectil();
 		deplaceChicken();
-		attaquerHero();
 	}
 
-	private void attaquerHero() {
-		if (this.hero.getCurentAction().equals("animationAttaque") && this.hero.getFrame()==2) {
-			this.hero.attaquer(plateau);
-		}		
-	}
 
 	public void deplacerHero(String direction) {
 		// TODO Auto-generated method stub
 		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
 			this.hero.deplacer(direction, plateau);
-		}else {
-			//System.out.println("timre" + timer%16);
 		}
 	}
 
-	public void tirerHero() {
+	public void animationBowHero() {
 		// TODO Auto-generated method stub
 		if (this.hero.getCurentAction().equals("nothing") && onTheBeat() ) {
-			this.hero.tirer(plateau);
+			this.hero.animationBow();;
 		}
 	}
 	public void animationPlaceBombHero() {
@@ -236,9 +228,7 @@ public class Control {
 	public void animationAttackHero() {
 		// TODO Auto-generated method stub
 		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
-			this.hero.setCurentAction("animationAttaque");
-			this.hero.setFrame(0);
-			
+			this.hero.animationSword();
 		}
 	}
 

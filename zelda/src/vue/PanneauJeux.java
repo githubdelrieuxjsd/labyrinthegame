@@ -52,7 +52,7 @@ public class PanneauJeux extends JPanel {
 					
 					break;
 				case KeyEvent.VK_S:
-					control.tirerHero();
+					control.animationBowHero();
 					break;
 				case KeyEvent.VK_D:
 					control.animationAttackHero();

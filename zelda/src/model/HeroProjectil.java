@@ -16,6 +16,7 @@ public class HeroProjectil extends Projectil {
 		this.setNom("HeroProjectil");
 		this.setDamage(0,0,0,1);
 		this.setFrame(-2);
+		
 	}
 
 	@Override
@@ -143,15 +144,16 @@ public class HeroProjectil extends Projectil {
 	@Override
 	public String getImage(Plateau plateau , Case c) {
 		String icon = "img/vide.png";
+		//"hyrule/link/arrow/arrowUp.png"
 		if (getExist() ) {
 			if (getDirection().equals("up")) {
-				icon = "image/Link/arrowUp24x24.png";
+				icon = "image/link/arrowUp24x24.png";
 			} else if (getDirection().equals("down")) {
-				icon = "image/Link/arrowDown24x24.png";
+				icon = "image/link/arrowDown24x24.png";
 			} else if (getDirection().equals("left")) {
-				icon = "image/Link/arrowLeft24x24.png";
+				icon = "image/link/arrowLeft24x24.png";
 			} else if (getDirection().equals("right")) {
-				icon = "image/Link/arrowRight24x24.png";
+				icon = "image/link/arrowRight24x24.png";
 			}
 		}
 		this.setFrame( (getFrame() + 1)%4 );
@@ -179,8 +181,16 @@ public class HeroProjectil extends Projectil {
 			res = res - this.getFrame()*10 ;
 		}
 		else if (this.getDirection().equals("down")) {
-			res = res + this.getFrame()*10 ;
+			res = res + this.getFrame()*10 -20 ;
 		}
+		
+		if (this.getDirection().equals("right")) {
+			res = res - 10 ;
+		}
+		else if (this.getDirection().equals("left")) {
+			res = res - 5 ;
+		}
+		
 		return res;
 	}
 
@@ -194,6 +204,12 @@ public class HeroProjectil extends Projectil {
 	protected int trouverlongeur() {
 		// TODO Auto-generated method stub
 		return 40;
+	}
+
+	@Override
+	public void perdreVie(Damage damage, Plateau plateau) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

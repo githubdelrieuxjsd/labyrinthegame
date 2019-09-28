@@ -201,6 +201,15 @@ public class Hero extends Unite {
 
 	}
 	
+	public void animationBow () {
+		this.setCurentAction("animationBow");
+		this.setFrame(0);
+	}
+	public void animationSword () {
+		this.setCurentAction("animationAttaque");
+		this.setFrame(0);
+	}
+	
 	public void tirer(Plateau plateau) {
 		// TODO Auto-generated method stub
 		if (this.isAlive()) {
@@ -299,6 +308,22 @@ public class Hero extends Unite {
 			icon = this.imageAttaque();
 			this.setFrame((getFrame() +1) % 7);
 			
+			if (this.getFrame() == 2) {
+				this.attaquer(plateau);
+			}
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothing");
+			}
+			
+			break;
+		case "animationBow":
+			icon = this.imageBow();
+			this.setFrame((getFrame() +1) % 9);
+			
+			if (this.getFrame() == 5) {
+				this.tirer(plateau);
+			}
+			
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothing");
 			}
@@ -311,6 +336,37 @@ public class Hero extends Unite {
 		
 		return icon;
 	}
+	
+	
+
+	private String imageBow() {
+		
+		int num =    this.getFrame() +1;
+		String icon = "hyrule/link/arrow/Down/1.png";
+		switch (this.getDirection()) {
+
+		case "up":
+			icon = "hyrule/link/arrow/Up/"+num+".png";
+
+			break;
+		case "down":
+			icon = "hyrule/link/arrow/Down/"+num+".png";
+
+			break;
+		case "left":
+			icon = "hyrule/link/arrow/Left/"+num+".png";
+			break;
+		case "right":
+			icon = "hyrule/link/arrow/Right/"+num+".png";
+
+			break;
+		default:
+			break;
+
+		}
+		return icon;
+	}
+
 
 	private String imageAttaque() {
 		int num =    this.getFrame() +1;
