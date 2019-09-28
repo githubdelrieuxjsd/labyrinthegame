@@ -7,9 +7,22 @@ public abstract class Element {
 	private Coordonnee coordonnee ;
 	private String nom ; 
 	private int frame ;
-	private String direction ;
+	private Direction direction ;
 	private String curentAction;
 
+	public boolean isMonstre () {
+		boolean res = false; 
+			switch	(this.getNom()){
+			case "Minotaure" : res = true;
+				break ; 
+			case "Chicken" : res = true ; 
+				break ;
+			default : 
+				break;
+		}
+		return res ;		
+	}
+	
 	
 	/**
 	public Element(Coordonnee coordonnee) {
@@ -42,13 +55,13 @@ public abstract class Element {
 	}
 
 
-	public String getDirection() {
+	public Direction getDirection() {
 		return direction;
 	}
 
 
-	public void setDirection(String direction) {
-		this.direction = direction;
+	public void setDirection(Direction direction) {
+		this.direction = direction ;
 	}
 
 

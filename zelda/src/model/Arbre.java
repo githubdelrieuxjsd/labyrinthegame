@@ -8,7 +8,7 @@ public class Arbre extends  Block {
 		this.setCoordonnee(coordonnee);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");		this.setNom("Arbre"); 
+		this.setDirection( new Direction ("down" ) );		this.setNom("Arbre"); 
 	}
 
 	public Arbre(int x, int y) {
@@ -16,16 +16,11 @@ public class Arbre extends  Block {
 		this.setCoordonnee(new Coordonnee(x,y));
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection(new Direction ("down" ) );
 		this.setNom("Arbre"); 
 
 	}
 
-	@Override
-	public void deplacer(String direction, Plateau plateau) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public String getImage(Plateau plateau ,Case c) {

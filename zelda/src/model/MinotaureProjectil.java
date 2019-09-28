@@ -6,7 +6,7 @@ public class MinotaureProjectil  extends Projectil{
 
 
 	
-	public MinotaureProjectil(Coordonnee coordonnee, String direction) {
+	public MinotaureProjectil(Coordonnee coordonnee, Direction direction) {
 		super();
 		this.setNom("MinotaureProjectil");
 		this.setExist(true);
@@ -24,7 +24,7 @@ public class MinotaureProjectil  extends Projectil{
 	public void deplacer(Plateau plateau) {
 		if (this.getExist()) {
 
-				switch (getDirection()) {
+				switch (getDirection().getDirection()) {
 
 				case "up":
 					Case caseUp = plateau.getCaseUp(this.getCoordonnee());

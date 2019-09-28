@@ -10,19 +10,17 @@ import tool.Tool;
 public class Minotaure extends Monstre{
 
 	private List<Projectil> listProjectil;
-	private int maxLife = 5 ;
 	
 	public Minotaure(Coordonnee coordonnee) {
 		super();
 		this.setExist(true);
-
-		// TODO Auto-generated constructor stu
+		this.setMaxLife(5);
 		this.setCoordonnee(coordonnee);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection(new Direction ("down" ));
 		this.setNom("Minotaure");
-		this.setLife( 5);
+		this.setLife( this.getMaxLife());
 		this.setDamage( 3,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 	}
@@ -31,45 +29,45 @@ public class Minotaure extends Monstre{
 	public Minotaure(int x, int y) {
 		super();
 		this.setExist(true);
-
+		this.setMaxLife(5);
 		this.setCoordonnee(new Coordonnee(x,y));
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection(new Direction ("down" ));
 		this.setNom("Minotaure");
-		this.setLife( 5);
+		this.setLife( this.getMaxLife());
 		this.setDamage( 3,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 	}
 
 
 	@Override
-	public void deplacer(String direction, Plateau plateau) {
+	public void deplacer(Direction direction, Plateau plateau) {
 		// TODO Auto-generated method stub
 		this.setDirection(direction);
-				switch (direction) {
+				switch (direction.getDirection()) {
 
 				case "up":
-					this.setDirection("up");
+					this.setDirection(new Direction ("up" ));
 
 					Case caseUp = plateau.getCaseUp(this.getCoordonnee());
 					interactionDeplacement(plateau, caseUp );
 					break;
 				case "down":
-					this.setDirection("down");
+					this.setDirection(new Direction ("down" ));
 
 					Case caseDown = plateau.getCaseDown(this.getCoordonnee());
 					interactionDeplacement(plateau, caseDown );
 					break;
 				case "left":
-					this.setDirection("left");
+					this.setDirection( new Direction ("left" ));
 
 					Case caseLeft = plateau.getCaseLeft(this.getCoordonnee());
 					interactionDeplacement(plateau, caseLeft );
 
 					break;
 				case "right":
-					this.setDirection("right");
+					this.setDirection(new Direction ("right" ));
 
 					Case caseRight = plateau.getCaseRight(this.getCoordonnee());
 					interactionDeplacement(plateau, caseRight );
@@ -105,8 +103,6 @@ public class Minotaure extends Monstre{
 				}
 			}
 
-
-
 			private void interactionRock(Plateau plateau, Case c) {
 				// TODO Auto-generated method stub
 				((Rock) c.getElement()).deplacer(getDirection(), plateau , true);
@@ -118,7 +114,6 @@ public class Minotaure extends Monstre{
 			
 			private void interactionHero(Plateau plateau, Case c) {
 				// TODO Auto-generated method stub
-				((Hero)c.getElement()).perdreVie(this.getDamage(), plateau);
 			}
 
 
@@ -134,6 +129,9 @@ public class Minotaure extends Monstre{
 				num = Tool.CoordinateToNum(caseApres.getElement().getCoordonnee());
 				plateau.getListCase().get(num).setElement(this);
 				this.setCoordonnee( cordApres );
+				
+				this.setCurentAction("moving");
+				this.setFrame(0);
 
 			}
 
@@ -176,7 +174,17 @@ public class Minotaure extends Monstre{
 
 				}
 
-			}*/
+			}
+			private void placerProjectil(Plateau plateau, MinotaureProjectil heroProjectil) {
+				// TODO Auto-generated method stub
+				int num = Tool.CoordinateToNum(heroProjectil.getCoordonnee());
+				plateau.getListCase().get(num).setElement(heroProjectil);
+				heroProjectil.deplacer(plateau);
+				plateau.getListCase().get(num).setElement(this);
+
+			}
+			*
+			*/
 
 			public List<Projectil> getListProjectil() {
 				return listProjectil;
@@ -186,14 +194,7 @@ public class Minotaure extends Monstre{
 				this.listProjectil = listProjectil;
 			}
 
-			private void placerProjectil(Plateau plateau, MinotaureProjectil heroProjectil) {
-				// TODO Auto-generated method stub
-				int num = Tool.CoordinateToNum(heroProjectil.getCoordonnee());
-				plateau.getListCase().get(num).setElement(heroProjectil);
-				heroProjectil.deplacer(plateau);
-				plateau.getListCase().get(num).setElement(this);
-
-			}
+			
 
 
 
@@ -203,7 +204,7 @@ public class Minotaure extends Monstre{
 		this.setLife(getLife() -damage.getEpee() - damage.getFleche());
 		
 		if (getLife() <= 0) {
-			this.mourir(p, 15, 13, true);
+			this.setCurentAction("death");
 		}
 		
 	}
@@ -212,19 +213,63 @@ public class Minotaure extends Monstre{
 	@Override
 	public void soigner(int soin) {
 		// TODO Auto-generated method stub
-		if ( soin+getLife() >= maxLife ) {
-			this.setLife(this.maxLife);
+		if ( soin+getLife() >= getMaxLife() ) {
+			this.setLife(this.getMaxLife());
 		}
 		else {
 			this.setLife(getLife() + soin);
 		}
 	}
 
-
 	@Override
-	public void attaquer(Plateau p) {
-		// TODO Auto-generated method stub
-		
+	public void animationAttaque() {
+		this.setCurentAction("animationAttaque");
+		this.setFrame(0);
+	}
+	
+	@Override
+	public void attaquer(Plateau plateau) {
+		switch (this.getDirection().getDirection()) {
+
+		case "up":
+			plateau.getCaseUp(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+
+//			System.out.println(caseUpLeft+ ","+caseUp +","+caseUpRight);
+			break;
+		case "down":
+			plateau.getCaseDown(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+
+			break;
+		case "left":
+			plateau.getCaseUp(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDown(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+
+			break;
+		case "right":
+			plateau.getCaseUp(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDown(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+
+
+			
+			break;
+		default:
+			break;
+
+		}		
 	}
 
 
@@ -232,38 +277,223 @@ public class Minotaure extends Monstre{
 	public void afficher() {
 		// TODO Auto-generated method stub
 		System.out.println(this.getNom() +","+this.getLife()+","+this.getCoordonnee()+","+this.isExist()+","+this.getDamage());
+	}	
+	
+	
+	@Override
+	public String getImage(Plateau plateau ,Case c) {
+		String icon ="hyrule/knight/Down1.png" ;
+		switch (this.getCurentAction()) {
+		
+		case "nothing":
+			icon = this.imageNothing();
+			this.setFrame( (getFrame() + 1) % 24 );
+			break;
+			
+		case "death":
+			int num =  this.getFrame() /2 +1;
+			//System.out.println(num);
+			icon = "hyrule/death/"+num+".png";
+			this.setFrame((getFrame() + 1) % 14);
+
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothing");
+				int x = (int) (Math.random() * (23 + 1 - 1)) + 1;
+				int y = (int) (Math.random() * (16 + 1 - 1)) + 1;
+				this.mourir(plateau, x, y, true);
+				
+			}
+			break;
+			
+		case "animationAttaque":
+			icon = this.imageAnimationAttaque();
+			this.setFrame((getFrame() +1) % 15);
+			
+			if (this.getFrame() == 0) {
+				this.setCurentAction("attaque");
+			}
+			
+			break;
+			
+		case "attaque":
+			icon = this.imageAttaque();
+			this.setFrame((getFrame() +1) % 16);
+			
+			if (this.getFrame() == 2) {
+				this.attaquer(plateau);
+			}
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothing");
+			}
+			
+			break;
+			
+		case "moving":
+			icon = this.imageMoving();
+			this.setFrame((getFrame() + 1) % 6);
+
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothing");
+			}
+			break;
+		
+		default: 
+			break;
+
+		}
+				
+		return icon;
 	}
 
+	
 
-	@Override
-	public String getImage(Plateau plateau , Case c) {
-		
-		String icon = "hyrule/knight/Down1.png";
 
-		if (getDirection().equals("up")) {
-			icon = "hyrule/knight/Up1.png";
-		} else if (getDirection().equals("down")) {
-			icon = "hyrule/knight/Down1.png";
-		} else if (getDirection().equals("left")) {
-			icon = "hyrule/knight/Left1.png";
-		} else if (getDirection().equals("right")) {
-			icon = "hyrule/knight/Right1.png";
+
+
+	private String imageAttaque() {
+		int num =    this.getFrame() /4 +1;
+		String icon = "hyrule/knight/beat/Down1.png";
+		switch (this.getDirection().getDirection()) {
+
+		case "up":
+			icon = "hyrule/knight/attaque/U"+num+".png";
+
+			break;
+		case "down":
+			icon = "hyrule/knight/attaque/D"+num+".png";
+
+			break;
+		case "left":
+			icon = "hyrule/knight/attaque/L"+num+".png";
+			break;
+		case "right":
+			icon = "hyrule/knight/attaque/R"+num+".png";
+
+			break;
+		default:
+			break;
+
 		}
 		return icon;
 	}
 
+
+	private String imageAnimationAttaque() {
+		int num =    this.getFrame() /5 +1;
+		String icon = "hyrule/knight/beat/Down1.png";
+		switch (this.getDirection().getDirection()) {
+
+		case "up":
+			icon = "hyrule/knight/prepattaque/U"+num+".png";
+
+			break;
+		case "down":
+			icon = "hyrule/knight/prepattaque/D"+num+".png";
+
+			break;
+		case "left":
+			icon = "hyrule/knight/prepattaque/L"+num+".png";
+			break;
+		case "right":
+			icon = "hyrule/knight/prepattaque/R"+num+".png";
+
+			break;
+		default:
+			break;
+
+		}
+		return icon;
+	}
+	
+	
+	private String imageMoving() {
+		int num =    this.getFrame() +1;
+		//System.out.println("frame: "+this.getFrame());
+
+		//System.out.println("num: "+num);
+		
+		String icon = "hyrule/knight/beat/Up/"+num+".png";
+		switch (this.getDirection().getDirection()) {
+
+		case "up":
+			 icon = "hyrule/knight/beat/Up/"+num+".png";
+			break;
+		case "down":
+			 icon = "hyrule/knight/beat/Down/"+num+".png";
+			break;
+		case "left":
+			 icon = "hyrule/knight/beat/Left/"+num+".png";
+			 break;
+		case "right":
+			 icon = "hyrule/knight/beat/Right/"+num+".png";
+			break;
+		default:
+			break;
+
+		}
+		return icon;
+	}
+
+
+	private String imageNothing() {
+		int num =    this.getFrame() /4 +1;
+		//System.out.println("frame: "+this.getFrame());
+
+		//System.out.println("num: "+num);
+		
+		String icon = "hyrule/knight/beat/Up/"+num+".png";
+		switch (this.getDirection().getDirection()) {
+
+		case "up":
+			 icon = "hyrule/knight/beat/Up/"+num+".png";
+			break;
+		case "down":
+			 icon = "hyrule/knight/beat/Down/"+num+".png";
+			break;
+		case "left":
+			 icon = "hyrule/knight/beat/Left/"+num+".png";
+			 break;
+		case "right":
+			 icon = "hyrule/knight/beat/Right/"+num+".png";
+			break;
+		default:
+			break;
+
+		}
+		return icon;
+
+	}
+	
+	
 	@Override
 	protected int trouverX() {
-		// TODO Auto-generated method stub
-		return this.getCoordonnee().getX()*40-40;
+		int res = this.getCoordonnee().getX() * 40 -40;
+		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
+			int num =    this.getFrame()   +1;
+			res = res + num * 6 - 40 ;
+		} else if (this.getDirection().equals("left") && this.getCurentAction().equals("moving")) {
+			int num =    this.getFrame() +1;
+			res = res - num * 6 +40 ;
+		}
+		return res;
 	}
 
 	@Override
 	protected int trouverY() {
-		// TODO Auto-generated method stub
-		return this.getCoordonnee().getY()*40-40;
+		int res = this.getCoordonnee().getY() * 40 -40;
+		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
+			int num =    this.getFrame()   +1;
+			res = res - num * 6 +40 ;
+		} else if (this.getDirection().equals("down") && this.getCurentAction().equals("moving")) {
+			int num =    this.getFrame()   +1;
+			res = res + num * 6 - 40;
+		} else if (this.getCurentAction().equals("moving")) {
+			int num =  - ( this.getFrame() -3 )* ( this.getFrame() -3 ) + 10 ;
+			res = res - num  ;
+			//System.out.println(this.getFrame() +","+ (num) );
+		}
+		return res;
 	}
-
 
 	@Override
 	protected int trouverlargeur() {
@@ -271,12 +501,27 @@ public class Minotaure extends Monstre{
 		return 120;
 	}
 
-
 	@Override
 	protected int trouverlongeur() {
 		// TODO Auto-generated method stub
 		return 120;
 	}
+
+
+	@Override
+	public int trouverBarreVieX() {
+		// TODO Auto-generated method stub
+		return this.trouverX()+30;
+	}
+
+
+	@Override
+	public int trouverBarreVieY() {
+		// TODO Auto-generated method stub
+		return this.trouverY();
+	}
+
+
 	
 	
 

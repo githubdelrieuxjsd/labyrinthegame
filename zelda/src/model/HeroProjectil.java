@@ -7,7 +7,7 @@ import tool.Tool;
 public class HeroProjectil extends Projectil {
 
 	
-	public HeroProjectil(Coordonnee coordonnee, String direction ) {
+	public HeroProjectil(Coordonnee coordonnee, Direction direction ) {
 		super();
 		this.setExist(true);
 		this.setCoordonnee(coordonnee);
@@ -24,7 +24,7 @@ public class HeroProjectil extends Projectil {
 		// TODO Auto-generated method stub
 		if (this.getExist()) {
 
-			switch (getDirection()) {
+			switch (getDirection().getDirection()) {
 
 			case "up":
 				Case caseUp = plateau.getCaseUp(this.getCoordonnee());
@@ -67,7 +67,7 @@ public class HeroProjectil extends Projectil {
 		case "Minotaure": interactionMinautore(plateau, c);
 
 			break;
-		case "MinotaureProjectil": interactionMinotaureProjectil(plateau, c);
+		case "MinotaureProjectil":// interactionMinotaureProjectil(plateau, c);
 
 		break;
 		case "Chicken": interactionChicken(plateau, c);
@@ -81,6 +81,7 @@ public class HeroProjectil extends Projectil {
 		}
 	}
 
+	/**
 	private void interactionMinotaureProjectil(Plateau plateau, Case c) {
 		// TODO Auto-generated method stub
 		int num = Tool.CoordinateToNum(getCoordonnee());
@@ -94,32 +95,31 @@ public class HeroProjectil extends Projectil {
 		plateau.getListCase().get(num).setElement(v);
 		mp.setExist(false);
 		}
-
+*/
+	
 	private void interactionChicken(Plateau plateau, Case c) {
 		// TODO Auto-generated method stub
 		c.getElement().perdreVie(getDamage(),plateau);
-		int num = Tool.CoordinateToNum(getCoordonnee());
-		Vide v = new Vide(getCoordonnee());
-		plateau.getListCase().get(num).setElement(v);
 		this.setExist(false); 
-	}
+		this.setNom("Vide");	}
 
 	private void interactionMinautore(Plateau plateau, Case c) {
-		// TODO Auto-generated method stub
-		((Minotaure)c.getElement()).perdreVie(getDamage(),plateau);
-		int num = Tool.CoordinateToNum(getCoordonnee());
-		Vide v = new Vide(getCoordonnee());
-		plateau.getListCase().get(num).setElement(v);
+		if ( !  c.getElement().getDirection().oppose(this.getDirection())) {
+			this.attaque(plateau ,c);
+		}
 		this.setExist(false); 
+		this.setNom("Vide");
+
+	}
+
+	private void attaque(Plateau plateau,Case c) {
+		c.getElement().perdreVie(getDamage(),plateau);
 
 	}
 
 	private void interactionArbre(Plateau plateau) {
-		// TODO Auto-generated method stub
-		int num = Tool.CoordinateToNum(getCoordonnee());
-		Vide v = new Vide(getCoordonnee());
-		plateau.getListCase().get(num).setElement(v);
-		this.setExist(false); 
+		this.setExist(false);
+		this.setNom("Vide");
 	}
 
 	private void interactionVide(Plateau plateau, Case caseApres) {
@@ -145,6 +145,7 @@ public class HeroProjectil extends Projectil {
 	public String getImage(Plateau plateau , Case c) {
 		String icon = "img/vide.png";
 		//"hyrule/link/arrow/arrowUp.png"
+
 		if (getExist() ) {
 			if (getDirection().equals("up")) {
 				icon = "image/link/arrowUp24x24.png";
@@ -157,7 +158,8 @@ public class HeroProjectil extends Projectil {
 			}
 		}
 		this.setFrame( (getFrame() + 1)%4 );
-	//	System.out.println("frame:"+ getFrame());
+		//System.out.println("frame:"+ getFrame());
+
 		return icon;
 	}
 	

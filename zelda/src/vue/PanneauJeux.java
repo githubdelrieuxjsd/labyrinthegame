@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import controleur.Control;
 
 import model.Case;
+import model.Direction;
 import model.Element;
 import model.Minotaure;
 
@@ -35,20 +36,20 @@ public class PanneauJeux extends JPanel {
 				// TODO Auto-generated method stub
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
-					control.deplacerHero("up");
+					control.deplacerHero(new Direction ("up" ));
 					break;
 				case KeyEvent.VK_DOWN:
-					control.deplacerHero("down");
+					control.deplacerHero(new Direction ("down"));
 
 					break;
 
 				case KeyEvent.VK_RIGHT:
 
-					control.deplacerHero("right");
+					control.deplacerHero(new Direction ("right"));
 				
 					break;
 				case KeyEvent.VK_LEFT:
-					control.deplacerHero("left");
+					control.deplacerHero(new Direction ("left" ));
 					
 					break;
 				case KeyEvent.VK_S:
@@ -59,6 +60,9 @@ public class PanneauJeux extends JPanel {
 					break;
 				case KeyEvent.VK_Q:
 					control.animationPlaceBombHero();
+					break;
+				case KeyEvent.VK_I:
+					control.getPlateau().afficher();
 					break;
 				default:
 					;
@@ -109,7 +113,12 @@ public class PanneauJeux extends JPanel {
 
 		for (Case c : control.getPlateau().getListCase()) {
 			
-			dessinForground(g , c);
+			dessinForgroundBlock(g , c);
+		
+			}
+		for (Case c : control.getPlateau().getListCase()) {
+			
+			dessinForgroundUnite(g , c);
 
 			dessinSideBar(g , c);			
 			}
@@ -118,8 +127,13 @@ public class PanneauJeux extends JPanel {
 
 	
 
-	private void dessinForground(Graphics g , Case c) {
-			c.dessin(control.getPlateau() ,g);
+	private void dessinForgroundBlock(Graphics g, Case c) {
+		c.dessinBlock(control.getPlateau() ,g);
+
+	}
+
+	private void dessinForgroundUnite(Graphics g , Case c) {
+			c.dessinUnite(control.getPlateau(), g);
 	}
 
 	private void dessinBackground(Graphics g, Case c) {
@@ -145,23 +159,14 @@ public class PanneauJeux extends JPanel {
 				c.setItem();
 
 			 if ( c.getElement().getCoordonnee().getX() > 0 && c.getElement().getCoordonnee().getX() < control.getHero().getLife() + 1 ) {
-					icon = new ImageIcon("hyrule/item/heart.png");
+					icon = new ImageIcon("hyrule/heart/rouge.png");
 					
 					Image img = icon.getImage();
 
 					g.drawImage(img, c.getElement().getCoordonnee().getX() * 40 +8 , c.getElement().getCoordonnee().getY() * 40 +10, 25,
 							21, null);
 				}
-
-				if (c.getElement().getCoordonnee().getX() > 10
-						&& c.getElement().getCoordonnee().getX() < 10 + minotaure.getLife() + 1) {
-					icon = new ImageIcon("hyrule/item/key.png");
-					
-					Image img = icon.getImage();
-
-					g.drawImage(img, c.getElement().getCoordonnee().getX() * 40 + 7, c.getElement().getCoordonnee().getY() * 40+10, 25,
-							25, null);
-				}
+			 
 		 }
 			
 			

@@ -8,7 +8,6 @@ public class Key extends Item {
 		super();
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
 		this.setNom("Key");
 		
 	}

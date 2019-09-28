@@ -28,7 +28,7 @@ public class Hero extends Unite {
 		this.setCoordonnee(coordonnee);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection(new Direction ("down" ));
 
 		this.setLife(5);
 		this.setDamage(2 ,0 ,0 ,0 );
@@ -47,17 +47,17 @@ public class Hero extends Unite {
 		this.setLife(5);
 		this.setDamage(2,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
-		this.setDirection("down");
+		this.setDirection(new Direction ("down" ));
 
 	}
 
 	@Override
-	public void deplacer(String direction, Plateau plateau) {
+	public void deplacer(Direction direction, Plateau plateau) {
 		// TODO Auto-generated method stub
 		// System.out.println(this.coordonnee +"," + this.getListProjectil().size() );
 		this.setDirection(direction);
 		if (this.isAlive()) {
-			switch (direction) {
+			switch (direction.getDirection()) {
 
 			case "up":
 				Case caseUp = plateau.getCaseUp(this.getCoordonnee());
@@ -143,7 +143,7 @@ public class Hero extends Unite {
 	@Override
 	public void attaquer(Plateau plateau) {
 		
-		switch (this.getDirection()) {
+		switch (this.getDirection().getDirection()) {
 
 		case "up":
 			Case caseUp = plateau.getCaseUp(this.getCoordonnee());
@@ -214,15 +214,13 @@ public class Hero extends Unite {
 		// TODO Auto-generated method stub
 		if (this.isAlive()) {
 			Coordonnee cord = new Coordonnee(this.getCoordonnee());
-			HeroProjectil heroProjectil = new HeroProjectil(cord, getDirection() );
+			HeroProjectil heroProjectil = new HeroProjectil(cord, getDirection()) ;
 
 			// System.out.println(heroProjectil.coordonnee);
 			if (!this.listProjectil.isEmpty()) {
-				int num = Tool.CoordinateToNum(listProjectil.get(0).getCoordonnee());
-				Vide v = new Vide(listProjectil.get(0).getCoordonnee());
-				plateau.getListCase().get(num).setElement(v);
-
 				listProjectil.get(0).setExist(false);
+				listProjectil.get(0).setNom("Vide");
+
 				listProjectil.remove(0);
 			}
 			listProjectil.add(heroProjectil);
@@ -343,7 +341,7 @@ public class Hero extends Unite {
 		
 		int num =    this.getFrame() +1;
 		String icon = "hyrule/link/arrow/Down/1.png";
-		switch (this.getDirection()) {
+		switch (this.getDirection().getDirection()) {
 
 		case "up":
 			icon = "hyrule/link/arrow/Up/"+num+".png";
@@ -371,7 +369,7 @@ public class Hero extends Unite {
 	private String imageAttaque() {
 		int num =    this.getFrame() +1;
 		String icon = "hyrule/link/beat/Down1.png";
-		switch (this.getDirection()) {
+		switch (this.getDirection().getDirection()) {
 
 		case "up":
 			icon = "hyrule/link/attaque/Up"+num+".png";
@@ -401,7 +399,7 @@ public class Hero extends Unite {
 
 		// System.out.println(this.getFrame() + " , "+num );
 		
-		switch (this.getDirection()) {
+		switch (this.getDirection().getDirection()) {
 
 		case "up":
 			//icon = "image/Link/linkMoving"+this.getFrame()%6+"Up24x24.png";
@@ -436,7 +434,7 @@ public class Hero extends Unite {
 		//System.out.println("num: "+num);
 		
 		String icon = "hyrule/link/beat/Down1.png" ;
-		switch (this.getDirection()) {
+		switch (this.getDirection().getDirection()) {
 
 		case "up":
 			icon = "hyrule/link/beat/Up"+num+".png";

@@ -1,7 +1,9 @@
 package controleur;
 
+import model.Direction;
 import model.Hero;
 import model.Minotaure;
+import model.Plateau;
 
 public class ContolKnight {
 	
@@ -16,8 +18,20 @@ public class ContolKnight {
 	}
 	
 	
-	public String deplacementOptimal(){
-		String res = "up";
+	public void action(Plateau plateau) {
+		if (this.minotaure.getCurentAction().equals("nothing")) {
+			int random = (int) (Math.random() * (100 - 1 +1 )) + 1;
+			if (random > 50) {
+				this.minotaure.animationAttaque();
+			}else {
+				this.minotaure.deplacer(this.deplacementOptimal() , plateau);
+			}	
+		}
+		
+	}
+	
+	public Direction deplacementOptimal(){
+		Direction res = new Direction ("up" );
 		String UporDown = "up" ;
 		String RightorLeft = "left";
 		int chance = 50 ; 
@@ -36,9 +50,9 @@ public class ContolKnight {
 
 		chance = chance + diffXY * 4 ;
 		if (random > chance) {
-			res = UporDown;
+			res = new Direction ( UporDown );
 		}else {
-			res = RightorLeft ;
+			res = new Direction ( RightorLeft ) ;
 		}
 		//System.out.println("XY: " + diffXY +",chance Y :"+chance+","+  res);
 		

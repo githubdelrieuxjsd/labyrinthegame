@@ -8,7 +8,6 @@ public class Rien extends Item {
 		this.setNom("Rien");
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
 	}
 
 	@Override

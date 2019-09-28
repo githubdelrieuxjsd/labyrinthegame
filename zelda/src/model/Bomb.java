@@ -9,7 +9,6 @@ public class Bomb extends Item {
 		this.damage = new Damage (0,0,2,0)	;
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
 		this.setNom("Bomb");
 		
 	}

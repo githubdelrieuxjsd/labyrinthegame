@@ -113,19 +113,59 @@ public class Case {
 		return res ;
 	}
 	
-	public void dessin(Plateau plateau , Graphics g) {
+	public void dessinBlock(Plateau plateau , Graphics g) {
 		// TODO Auto-generated method stub
 		g.drawImage(this.trouverItemImage(plateau), this.trouverItemX(plateau , this),
 			this.trouverItemY(plateau, this) , this.trouverItemLongeur(), this.trouverItemLargeur(), null);
 
 		//this.afficherNum(102);
 		
-		g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
-				this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
+		if ( ! (this.getElement().getNom().equals("Hero") ||
+				this.getElement().isMonstre()  )) {
+			g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
+					this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
+		}
+		
+	}
+	public void dessinUnite(Plateau plateau , Graphics g) {
+		// TODO Auto-generated method stub
+
+		//this.afficherNum(102);
+		if (this.getElement().getNom().equals("Hero") ) {
+			g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
+					this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
+		}
+		
+		else if ( this.getElement().isMonstre() ) {
+			
+				if ( ((Monstre)this.getElement()).getLife() <  ((Monstre)this.getElement()).getMaxLife() 
+						&& ((Monstre)this.getElement()).getLife()>0 ) {
+					for (int i = 0 ; i < ((Monstre)this.getElement()).getMaxLife() ;i ++) {
+						ImageIcon icon = new ImageIcon("hyrule/heart/noir.png");
+						
+						if (i < ((Monstre)this.getElement()).getLife()) {
+							icon = new ImageIcon("hyrule/heart/rouge.png");	
+						}
+						Image img = icon.getImage();		
+
+						g.drawImage(img, ((Monstre) this.getElement()).trouverBarreVieX()+10*i ,
+								((Monstre) this.getElement()).trouverBarreVieY()	 , 10, 10, null);
+					}
+			}
+				g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
+						this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
+		
+		}
+		
+		
+		
 	}
 	
 	
 	
+	
+	
+
 	public void afficher() {
 		if (this.getElement().getNom().equals("Hero")) {
 			System.out.println( this.getElement().getNom() +"," + this.getElement().getCoordonnee() +","

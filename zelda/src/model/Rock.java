@@ -14,7 +14,7 @@ public class Rock extends Block{
 		this.setCoordonnee(coordonnee);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection( new Direction ("down" ) );
 		this.setNom("Rock");
 		this.setFrame(0);
 		this.life = 1;
@@ -28,7 +28,7 @@ public class Rock extends Block{
 		this.setCoordonnee(new Coordonnee(x,y));
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection( new Direction ("down" ) );
 		this.setNom("Rock");
 		this.setFrame(0);
 		this.life = 1;
@@ -36,11 +36,11 @@ public class Rock extends Block{
 	}
 
 
-	@Override
-	public void deplacer(String direction, Plateau plateau, boolean pousserRock) {
+	
+	public void deplacer(Direction direction, Plateau plateau, boolean pousserRock) {
 		// TODO Auto-generated method stub
 		this.setDirection(direction);
-					switch (direction) {
+					switch (direction.getDirection()) {
 
 					case "up":
 						Case caseUp = plateau.getCaseUp(this.getCoordonnee());
@@ -56,7 +56,7 @@ public class Rock extends Block{
 						break;
 					case "right":
 						Case caseRight = plateau.getCaseRight(this.getCoordonnee());
-						interactionDeplacement(plateau, caseRight ,direction ,pousserRock);
+						interactionDeplacement(plateau, caseRight ,direction,pousserRock);
 						break;
 					default:
 						break;
@@ -66,7 +66,7 @@ public class Rock extends Block{
 				}
 
 
-			private void interactionDeplacement(Plateau plateau, Case c, String direction, boolean pousserRock) {
+			private void interactionDeplacement(Plateau plateau, Case c, Direction direction, boolean pousserRock) {
 				// TODO Auto-generated method stub
 				switch (c.getElement().getNom()) {
 
@@ -95,7 +95,7 @@ public class Rock extends Block{
 				}
 			}
 
-			private void interactionRock(Plateau plateau, Case c, String direction) {
+			private void interactionRock(Plateau plateau, Case c, Direction direction) {
 				// TODO Auto-generated method stub
 				((Rock) c.getElement()).deplacer(direction, plateau);
 				
@@ -136,8 +136,8 @@ public class Rock extends Block{
 			}
 
 
-			@Override
-			public void deplacer(String direction, Plateau plateau) {
+			
+			public void deplacer(Direction direction, Plateau plateau) {
 				// TODO Auto-generated method stub
 				deplacer (direction ,plateau, false);
 			}

@@ -10,6 +10,7 @@ import model.Bush;
 import model.Case;
 import model.Chicken;
 import model.Coordonnee;
+import model.Direction;
 import model.Hero;
 import model.Key;
 import model.Minotaure;
@@ -156,17 +157,12 @@ public class Control {
 
 	public void deplaceChicken() {
 		scort = 0;
-		if (timer%16 == 0) {
 			for (Monstre m : listMonstre) {
 				if (m.getNom().equals("Chicken")) {
 					m.deplacer(ctrRandom.deplacement(), plateau);
 					if (!m.isAlive()) {
 						scort++;
 					}
-				}
-				if (m.getNom().equals("Minotaure")) {
-					m.deplacer(this.ctrKnight.deplacementOptimal(), plateau);
-							// ((Minotaure)m).tirer(plateau);
 				}
 			}
 			if (scort == 20) {
@@ -176,7 +172,6 @@ public class Control {
 				
 
 			}
-		}
 
 	}
 
@@ -202,11 +197,17 @@ public class Control {
 	public void action() {
 		this.timer++;
 		deplacerProgectil();
-		deplaceChicken();
+		if (this.timer%16 == 0) {
+			deplaceChicken();
+			
+			ctrKnight.action(plateau);
+
+			}
+		
 	}
 
 
-	public void deplacerHero(String direction) {
+	public void deplacerHero(Direction direction) {
 		// TODO Auto-generated method stub
 		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
 			this.hero.deplacer(direction, plateau);

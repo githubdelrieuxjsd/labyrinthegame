@@ -4,7 +4,6 @@ public abstract class Item {
 
 	private String nom;
 	private int frame ;
-	private String direction ;
 	private String curentAction;
 	
 	
@@ -31,13 +30,7 @@ public abstract class Item {
 		this.frame = frame;
 	}
 
-	public String getDirection() {
-		return direction;
-	}
-
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
+	
 
 	public String getCurentAction() {
 		return curentAction;

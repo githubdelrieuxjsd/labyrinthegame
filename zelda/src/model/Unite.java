@@ -13,7 +13,7 @@ public abstract class Unite extends Element{
 	
 
 
-	public abstract void deplacer(String direction, Plateau plateau);
+	public abstract void deplacer(Direction direction, Plateau plateau);
 	
 	public abstract void soigner(int soin );
 

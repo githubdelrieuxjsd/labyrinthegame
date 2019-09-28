@@ -13,7 +13,7 @@ public class Vide extends Element {
 		this.setCoordonnee(coordonnee);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection(new Direction ("down" ));
 	}
 	
 	public Vide(int x, int y) {
@@ -22,7 +22,7 @@ public class Vide extends Element {
 		this.setCoordonnee(new Coordonnee(x,y));
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");	}
+		this.setDirection(new Direction ("down" ));	}
 
 	@Override
 	public String getImage(Plateau plateau ,Case c ) {

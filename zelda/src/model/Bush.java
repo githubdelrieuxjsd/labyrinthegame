@@ -9,7 +9,7 @@ public class Bush extends Block {
 		this.setCoordonnee(coordonnee);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection(new Direction ("down" ));
 		this.setNom("Bush");
 		this.life = 1;
 	}
@@ -19,7 +19,7 @@ public class Bush extends Block {
 		this.setCoordonnee(new Coordonnee(x,y));
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection(new Direction ("down" ));
 		this.setNom("Bush"); 
 		this.life = 1;
 	}
@@ -34,12 +34,6 @@ public class Bush extends Block {
 		}
 	}
 	
-	
-	@Override
-	public void deplacer(String direction, Plateau plateau) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public String getImage(Plateau plateau , Case c) {

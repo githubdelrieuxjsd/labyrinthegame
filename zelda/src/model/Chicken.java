@@ -8,7 +8,6 @@ import tool.Tool;
 
 public class Chicken extends Monstre {
 
-	protected int maxLife = 1;
 	
 	public Chicken(Coordonnee coordonnee ) {
 		super();
@@ -17,54 +16,54 @@ public class Chicken extends Monstre {
 		this.setCoordonnee(coordonnee);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setDirection("down");
+		this.setDirection( new Direction ("down" ) );
 		this.setNom("Chicken");
-		this.setLife( 2);
+		
 		this.setDamage(0,0,0,0);
 	}
 
 	public Chicken(int x, int y) {
 		super();
 		this.setExist(true);
- 
+		this.setNom("Chicken");
+
 		this.setCoordonnee(new Coordonnee(x,y));
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
-		this.setNom("Chicken");
-		this.setLife( 2);
-		this.setDamage(0,0,0,0);
-		this.setDirection ("down") ;
+		this.setMaxLife(2);
+		this.setLife( this.getMaxLife());		this.setDamage(0,0,0,0);
+		this.setDirection ( new Direction ("down" ) ) ;
 	}
 
 	@Override
-	public void deplacer(String direction, Plateau plateau) {
+	public void deplacer(Direction direction, Plateau plateau) {
 		// TODO Auto-generated method stub
 		if (this.isAlive()&& this.getCurentAction().equals("nothing")) {
 			
 			this.setDirection(direction);
-			switch (direction) {
+			switch (direction.getDirection()) {
 
 			case "up":
-				this.setDirection("up");
+				this.setDirection(new Direction ("up" ));
 
 				Case caseUp = plateau.getCaseUp(this.getCoordonnee());
 				interactionDeplacement(plateau, caseUp );
 				break;
 			case "down":
-				this.setDirection("down");
+				this.setDirection(new Direction ("down" ));
 
 				Case caseDown = plateau.getCaseDown(this.getCoordonnee());
 				interactionDeplacement(plateau, caseDown );
 				break;
 			case "left":
-				this.setDirection("left");
+				this.setDirection(new Direction ("left" ));
 
 				Case caseLeft = plateau.getCaseLeft(this.getCoordonnee());
 				interactionDeplacement(plateau, caseLeft );
 
 				break;
 			case "right":
-				this.setDirection("right");
+				this.setDirection( new Direction ("right" ) );
 
 				Case caseRight = plateau.getCaseRight(this.getCoordonnee());
 				interactionDeplacement(plateau, caseRight );
@@ -137,8 +136,8 @@ public class Chicken extends Monstre {
 	@Override
 	public void soigner(int soin) {
 		// TODO Auto-generated method stub
-		if (soin + getLife() >= maxLife) {
-			setLife(maxLife);
+		if (soin + getLife() >= getMaxLife()) {
+			setLife(getMaxLife());
 		} else {
 			this.setLife( getLife() + soin );
 		}
@@ -206,7 +205,7 @@ public class Chicken extends Monstre {
 		//System.out.println("num: "+num);
 		
 		String icon = "hyrule/chicken/R"+num+".png" ;
-		switch (this.getDirection()) {
+		switch (this.getDirection().getDirection()) {
 
 		case "up":
 			icon = "hyrule/chicken/R"+num+".png";
@@ -274,5 +273,23 @@ public class Chicken extends Monstre {
 		return 120;
 	}
 
-	
+	@Override
+	public void animationAttaque() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int trouverBarreVieX() {
+		// TODO Auto-generated method stub
+		return this.trouverX()+45;
+	}
+
+
+	@Override
+	public int trouverBarreVieY() {
+		// TODO Auto-generated method stub
+		return this.trouverY() +30;
+	}
+
 }
