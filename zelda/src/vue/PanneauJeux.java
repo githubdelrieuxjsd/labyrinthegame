@@ -116,7 +116,7 @@ public class PanneauJeux extends JPanel {
 	
 
 	private void dessinForground(Graphics g , Case c) {
-			c.dessin(g);
+			c.dessin(control.getPlateau() ,g);
 	}
 
 	private void dessinBackground(Graphics g, Case c) {

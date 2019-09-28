@@ -227,7 +227,7 @@ public class Minotaure extends Monstre{
 
 
 	@Override
-	public String getImage(Case c) {
+	public String getImage(Plateau plateau , Case c) {
 		
 		String icon = "hyrule/knight/Down1.png";
 

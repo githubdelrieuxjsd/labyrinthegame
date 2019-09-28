@@ -147,7 +147,7 @@ public class MinotaureProjectil  extends Projectil{
 		}
 
 	@Override
-	public String getImage(Case c) {
+	public String getImage(Plateau plateau , Case c) {
 		String icon = "img/grass2.png";
 		if (getExist() ) {
 			switch (this.getFrame()) {

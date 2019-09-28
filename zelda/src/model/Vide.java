@@ -19,7 +19,7 @@ public class Vide extends Element {
 	}
 
 	@Override
-	public String getImage(Case c ) {
+	public String getImage(Plateau plateau ,Case c ) {
 		Element element = c.getElement() ;
 		ObjetCacher objCacher = c.getObjetCacher() ;
 		String icon = "img/vide.png";

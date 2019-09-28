@@ -221,10 +221,10 @@ public class Control {
 				|| timer%16 == 5 || timer%16 == 11
 				//|| timer%16 == 6 || timer%16 == 10
 				//|| timer%16 == 7 || timer%16 == 9
-				) ) {
+				||true				) ) {
 			this.hero.deplacer(direction, plateau);
 		}else {
-			System.out.println("timre" + timer%16);
+			//System.out.println("timre" + timer%16);
 		}
 	}
 
@@ -237,6 +237,7 @@ public class Control {
 				||timer%16 == 3 || timer%16 == 13 
 				|| timer%16 == 4 || timer%16 == 12
 				|| timer%16 == 5 || timer%16 == 11
+				||true
 				) ) {
 			this.hero.tirer(plateau);
 		}
@@ -248,6 +249,7 @@ public class Control {
 				 ||timer%16 == 3 || timer%16 == 13 
 				|| timer%16 == 4 || timer%16 == 12
 				|| timer%16 == 5 || timer%16 == 11
+				|| true
 				) ) {
 			this.hero.setCurentAction("animationAttaque");
 			this.hero.setFrame(0);

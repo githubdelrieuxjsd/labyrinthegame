@@ -65,7 +65,7 @@ public abstract class Element {
 		this.nom = nom;
 	}
 	
-	public abstract String getImage(Case c) ;
+	public abstract String getImage(Plateau plateau ,Case c) ;
 
 
 	public int getFrame() {

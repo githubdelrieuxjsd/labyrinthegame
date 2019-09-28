@@ -151,7 +151,7 @@ public class HeroProjectil extends Projectil {
 	}
 
 	@Override
-	public String getImage(Case c) {
+	public String getImage(Plateau plateau , Case c) {
 		String icon = "img/vide.png";
 		if (getExist() ) {
 			if (getDirection().equals("up")) {

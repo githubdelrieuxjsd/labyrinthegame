@@ -61,10 +61,10 @@ public class Case {
 		
 	}
 	
-	private Image trouverImage() {
+	private Image trouverImage(Plateau plateau ) {
 		Element element = this.getElement();
 		ObjetCacher objCacher = this.getObjetCacher();
-		ImageIcon icon = new ImageIcon(element.getImage(this));
+		ImageIcon icon = new ImageIcon(element.getImage( plateau ,this));
 		Image img = icon.getImage();
 		return img;
 	}
@@ -85,9 +85,9 @@ public class Case {
 		return res ;
 	}
 	
-	public void dessin(Graphics g) {
+	public void dessin(Plateau plateau , Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(this.trouverImage(), this.trouverX(),
+		g.drawImage(this.trouverImage(plateau), this.trouverX(),
 				this.trouverY() , this.trouverlongeur(), this.trouverlargeur(), null);
 	}
 	

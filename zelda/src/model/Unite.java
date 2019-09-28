@@ -35,10 +35,13 @@ public abstract class Unite extends Element{
 	
 	public void mourir(Plateau p , int x,int y , boolean respawn) {
 		this.exist = false ;
+		
 		int num = Tool.CoordinateToNum(this.getCoordonnee());
 		Coordonnee cord = new Coordonnee(this.getCoordonnee());
 		p.getListCase().get(num).setElement(new Vide (cord));
+		
 		if (respawn) {
+			
 			num = Tool.CoordinateToNum(x ,y);
 			this.soigner (1000000);
 			this.setCoordonnee(new Coordonnee (x,y) );

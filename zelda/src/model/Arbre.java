@@ -22,7 +22,7 @@ public class Arbre extends  Block {
 	}
 
 	@Override
-	public String getImage(Case c) {
+	public String getImage(Plateau plateau ,Case c) {
 		// TODO Auto-generated method stub
 		return "hyrule/block/tree.png";
 	}

@@ -31,7 +31,7 @@ public class Chicken extends Monstre {
 	@Override
 	public void deplacer(String direction, Plateau plateau) {
 		// TODO Auto-generated method stub
-		if (this.isAlive()) {
+		if (this.isAlive()&& this.getCurentAction().equals("nothing")) {
 			this.setDirection(direction);
 			switch (direction) {
 
@@ -123,9 +123,9 @@ public class Chicken extends Monstre {
 		this.setLife(this.getLife() - damage);
 
 		if (getLife() <= 0) {
-			int x = (int) (Math.random() * (23 + 1 - 1)) + 1;
-			int y = (int) (Math.random() * (16 + 1 - 1)) + 1;
-			this.mourir(p, x, y, false);
+			
+			this.setCurentAction("death");
+			this.setFrame(0);
 		}
 
 	}
@@ -154,43 +154,93 @@ public class Chicken extends Monstre {
 
 	
 	@Override
-	public String getImage(Case c) {
-		String icon = "img/chickenLeft2.png";
-		((Unite)c.getElement()).afficher();
-		if (getDirection().equals("up")) {
-			icon = "img/chickenUp.png";
-		} else if (getDirection().equals("down")) {
-			icon = "img/chickenDown.png";
-		} else if (getDirection().equals("left")) {
-			icon = "img/chickenLeft.png";
-		} else if (getDirection().equals("right")) {
-			icon = "img/chickenRight.png";
+	public String getImage(Plateau p ,Case c) {
+		ObjetCacher objCacher = c.getObjetCacher();
+		String icon = "hyrule/link/beat/Down1.png";;
+		switch (this.getCurentAction()) {
+		
+		case "nothing":
+			icon = this.imageNothing();
+			this.setFrame( (getFrame() + 1) % 16 );
+			break;
+		case "death":
+			int num =  this.getFrame() /2 +1;
+			System.out.println(num);
+			icon = "hyrule/death/"+num+".png";
+			this.setFrame((getFrame() + 1) % 14);
+
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothing");
+				int x = (int) (Math.random() * (23 + 1 - 1)) + 1;
+				int y = (int) (Math.random() * (16 + 1 - 1)) + 1;
+				this.mourir(p, x, y, false);
+			}
+			break;
+		
+		default: 
+			break;
+
 		}
+				
 		return icon;
 	}
 
+	
+	private String imageNothing() {
+		int num =    this.getFrame()  /2  +1;
+		//System.out.println("frame: "+this.getFrame());
+
+		//System.out.println("num: "+num);
+		
+		String icon = "hyrule/link/beat/Down1.png" ;
+		switch (this.getDirection()) {
+
+		case "up":
+			icon = "hyrule/link/beat/Down1.png";
+
+			break;
+		case "down":
+			icon = "hyrule/link/beat/Down1.png";
+
+			break;
+		case "left":
+			icon = "hyrule/link/beat/Down1.png";
+			break;
+		case "right":
+			icon = "hyrule/link/beat/Down1.png" ;
+
+			break;
+		default:
+			break;
+
+		}
+		return icon;
+
+	}
+	
+	
 	@Override
 	protected int trouverX() {
 		// TODO Auto-generated method stub
-		return this.getCoordonnee().getX()*40;
+		return this.getCoordonnee().getX()*40-40;
 	}
 
 	@Override
 	protected int trouverY() {
 		// TODO Auto-generated method stub
-		return this.getCoordonnee().getY()*40;
+		return this.getCoordonnee().getY()*40-40;
 	}
 
 	@Override
 	protected int trouverlargeur() {
 		// TODO Auto-generated method stub
-		return 40;
+		return 120;
 	}
 
 	@Override
 	protected int trouverlongeur() {
 		// TODO Auto-generated method stub
-		return 40;
+		return 120;
 	}
 
 	

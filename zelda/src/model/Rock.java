@@ -137,7 +137,7 @@ public class Rock extends Block{
 
 
 			@Override
-			public String getImage(Case c) {
+			public String getImage(Plateau plateau , Case c) {
 				// TODO Auto-generated method stub
 				ObjetCacher objCacher = c.getObjetCacher();
 				String icon = "hyrule/block/rock.png";

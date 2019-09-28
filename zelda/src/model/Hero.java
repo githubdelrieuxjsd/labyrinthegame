@@ -1,6 +1,10 @@
 package model;
 //28:5
 //7:20
+//56,20
+//14:46 knight
+//26:42 grappin + bomb
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -276,7 +280,7 @@ public class Hero extends Unite {
 	}
 
 	@Override
-	public String getImage(Case c) {
+	public String getImage(Plateau plateau , Case c) {
 		ObjetCacher objCacher = c.getObjetCacher();
 		String icon = "hyrule/link/beat/Down1.png";
 		switch (this.getCurentAction()) {
