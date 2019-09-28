@@ -27,7 +27,9 @@ public class Bush extends Block {
 	@Override
 	public String getImage(Plateau plateau , Case c) {
 		// TODO Auto-generated method stub
-		String icon = "hyrule/block/bush.png" ;
+		//String icon = "hyrule/block/bush.png" ;
+		String icon = "hyrule/objet/bomb.png" ;
+
 		if (this.getCurentAction().equals("dead")) {
 			icon = "";
 		}

@@ -174,6 +174,7 @@ public class Chicken extends Monstre {
 				int x = (int) (Math.random() * (23 + 1 - 1)) + 1;
 				int y = (int) (Math.random() * (16 + 1 - 1)) + 1;
 				this.mourir(p, x, y, false);
+				
 			}
 			break;
 		

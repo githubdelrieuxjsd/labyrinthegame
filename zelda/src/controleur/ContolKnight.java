@@ -34,7 +34,7 @@ public class ContolKnight {
 		
 		int random = (int) (Math.random() * (100 - 1 +1 )) + 1;
 
-		chance = chance + diffXY * 3 ;
+		chance = chance + diffXY * 4 ;
 		if (random > chance) {
 			res = UporDown;
 		}else {
