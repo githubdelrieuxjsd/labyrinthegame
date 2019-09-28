@@ -5,17 +5,23 @@ public class Bush extends Block {
 	private int life ; 
 	
 	public Bush(Coordonnee coordonnee) {
-		super(coordonnee);
+		super();
+		this.setCoordonnee(coordonnee);
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 		this.setNom("Bush");
 		this.life = 1;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Bush(int x, int y) {
-		super(x, y);
+		super();
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 		this.setNom("Bush"); 
 		this.life = 1;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -27,8 +33,7 @@ public class Bush extends Block {
 	@Override
 	public String getImage(Plateau plateau , Case c) {
 		// TODO Auto-generated method stub
-		//String icon = "hyrule/block/bush.png" ;
-		String icon = "hyrule/objet/bomb.png" ;
+		String icon = "hyrule/block/bush.png" ;
 
 		if (this.getCurentAction().equals("dead")) {
 			icon = "";

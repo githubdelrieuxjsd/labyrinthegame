@@ -3,16 +3,21 @@ package model;
 public class Arbre extends  Block {
 
 	public Arbre(Coordonnee coordonnee) {
-		super(coordonnee);
-		// TODO Auto-generated constructor stub
-		this.setNom("Arbre"); 
+		super();
+		this.setCoordonnee(coordonnee);
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");		this.setNom("Arbre"); 
 	}
 
 	public Arbre(int x, int y) {
-		super(x,y);
+		super();
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 		this.setNom("Arbre"); 
 
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

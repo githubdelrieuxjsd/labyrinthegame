@@ -6,17 +6,23 @@ import tool.Tool;
 
 public class Rock extends Block{
 
-	public Rock(Coordonnee position) {
-		super(position);
-		// TODO Auto-generated constructor stub
+	public Rock(Coordonnee coordonnee) {
+		super();
+		this.setCoordonnee(coordonnee);
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 		this.setNom("Rock");
 		this.setFrame(0);
 	}
 	
 	
 	public Rock(int x, int y) {
-		super(x, y);
-		// TODO Auto-generated constructor stub
+		super();
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 		this.setNom("Rock");
 		this.setFrame(0);
 
@@ -116,13 +122,7 @@ public class Rock extends Block{
 				this.setCoordonnee( cordApres );
 
 				
-				ObjetCacher objCacher = caseApres.getObjetCacher();
-				switch (objCacher.getNom()) {
 				
-				case "Spike": caseApres.setObjetCacher(new Rien() );
-					break;
-				default :;
-				}
 				this.setCurentAction("moving");
 
 				
@@ -139,7 +139,6 @@ public class Rock extends Block{
 			@Override
 			public String getImage(Plateau plateau , Case c) {
 				// TODO Auto-generated method stub
-				ObjetCacher objCacher = c.getObjetCacher();
 				String icon = "hyrule/block/rock.png";
 
 				switch (this.getCurentAction()) {

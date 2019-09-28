@@ -11,6 +11,7 @@ public abstract class Element {
 	private String curentAction;
 
 	
+	/**
 	public Element(Coordonnee coordonnee) {
 		super();
 		this.coordonnee = coordonnee;
@@ -28,6 +29,8 @@ public abstract class Element {
 		this.curentAction = ("nothing") ;
 
 	}
+	*/
+	
 	
 	public String getCurentAction() {
 		return curentAction;

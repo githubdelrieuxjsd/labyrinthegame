@@ -1,6 +1,6 @@
 package model;
 
-public class Spike extends ObjetCacher{
+public class Spike extends Piege{
 
 	private int damage ;
 	private boolean visible ;

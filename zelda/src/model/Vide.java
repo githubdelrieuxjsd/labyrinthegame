@@ -7,37 +7,27 @@ import javax.swing.ImageIcon;
 public class Vide extends Element {
 
 	public Vide(Coordonnee coordonnee ) {
-		super(coordonnee);
+		super();
 
 		this.setNom("Vide") ;
+		this.setCoordonnee(coordonnee);
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 	}
 	
 	public Vide(int x, int y) {
-		super(x, y);
+		super();
 		this.setNom("Vide") ;
-		// TODO Auto-generated constructor stub
-	}
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");	}
 
 	@Override
 	public String getImage(Plateau plateau ,Case c ) {
 		Element element = c.getElement() ;
-		ObjetCacher objCacher = c.getObjetCacher() ;
 		String icon = "img/vide.png";
-		if ( objCacher != null) {
-			switch (objCacher.getNom()) {
-			case "Spike" : 
-				if (((Spike)objCacher).isVisible()) {
-					icon = "img/spike.png"; 
-				}
-				break;
-			case "Key" : 
-				icon = "img/key3.png";
-				break;
-			default :;
-			}
-		}
-		
-		
 		return icon;
 	}
 	

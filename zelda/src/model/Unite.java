@@ -11,18 +11,7 @@ public abstract class Unite extends Element{
 	private int life;
 	private int damage;
 	
-	public Unite( Coordonnee position) {
-		super(position);
-		this.exist = true;
-		}
 	
-	
-
-
-	public Unite( int x, int y) {
-		super(x, y);
-		this.exist = true;
-	}
 
 	public abstract void deplacer(String direction, Plateau plateau);
 	

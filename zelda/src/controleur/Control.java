@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.Arbre;
 import model.Block;
+import model.Bomb;
 import model.Bush;
 import model.Case;
 import model.Chicken;
@@ -20,6 +21,7 @@ import model.Vide;
 import tool.Tool;
 
 public class Control {
+	
 	
 	private ControlRandom ctrRandom ;
 	private ContolKnight ctrKnight ;
@@ -169,8 +171,8 @@ public class Control {
 			}
 			if (scort == 20) {
 				int num = Tool.CoordinateToNum(4, 1);
-				plateau.getListCase().get(num).setElement(new Vide(4, 1));
-				plateau.getListCase().get(num).setObjetCacher(new Key());
+				//plateau.getListCase().get(num).setElement(new Vide(4, 1));
+				plateau.getListCase().get(num).setItem(new Key());
 				
 
 			}

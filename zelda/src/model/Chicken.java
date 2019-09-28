@@ -11,17 +11,25 @@ public class Chicken extends Monstre {
 	protected int maxLife = 1;
 	
 	public Chicken(Coordonnee coordonnee ) {
-		super(coordonnee);
-		// TODO Auto-generated constructor stub
+		super();
+		this.setExist(true);
+
+		this.setCoordonnee(coordonnee);
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 		this.setNom("Chicken");
 		this.setLife( 1);
 		this.setDamage( 0);
-		this.setDirection ("down") ;
 	}
 
 	public Chicken(int x, int y) {
-		super(x, y);
-		// TODO Auto-generated constructor stub
+		super();
+		this.setExist(true);
+ 
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
 		this.setNom("Chicken");
 		this.setLife( 1);
 		this.setDamage( 0);
@@ -106,27 +114,20 @@ public class Chicken extends Monstre {
 		plateau.getListCase().get(num).setElement(this);
 		this.setCoordonnee(cordApres);
 
-		ObjetCacher objCacher = caseApres.getObjetCacher();
-		switch (objCacher.getNom()) {
-
-		case "Spike":
-			((Spike) objCacher).attaquer(this, plateau ,false);
-			break;
-		default:
-			;
-		}
 	}
 
 	@Override
 	public void perdreVie(int damage, Plateau p) {
 		// TODO Auto-generated method stub
-		this.setLife(this.getLife() - damage);
+		if ( ! this.getCurentAction().equals("death")) {
+			this.setLife(this.getLife() - damage);
 
-		if (getLife() <= 0) {
-			
-			this.setCurentAction("death");
-			this.setFrame(0);
+			if (getLife() <= 0) {
+				this.setCurentAction("death");
+				this.setFrame(0);
+			}
 		}
+		
 
 	}
 
@@ -155,7 +156,6 @@ public class Chicken extends Monstre {
 	
 	@Override
 	public String getImage(Plateau p ,Case c) {
-		ObjetCacher objCacher = c.getObjetCacher();
 		String icon = "hyrule/link/beat/Down1.png";;
 		switch (this.getCurentAction()) {
 		

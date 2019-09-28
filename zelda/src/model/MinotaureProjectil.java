@@ -7,9 +7,12 @@ public class MinotaureProjectil  extends Projectil{
 
 	
 	public MinotaureProjectil(Coordonnee coordonnee, String direction, int damage) {
-		super(coordonnee, direction, damage);
+		super();
 		this.setNom("MinotaureProjectil");
 
+		this.setCoordonnee(coordonnee);
+		this.setFrame(0);
+		this.setCurentAction("moving") ;
 		this.setDirection(direction);
 		this.setFrame(0);
 
@@ -121,15 +124,6 @@ public class MinotaureProjectil  extends Projectil{
 		private void interactionVide(Plateau plateau, Case caseApres) {
 			// TODO Auto-generated method stub
 			
-			
-			ObjetCacher objCacher = caseApres.getObjetCacher();
-			switch (objCacher.getNom()) {
-			
-			case "Spike": 
-				break;
-				
-			default :;
-			}
 			if (this.getExist()) {
 				Case caseAvant = plateau.getCase(this.getCoordonnee());
 				Coordonnee cordApres = new Coordonnee(caseApres.getElement().getCoordonnee());

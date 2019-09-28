@@ -8,8 +8,9 @@ public class HeroProjectil extends Projectil {
 
 	
 	public HeroProjectil(Coordonnee coordonnee, String direction, int damage ) {
-		super(coordonnee, direction,damage);
-		// TODO Auto-generated constructor stub
+		super();
+		this.setCoordonnee(coordonnee);
+		this.setCurentAction("moving") ;
 		this.setDirection(direction);
 		this.setNom("HeroProjectil");
 		this.setFrame(-2);
@@ -121,19 +122,6 @@ public class HeroProjectil extends Projectil {
 	private void interactionVide(Plateau plateau, Case caseApres) {
 		// TODO Auto-generated method stub
 		
-		
-		ObjetCacher objCacher = caseApres.getObjetCacher();
-		switch (objCacher.getNom()) {
-		
-		case "Spike":
-					((Spike)objCacher).setVisible(true);
-					int num = Tool.CoordinateToNum(getCoordonnee());
-					Vide v = new Vide(getCoordonnee());
-					plateau.getListCase().get(num).setElement(v);
-					this.setExist(false); 
-			break;
-		default :;
-		}
 		if (this.getExist()) {
 			Case caseAvant = plateau.getCase(this.getCoordonnee());
 			Coordonnee cordApres = new Coordonnee(caseApres.getElement().getCoordonnee());

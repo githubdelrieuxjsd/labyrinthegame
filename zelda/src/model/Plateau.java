@@ -49,7 +49,7 @@ public class Plateau {
 			
 			int num = Tool.CoordinateToNum(b.getCoordonnee());
 			this.listCase.get(num).setElement(b);
-			this.listCase.get(num).setObjetCacher(new Rien () );
+			this.listCase.get(num).setItem(new Rien () );
 			
 		}
 		
@@ -63,7 +63,7 @@ public class Plateau {
 		// TODO Auto-generated method stub
 		int num = Tool.CoordinateToNum(hero.getCoordonnee());
 		this.listCase.get(num).setElement(hero);
-		this.listCase.get(num).setObjetCacher(new Rien ());
+		this.listCase.get(num).setItem(new Rien ());
 
 	}
 
@@ -74,8 +74,8 @@ public class Plateau {
 		for (int i =0 ;i < 25 ; i++) {
 			for (int j = 0 ; j<25 ;j++) {
 				int random = (int)(Math.random()* (100+0-1)) + 0;
-				if (random > 100) {
-					listCase.add(new Case(new Vide( new Coordonnee (i,j)), new Spike(false) ) ) ;
+				if (random > 95) {
+					listCase.add(new Case(new Vide( new Coordonnee (i,j)), new Bomb() ) ) ;
 				}
 				else {
 					listCase.add(new Case(new Vide( new Coordonnee (i,j) ) ) ) ;
@@ -140,7 +140,7 @@ public class Plateau {
 		for (Case c : listCase) {
 			Coordonnee cord = new Coordonnee (c.getElement().getCoordonnee() );
 			c.setElement(new Vide (cord));
-			c.setObjetCacher(new Key () );
+			c.setItem(new Key () );
 		}		
 	}
 

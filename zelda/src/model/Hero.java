@@ -20,19 +20,29 @@ public class Hero extends Unite {
 	private List<Projectil> listProjectil;
 	private int maxLife = 5;
 
-	public Hero(Coordonnee position) {
-		super(position);
-		// TODO Auto-generated constructor stub
-		this.setNom("Hero");
+	public Hero(Coordonnee coordonnee) {
+		super();
+		this.setExist(true);
+
+		
+		this.setCoordonnee(coordonnee);
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
+
 		this.setLife(5);
 		this.setDamage(1);
 		this.listProjectil = new ArrayList<Projectil>();
-		this.setDirection("down");
 	}
 
 	public Hero(int x, int y) {
-		super(x, y);
+		super();
+		this.setExist(true);
 
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		
 		this.setNom("Hero");
 		this.setLife(5);
 		this.setDamage(1);
@@ -125,25 +135,13 @@ public class Hero extends Unite {
 		plateau.getListCase().get(num).setElement(this);
 		this.setCoordonnee(cordApres);
 
-		ObjetCacher objCacher = caseApres.getObjetCacher();
-		switch (objCacher.getNom()) {
-
-		case "Spike":
-			((Spike) objCacher).attaquer(this, plateau, true);
-			break;
-		case "Key":
-			this.setCoordonnee( new Coordonnee( 12,6) );
-			plateau.end();
-			break;
-		default:
-			;
-		}
+		Item item = caseApres.getItem();
+		item.etreRamasser(plateau, caseApres );
 
 	}
 
 	@Override
 	public void attaquer(Plateau plateau) {
-
 		
 		switch (this.getDirection()) {
 
@@ -270,8 +268,6 @@ public class Hero extends Unite {
 
 	}
 
-
-
 	@Override
 	public void afficher() {
 		// TODO Auto-generated method stub
@@ -281,8 +277,10 @@ public class Hero extends Unite {
 
 	@Override
 	public String getImage(Plateau plateau , Case c) {
-		ObjetCacher objCacher = c.getObjetCacher();
 		String icon = "hyrule/link/beat/Down1.png";
+		//System.out.println(this.getCurentAction());
+		//System.out.println(this.getFrame());
+
 		switch (this.getCurentAction()) {
 		
 		case "nothing":
@@ -296,8 +294,6 @@ public class Hero extends Unite {
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothing");
 			}
-			
-
 			break;
 		case "animationAttaque":
 			icon = this.imageAttaque();
@@ -312,19 +308,6 @@ public class Hero extends Unite {
 			break;
 
 		}
-
-		if (objCacher != null) {
-			switch (objCacher.getNom()) {
-			case "Spike":
-				if (((Spike) objCacher).isVisible()) {
-					icon = "hyrule/link/beat/Down1.png";
-				}
-				break;
-			default:
-				;
-			}
-		}
-		
 		
 		return icon;
 	}
@@ -418,6 +401,8 @@ public class Hero extends Unite {
 			break;
 
 		}
+		//System.out.println(icon);
+
 		return icon;
 
 	}

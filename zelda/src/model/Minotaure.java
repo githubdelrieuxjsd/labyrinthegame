@@ -12,25 +12,34 @@ public class Minotaure extends Monstre{
 	private List<Projectil> listProjectil;
 	private int maxLife = 5 ;
 	
-	public Minotaure(Coordonnee position) {
-		super(position);
-		// TODO Auto-generated constructor stu
+	public Minotaure(Coordonnee coordonnee) {
+		super();
+		this.setExist(true);
 
+		// TODO Auto-generated constructor stu
+		this.setCoordonnee(coordonnee);
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 		this.setNom("Minotaure");
 		this.setLife( 5);
 		this.setDamage( 3);
 		this.listProjectil = new ArrayList<Projectil>();
-		this.setDirection ("left") ;
 	}
 
 	
 	public Minotaure(int x, int y) {
-		super(x, y);
+		super();
+		this.setExist(true);
+
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection("down");
 		this.setNom("Minotaure");
 		this.setLife( 5);
 		this.setDamage( 3);
 		this.listProjectil = new ArrayList<Projectil>();
-		this.setDirection ("left") ;
 	}
 
 

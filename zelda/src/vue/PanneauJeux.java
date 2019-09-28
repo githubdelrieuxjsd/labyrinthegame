@@ -138,26 +138,30 @@ public class PanneauJeux extends JPanel {
 		// TODO Auto-generated method stub
 		
 			ImageIcon icon = new ImageIcon("img/vide.png");
+		 if (c.getElement().getCoordonnee().getY() == 18) {
+				c.setItem();
 
-			if (c.getElement().getCoordonnee().getY() == 18 && c.getElement().getCoordonnee().getX() > 0
-					&& c.getElement().getCoordonnee().getX() < control.getHero().getLife() + 1) {
-				icon = new ImageIcon("hyrule/objet/heart.png");
-				
-				Image img = icon.getImage();
+			 if ( c.getElement().getCoordonnee().getX() > 0 && c.getElement().getCoordonnee().getX() < control.getHero().getLife() + 1 ) {
+					icon = new ImageIcon("hyrule/item/heart.png");
+					
+					Image img = icon.getImage();
 
-				g.drawImage(img, c.getElement().getCoordonnee().getX() * 40 +8 , c.getElement().getCoordonnee().getY() * 40 +10, 25,
-						21, null);
-			}
+					g.drawImage(img, c.getElement().getCoordonnee().getX() * 40 +8 , c.getElement().getCoordonnee().getY() * 40 +10, 25,
+							21, null);
+				}
 
-			if (c.getElement().getCoordonnee().getY() == 18 && c.getElement().getCoordonnee().getX() > 5
-					&& c.getElement().getCoordonnee().getX() < 5 + minotaure.getLife() + 1) {
-				icon = new ImageIcon("hyrule/objet/key.png");
-				
-				Image img = icon.getImage();
+				if (c.getElement().getCoordonnee().getX() > 10
+						&& c.getElement().getCoordonnee().getX() < 10 + minotaure.getLife() + 1) {
+					icon = new ImageIcon("hyrule/item/key.png");
+					
+					Image img = icon.getImage();
 
-				g.drawImage(img, c.getElement().getCoordonnee().getX() * 40 + 7, c.getElement().getCoordonnee().getY() * 40+10, 25,
-						25, null);
-			}
+					g.drawImage(img, c.getElement().getCoordonnee().getX() * 40 + 7, c.getElement().getCoordonnee().getY() * 40+10, 25,
+							25, null);
+				}
+		 }
+			
+			
 
 			
 

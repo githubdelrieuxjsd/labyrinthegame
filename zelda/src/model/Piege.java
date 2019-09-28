@@ -1,14 +1,10 @@
 package model;
 
-public abstract class ObjetCacher {
+public abstract class Piege {
 
-	private String nom;
+	private String nom ;
 
 	
-	public ObjetCacher() {
-		super();
-	}
-
 	public String getNom() {
 		return nom;
 	}
@@ -16,7 +12,7 @@ public abstract class ObjetCacher {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
+	
 	
 	
 	

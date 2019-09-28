@@ -2,13 +2,10 @@ package model;
 
 public class Coordonnee {
 
-	@Override
-	public String toString() {
-		return "[" + x + "," + y + "]";
-	}
+	
 
-	int x ;
-	int y ;
+	private int x ;
+	private int y ;
 	
 	public Coordonnee(int x, int y) {
 		super();
@@ -43,7 +40,10 @@ public class Coordonnee {
 		return (x==x && y==y);
 	}
 
-	
+	@Override
+	public String toString() {
+		return "[" + x + "," + y + "]";
+	}
 	
 	
 }
