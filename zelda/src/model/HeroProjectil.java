@@ -70,7 +70,10 @@ public class HeroProjectil extends Projectil {
 		case "MinotaureProjectil":// interactionMinotaureProjectil(plateau, c);
 
 		break;
-		case "Chicken": interactionChicken(plateau, c);
+		case "Chicken": interactionMonstre(plateau, c);
+
+		break;
+		case "Goblin": interactionMonstre(plateau, c);
 
 		break;
 		
@@ -97,7 +100,7 @@ public class HeroProjectil extends Projectil {
 		}
 */
 	
-	private void interactionChicken(Plateau plateau, Case c) {
+	private void interactionMonstre(Plateau plateau, Case c) {
 		// TODO Auto-generated method stub
 		c.getElement().perdreVie(getDamage(),plateau);
 		this.setExist(false); 

@@ -158,9 +158,9 @@ public class Chicken extends Monstre {
 	private void dropItem(Case c) {
 		if (c.getItem().getNom().equals("Rien")) {
 			int x = (int) (Math.random() * (100 + 1 - 1)) + 1;
-			if (x<50) {
+			if (x>50) {
 				c.setItem(new Rubi());
-			}else {
+			}else if (x<20) {
 				c.setItem(new Heart());
 			}
 

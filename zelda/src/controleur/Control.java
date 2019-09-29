@@ -11,6 +11,7 @@ import model.Case;
 import model.Chicken;
 import model.Coordonnee;
 import model.Direction;
+import model.Goblin;
 import model.Hero;
 import model.Key;
 import model.Minotaure;
@@ -58,13 +59,22 @@ public class Control {
 
 	private void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure();
-		creationChicken();
+		creationMinotaure(1);
+		creationChicken(20);
+		creationGoblin(10);
 	}
 
-	private void creationChicken() {
+	private void creationGoblin(int nombre) {
+				for (int i = 0; i < nombre; i++) {
+					int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
+					int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
+					listMonstre.add(new Goblin(random1, random2));
+				}		
+	}
+
+	private void creationChicken(int nombre) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < nombre; i++) {
 
 			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
 			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
@@ -74,9 +84,16 @@ public class Control {
 		}
 	}
 
-	private void creationMinotaure() {
-		// TODO Auto-generated method stub
-		listMonstre.add(new Minotaure(12, 12, this.hero) );
+	private void creationMinotaure(int nombre) {
+		for (int i = 0; i < nombre; i++) {
+
+			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
+			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
+
+			listMonstre.add(new Minotaure(random1, random2, this.hero) );
+
+		}
+		
 	}
 
 	private void creationBlock() {
@@ -166,12 +183,17 @@ public class Control {
 
 	public void deplaceChicken() {
 		List <Monstre> monstreTransform = new ArrayList<Monstre>();
+		List <Monstre> monstreDead = new ArrayList<Monstre>();
+
 			for (Monstre m : listMonstre) {
-				if (m.getNom().equals("Chicken")) {
+				if (m.getNom().equals("Chicken") || m.getNom().equals("Goblin")) {
 					if (m.getCurentAction().equals("transformation")) {
 						monstreTransform.add(m);
 						
-					}else {
+					}else if (m.getCurentAction().equals("dead")) {
+						monstreDead.add(m);
+					}
+					else {
 						m.deplacer(ctrRandom.deplacement(), plateau);
 					}
 				}
@@ -183,14 +205,25 @@ public class Control {
 				this.listMonstre.add(minotaure);
 				this.plateau.getCase(m.getCoordonnee()).setElement(minotaure);
 			}
+			for (Monstre m : monstreDead) {
+				this.listMonstre.remove(m);
+			}
 	}
 	
 	private void actionMinotaure() {
+		List <Monstre> monstreDead = new ArrayList<Monstre>();
+
 		for (Monstre m : listMonstre) {
+			 if (m.getCurentAction().equals("dead")) {
+					monstreDead.add(m);
+				}
 			if (m.getNom().equals("Minotaure")) {
 				((Minotaure) m).action(plateau);
 			}
 		}		
+		for (Monstre m : monstreDead) {
+			this.listMonstre.remove(m);
+		}
 	}
 
 
@@ -201,16 +234,6 @@ public class Control {
 				hero.getListProjectil().get(0).deplacer(plateau);
 			}
 		}
-
-		Minotaure minotaure = (Minotaure) listMonstre.get(0);
-		if (!minotaure.getListProjectil().isEmpty()) {
-			for (Projectil p : minotaure.getListProjectil()) {
-				if (p.getFrame() == 3) {
-					p.deplacer(plateau);
-				}
-			}
-		}
-
 	}
 
 	public void action() {
@@ -219,7 +242,6 @@ public class Control {
 		if (this.timer%16 == 0) {
 			deplaceChicken();
 			actionMinotaure();
-
 			}
 		
 	}
@@ -266,6 +288,24 @@ public class Control {
 			}
 		return true ;
 		}
+
+	public void information() {
+		System.out.println();
+		System.out.println("Plateau");
+		this.plateau.afficher();
+		
+		System.out.println();
+		System.out.println("Hero");
+		this.hero.afficher();
+		
+		System.out.println();
+		System.out.println("Monstre");
+
+		for (Monstre m : listMonstre) {
+			m.afficher();
+		}
+		
+	}
 	
 	
 	

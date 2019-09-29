@@ -17,6 +17,8 @@ public abstract class Element {
 				break ; 
 			case "Chicken" : res = true ; 
 				break ;
+			case "Goblin" : res = true ; 
+			break ;
 			default : 
 				break;
 		}

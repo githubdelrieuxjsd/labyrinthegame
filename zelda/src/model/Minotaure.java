@@ -10,6 +10,8 @@ import tool.Tool;
 
 public class Minotaure extends Monstre{
 
+	private int epee = 2 ;
+	
 	private List<Projectil> listProjectil;
 	private ControlKnight ctr ;
 	
@@ -22,7 +24,7 @@ public class Minotaure extends Monstre{
 		this.setDirection(new Direction ("down" ));
 		this.setNom("Minotaure");
 		this.setLife( this.getMaxLife());
-		this.setDamageMonstre( 1,0,0,0);
+		this.setDamageMonstre( epee ,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 		Monstre.setHero(hero);
 		this.ctr = new ControlKnight (this);
@@ -39,7 +41,7 @@ public class Minotaure extends Monstre{
 		this.setDirection(new Direction ("down" ));
 		this.setNom("Minotaure");
 		this.setLife( this.getMaxLife());
-		this.setDamageMonstre( 1,0,0,0);
+		this.setDamageMonstre( epee ,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 		Monstre.setHero(hero);
 		this.ctr = new ControlKnight (this);
@@ -56,7 +58,7 @@ public class Minotaure extends Monstre{
 		this.setDirection(new Direction ("down" ));
 		this.setNom("Minotaure");
 		this.setLife( this.getMaxLife());
-		this.setDamageMonstre( 1,0,0,0);
+		this.setDamageMonstre( epee ,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 		Monstre.setHero(Monstre.getHero());
 		this.ctr = new ControlKnight (this);
@@ -73,7 +75,7 @@ public class Minotaure extends Monstre{
 		this.setDirection(new Direction ("down" ));
 		this.setNom("Minotaure");
 		this.setLife( this.getMaxLife());
-		this.setDamageMonstre( 1,0,0,0);
+		this.setDamageMonstre( epee ,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 		Monstre.setHero(Monstre.getHero());
 		this.ctr = new ControlKnight (this);

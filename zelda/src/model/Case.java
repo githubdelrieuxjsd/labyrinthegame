@@ -138,6 +138,10 @@ public class Case {
 		
 		else if ( this.getElement().isMonstre() ) {
 			
+			g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
+					this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
+			if ( this.getElement().isMonstre() ) {
+			
 				if ( ((Monstre)this.getElement()).getLife() <  ((Monstre)this.getElement()).getMaxLife() 
 						&& ((Monstre)this.getElement()).getLife()>0 ) {
 					for (int i = 0 ; i < ((Monstre)this.getElement()).getMaxLife() ;i ++) {
@@ -152,9 +156,7 @@ public class Case {
 								((Monstre) this.getElement()).trouverBarreVieY()	 , 10, 10, null);
 					}
 			}
-				g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
-						this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
-		
+			}
 		}
 		
 		

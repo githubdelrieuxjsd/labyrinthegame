@@ -9,6 +9,12 @@ public abstract class Damage {
 	private int projectil ;
 	
 	
+	@Override
+	public String toString() {
+		return "Damage [epee=" + epee + ", magie=" + magie + ", explosion=" + explosion + ", projectil=" + projectil
+				+ "]";
+	}
+
 	public abstract boolean doDamage(Element element );
 	
 	public int getEpee() {

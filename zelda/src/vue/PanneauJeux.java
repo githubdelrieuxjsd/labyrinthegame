@@ -20,9 +20,9 @@ import model.Monstre;
 
 public class PanneauJeux extends JPanel {
 
-	Control control = new Control();
-
-	Minotaure minotaure = (Minotaure) control.getListMonstre().get(0);
+	private Control control = new Control();
+	//31,25
+	private long fps = 31 ;
 
 	public PanneauJeux() {
 
@@ -62,8 +62,27 @@ public class PanneauJeux extends JPanel {
 				case KeyEvent.VK_Q:
 					control.animationPlaceBombHero();
 					break;
+				case KeyEvent.VK_O:
+					if (fps==31) {
+						fps = 500; 
+					}else {
+						fps= 31;
+					}					
+					break;
+				case KeyEvent.VK_P:
+					if (fps==31) {
+						fps = 1000; 
+					}else {
+						fps= 31;
+					}					
+					break;
 				case KeyEvent.VK_I:
-					control.getPlateau().afficher();
+					if (fps==31) {
+						fps = 3000; 
+					}else {
+						fps= 31;
+					}
+					control.information();
 					break;
 				default:
 					;
@@ -95,7 +114,7 @@ public class PanneauJeux extends JPanel {
 		
 		try {
 			//Thread.sleep(1000);  // 1 fps
-			Thread.sleep(31,25);  // 32 fps
+			Thread.sleep(fps);  // 32 fps
 			//Thread.sleep(16,666666); // 60 fps
 		} catch (InterruptedException e) {
 			e.printStackTrace();

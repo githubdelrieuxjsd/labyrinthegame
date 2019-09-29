@@ -32,12 +32,10 @@ public class Plateau {
 	
 
 	private void placerMonstre(List<Monstre> listMonstre) {
-		// TODO Auto-generated method stub
+
 		for (Monstre m : listMonstre) {
 				int num = Tool.CoordinateToNum(m.getCoordonnee());
 				this.listCase.get(num).setElement(m);
-				//this.listCase.get(num).setObjetCacher(new Rien () );
-				
 			}
 	}
 
