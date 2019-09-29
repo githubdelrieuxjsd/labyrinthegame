@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
+import controleur.Control;
 import tool.Tool;
 
 public class Chicken extends Monstre {
@@ -19,7 +20,7 @@ public class Chicken extends Monstre {
 		this.setDirection( new Direction ("down" ) );
 		this.setNom("Chicken");
 		
-		this.setDamage(0,0,0,0);
+		this.setDamageMonstre(0,0,0,0);
 	}
 
 	public Chicken(int x, int y) {
@@ -31,8 +32,11 @@ public class Chicken extends Monstre {
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setMaxLife(2);
-		this.setLife( this.getMaxLife());		this.setDamage(0,0,0,0);
+		this.setLife( this.getMaxLife());	
+		this.setDamageMonstre(0,0,0,0);
 		this.setDirection ( new Direction ("down" ) ) ;
+		
+
 	}
 
 	@Override
@@ -115,22 +119,30 @@ public class Chicken extends Monstre {
 		this.setCoordonnee(cordApres);
 		
 		this.setCurentAction("moving");
+		
+		this.transformation(caseApres);
 
+	}
 
+	private void transformation(Case c) {
+		Item item = c.getItem() ; 
+		if (item.getNom().equals("Key")) {
+			item.etreRamasser(c);
+			this.setCurentAction("transformation");
+			this.setFrame(0);
+		}
 	}
 
 	@Override
 	public void perdreVie(Damage damage, Plateau p) {
-		if ( ! this.getCurentAction().equals("death")) {
-			this.setLife(this.getLife() - damage.getEpee() - damage.getFleche() - damage.getBomb() );
-
+		
+			if ( damage.doDamage(this)) {
+			this.setLife(this.getLife() - damage.getEpee() - damage.getProjectil() - damage.getExplosion() );
+			}
 			if (getLife() <= 0) {
 				this.setCurentAction("death");
 				this.setFrame(0);
 			}
-		}
-		
-
 	}
 
 	@Override
@@ -143,6 +155,20 @@ public class Chicken extends Monstre {
 		}
 	}
 
+	private void dropItem(Case c) {
+		if (c.getItem().getNom().equals("Rien")) {
+			int x = (int) (Math.random() * (100 + 1 - 1)) + 1;
+			if (x<50) {
+				c.setItem(new Rubi());
+			}else {
+				c.setItem(new Heart());
+			}
+
+		}
+		
+	}
+
+	
 	@Override
 	public void attaquer(Plateau m) {
 		// TODO Auto-generated method stub
@@ -171,6 +197,10 @@ public class Chicken extends Monstre {
 			icon = "hyrule/death/"+num+".png";
 			this.setFrame((getFrame() + 1) % 14);
 
+			if (this.getFrame() == 4) {
+				this.dropItem( c );
+
+			}
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothing");
 				int x = (int) (Math.random() * (23 + 1 - 1)) + 1;
@@ -188,7 +218,11 @@ public class Chicken extends Monstre {
 			}
 			break;
 		
-		default: 
+		default:
+			 num =  this.getFrame() /2 +1;
+			//System.out.println(num);
+			icon = "hyrule/death/"+num+".png";
+			this.setFrame((getFrame() + 1) % 14);
 			break;
 
 		}
@@ -198,6 +232,7 @@ public class Chicken extends Monstre {
 
 	
 
+	
 	private String imageNothing() {
 		int num =    this.getFrame() /2 +1;
 		//System.out.println("frame: "+this.getFrame());

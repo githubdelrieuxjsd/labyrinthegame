@@ -209,8 +209,9 @@ public class Rock extends Block{
 
 			@Override
 			public void perdreVie(Damage damage, Plateau plateau) {
-				// TODO Auto-generated method stub
-				this.life = life - damage.getBomb();
+				if (damage.doDamage(this)) {
+					this.life = life - damage.getExplosion() ;
+				}
 				if (life < 0 ) {
 					this.setCurentAction("dead")  ;
 					this.setNom("Vide");

@@ -1,21 +1,16 @@
 package model;
 
-public class Damage {
+public abstract class Damage {
 
 	
 	private int epee ;
 	private int magie ; 
-	private int bomb ;
-	private int fleche ;
+	private int explosion ;
+	private int projectil ;
 	
-	public Damage(int epee, int magie, int bomb, int fleche) {
-		super();
-		this.epee = epee;
-		this.magie = magie;
-		this.bomb = bomb;
-		this.fleche = fleche;
-	}
-
+	
+	public abstract boolean doDamage(Element element );
+	
 	public int getEpee() {
 		return epee;
 	}
@@ -32,21 +27,23 @@ public class Damage {
 		this.magie = magie;
 	}
 
-	public int getBomb() {
-		return bomb;
+	public int getExplosion() {
+		return explosion;
 	}
 
-	public void setBomb(int bomb) {
-		this.bomb = bomb;
+	public void setExplosion(int explosion) {
+		this.explosion = explosion;
 	}
 
-	public int getFleche() {
-		return fleche;
+	public int getProjectil() {
+		return projectil;
 	}
 
-	public void setFleche(int fleche) {
-		this.fleche = fleche;
+	public void setProjectil(int projectil) {
+		this.projectil = projectil;
 	}
+
+	
 	
 	
 	

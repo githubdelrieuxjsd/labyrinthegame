@@ -25,12 +25,11 @@ public class Control {
 	
 	
 	private ControlRandom ctrRandom ;
-	private ContolKnight ctrKnight ;
 	
 	private Plateau plateau;
 	private Hero hero;
 
-	private List<Monstre> listMonstre;
+	private static List<Monstre> listMonstre;
 	private List<Block> listBlock;
 	
 	private int scort;
@@ -53,7 +52,6 @@ public class Control {
 		creationBlock();
 		creationMonstre();
 		plateau = new Plateau(hero, listBlock, listMonstre);
-		this.ctrKnight = new ContolKnight(hero , (Minotaure)listMonstre.get(0));
 	}
 
 	
@@ -78,7 +76,7 @@ public class Control {
 
 	private void creationMinotaure() {
 		// TODO Auto-generated method stub
-		listMonstre.add(new Minotaure(12, 12));
+		listMonstre.add(new Minotaure(12, 12, this.hero) );
 	}
 
 	private void creationBlock() {
@@ -138,6 +136,17 @@ public class Control {
 		}
 	}
 
+	public List<Monstre> getListMonstre() {
+		return listMonstre;
+	}
+
+	public List<Block> getListBlock() {
+		return listBlock;
+	}
+
+	public void setListBlock(List<Block> listBlock) {
+		this.listBlock = listBlock;
+	}
 	
 	public Plateau getPlateau() {
 		return plateau;
@@ -156,24 +165,34 @@ public class Control {
 	}
 
 	public void deplaceChicken() {
-		scort = 0;
+		List <Monstre> monstreTransform = new ArrayList<Monstre>();
 			for (Monstre m : listMonstre) {
 				if (m.getNom().equals("Chicken")) {
-					m.deplacer(ctrRandom.deplacement(), plateau);
-					if (!m.isAlive()) {
-						scort++;
+					if (m.getCurentAction().equals("transformation")) {
+						monstreTransform.add(m);
+						
+					}else {
+						m.deplacer(ctrRandom.deplacement(), plateau);
 					}
 				}
 			}
-			if (scort == 20) {
-				int num = Tool.CoordinateToNum(4, 1);
-				//plateau.getListCase().get(num).setElement(new Vide(4, 1));
-				plateau.getListCase().get(num).setItem(new Key());
-				
-
+			
+			for (Monstre m : monstreTransform) {
+				this.listMonstre.remove(m);
+				Minotaure minotaure = new Minotaure(m.getCoordonnee()) ;
+				this.listMonstre.add(minotaure);
+				this.plateau.getCase(m.getCoordonnee()).setElement(minotaure);
 			}
-
 	}
+	
+	private void actionMinotaure() {
+		for (Monstre m : listMonstre) {
+			if (m.getNom().equals("Minotaure")) {
+				((Minotaure) m).action(plateau);
+			}
+		}		
+	}
+
 
 	public void deplacerProgectil() {
 
@@ -199,14 +218,14 @@ public class Control {
 		deplacerProgectil();
 		if (this.timer%16 == 0) {
 			deplaceChicken();
-			
-			ctrKnight.action(plateau);
+			actionMinotaure();
 
 			}
 		
 	}
 
 
+	
 	public void deplacerHero(Direction direction) {
 		// TODO Auto-generated method stub
 		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
@@ -234,21 +253,7 @@ public class Control {
 	}
 
 	
-	public List<Monstre> getListMonstre() {
-		return listMonstre;
-	}
 
-	public void setListMonstre(List<Monstre> listMonstre) {
-		this.listMonstre = listMonstre;
-	}
-
-	public List<Block> getListBlock() {
-		return listBlock;
-	}
-
-	public void setListBlock(List<Block> listBlock) {
-		this.listBlock = listBlock;
-	}
 
 	
 	private boolean onTheBeat () {

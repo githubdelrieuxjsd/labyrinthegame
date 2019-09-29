@@ -23,6 +23,10 @@ public abstract class Element {
 		return res ;		
 	}
 	
+	public boolean isHero() {
+		return this.getNom().equals("Hero");
+	}
+	
 	
 	/**
 	public Element(Coordonnee coordonnee) {
@@ -105,5 +109,8 @@ public abstract class Element {
 
 
 	protected abstract int trouverlongeur();
+
+
+	
 		
 }

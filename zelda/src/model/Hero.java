@@ -19,6 +19,7 @@ public class Hero extends Unite {
 
 	private List<Projectil> listProjectil;
 	private int maxLife = 5;
+	
 
 	public Hero(Coordonnee coordonnee) {
 		super();
@@ -31,7 +32,7 @@ public class Hero extends Unite {
 		this.setDirection(new Direction ("down" ));
 
 		this.setLife(5);
-		this.setDamage(2 ,0 ,0 ,0 );
+		this.setDamageHero( 2,0,0 );
 		this.listProjectil = new ArrayList<Projectil>();
 	}
 
@@ -45,7 +46,7 @@ public class Hero extends Unite {
 		
 		this.setNom("Hero");
 		this.setLife(5);
-		this.setDamage(2,0,0,0);
+		this.setDamageHero(2,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
 		this.setDirection(new Direction ("down" ));
 
@@ -135,10 +136,12 @@ public class Hero extends Unite {
 		plateau.getListCase().get(num).setElement(this);
 		this.setCoordonnee(cordApres);
 
-		Item item = caseApres.getItem();
-		item.etreRamasser(plateau, caseApres );
+		
+		this.Ramasser( caseApres);
 
 	}
+
+	
 
 	@Override
 	public void attaquer(Plateau plateau) {
@@ -250,14 +253,32 @@ public class Hero extends Unite {
 
 	@Override
 	public void perdreVie(Damage damage, Plateau p) {
-		// TODO Auto-generated method stub
-		this.setLife(this.getLife() - damage.getBomb() - damage.getEpee() );
+
+		if (damage.doDamage(this)) {
+			this.setLife(this.getLife() - damage.getExplosion() - damage.getEpee() -damage.getMagie() - damage.getProjectil());
+			this.setCurentAction("hurt");
+			this.setFrame(0);
+		}
 		//System.out.println("life : "+this.getLife());
 		if (getLife() <= 0) {
 			this.mourir(p, 4, 1, true);
 		}
 	}
 
+	private void Ramasser(Case c) {
+		Item item = c.getItem();
+
+		switch (item.getNom()) {
+		case "Heart" :  item.etreRamasser(c);
+		this.soigner(1);
+			break;
+		case "Rubi" :  item.etreRamasser(c);
+			break;
+		default :
+			break;
+		}
+	}
+	
 	@Override
 	public void soigner(int soin) {
 		// TODO Auto-generated method stub
@@ -302,6 +323,14 @@ public class Hero extends Unite {
 				this.setCurentAction("nothing");
 			}
 			break;
+		case "hurt":
+			icon = this.imageHurt();
+			this.setFrame((getFrame() + 1) % 6);
+
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothing");
+			}
+			break;
 		case "animationAttaque":
 			icon = this.imageAttaque();
 			this.setFrame((getFrame() +1) % 7);
@@ -336,6 +365,31 @@ public class Hero extends Unite {
 	}
 	
 	
+
+	private String imageHurt() {
+		String icon = "hyrule/link/beat/Down1.png";
+		int num =    this.getFrame() /2  +1;		
+		switch (this.getDirection().getDirection()) {
+
+		case "up":
+			icon = "hyrule/link/hurt/U"+num+".png";
+			break;
+		case "down":
+			icon = "hyrule/link/hurt/D"+num+".png";
+			break;
+		case "right":
+			icon = "hyrule/link/hurt/R"+num+".png";
+			break;
+		case "left":
+			icon = "hyrule/link/hurt/L"+num+".png";
+			break;
+		default:
+			break;
+		}
+		//System.out.println(icon);
+
+		return icon;		
+	}
 
 	private String imageBow() {
 		
@@ -462,7 +516,7 @@ public class Hero extends Unite {
 	}
 
 	@Override
-	protected int trouverX() {
+	public int trouverX() {
 		int res = this.getCoordonnee().getX() * 40 -40;
 		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
 			int num =    this.getFrame()  / 2  +1;
@@ -471,11 +525,13 @@ public class Hero extends Unite {
 			int num =    this.getFrame()  /2  +1;
 			res = res - num * 13 +40 ;
 		}
+		
+		
 		return res;
 	}
 
 	@Override
-	protected int trouverY() {
+	public int trouverY() {
 		int res = this.getCoordonnee().getY() * 40 -40;
 		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
 			int num =    this.getFrame()  /2  +1;
@@ -484,23 +540,29 @@ public class Hero extends Unite {
 			int num =    this.getFrame()  /2  +1;
 			res = res + num * 13 - 40;
 		}
+		
 		return res;
 	}
 
 	@Override
-	protected int trouverlargeur() {
+	public int trouverlargeur() {
 		int res = 120;
 		return res ;
 	}
 
 	@Override
-	protected int trouverlongeur() {
+	public int trouverlongeur() {
 		int res = 120;
 		return res ;
 	}
 
 	public void placerBomb(Plateau plateau) {
 		plateau.getCase(this.getCoordonnee()).setItem(new Bomb());		
+	}
+
+	public int getMaxLife() {
+		// TODO Auto-generated method stub
+		return this.maxLife;
 	}
 
 	

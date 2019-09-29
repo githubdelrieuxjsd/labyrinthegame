@@ -14,7 +14,7 @@ public class HeroProjectil extends Projectil {
 		this.setCurentAction("moving") ;
 		this.setDirection(direction);
 		this.setNom("HeroProjectil");
-		this.setDamage(0,0,0,1);
+		this.setDamageHero(0,0,0,1);
 		this.setFrame(-2);
 		
 	}

@@ -27,8 +27,8 @@ public abstract class Projectil extends Element {
 
 
 
-	public void setDamage(int epee,int magie ,int bomb ,int fleche) {
-		this.damage = new Damage (epee , magie , bomb , fleche);
+	public void setDamageHero(int epee,int magie ,int bomb ,int fleche) {
+		this.damage = new DamageHero (epee ,magie, bomb , fleche);
 	}
 
 	

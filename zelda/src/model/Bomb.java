@@ -6,7 +6,7 @@ public class Bomb extends Item {
 	
 	public Bomb() {
 		super();
-		this.damage = new Damage (0,0,2,0)	;
+		this.damage = new DamageNeutre(0,0,3,0);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setNom("Bomb");
@@ -73,7 +73,7 @@ public class Bomb extends Item {
 	}
 
 	@Override
-	public void etreRamasser(Plateau plateau, Case c) {
+	public void etreRamasser( Case c) {
 		// TODO Auto-generated method stub
 		
 	}

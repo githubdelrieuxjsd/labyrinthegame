@@ -10,7 +10,7 @@ public abstract class Item {
 	
 	public abstract String getImage(Plateau plateau ,Case c) ;
 	
-	public abstract void etreRamasser(Plateau plateau ,Case c) ;
+	public abstract void etreRamasser(Case c) ;
 	
 	protected abstract int trouverX(Plateau plateau ,Case c);
 

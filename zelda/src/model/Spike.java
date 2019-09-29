@@ -8,7 +8,7 @@ public class Spike extends Piege{
 	public Spike(boolean visible) {
 		super();
 		this.setNom("Spike");
-		this.damage = new Damage (1,0,0,0);
+		this.damage = new DamageMonstre (1,0,0,0);
 		this.visible = visible ;
 	} 
 	

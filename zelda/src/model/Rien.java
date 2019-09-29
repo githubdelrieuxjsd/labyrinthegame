@@ -17,7 +17,7 @@ public class Rien extends Item {
 	}
 
 	@Override
-	public void etreRamasser(Plateau plateau, Case c) {
+	public void etreRamasser( Case c) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -63,8 +63,11 @@ public abstract class Unite extends Element{
 		return damage;
 	}
 
-	public void setDamage(int epee,int magie ,int bomb ,int fleche) {
-		this.damage = new Damage (epee , magie , bomb , fleche);
+	public void setDamageHero(int epee ,int bomb ,int fleche) {
+		this.damage = new DamageHero (epee , bomb , fleche);
+	}
+	public void setDamageMonstre(int epee,int magie ,int bomb ,int fleche) {
+		this.damage = new DamageMonstre (epee , magie , bomb , fleche);
 	}
 
 	public boolean isExist() {

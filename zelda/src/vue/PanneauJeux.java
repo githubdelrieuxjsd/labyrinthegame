@@ -16,6 +16,7 @@ import model.Case;
 import model.Direction;
 import model.Element;
 import model.Minotaure;
+import model.Monstre;
 
 public class PanneauJeux extends JPanel {
 
@@ -156,17 +157,19 @@ public class PanneauJeux extends JPanel {
 		
 			ImageIcon icon = new ImageIcon("img/vide.png");
 		 if (c.getElement().getCoordonnee().getY() == 18) {
-				c.setItem();
-
-			 if ( c.getElement().getCoordonnee().getX() > 0 && c.getElement().getCoordonnee().getX() < control.getHero().getLife() + 1 ) {
-					icon = new ImageIcon("hyrule/heart/rouge.png");
+			 c.setItem();
+				for (int i = 0 ; i < control.getHero().getMaxLife() ;i ++) {
+					 icon = new ImageIcon("hyrule/heart/noir.png");
 					
-					Image img = icon.getImage();
+					if (i < control.getHero().getLife()) {
+						icon = new ImageIcon("hyrule/heart/rouge.png");	
+					}
+					Image img = icon.getImage();		
 
-					g.drawImage(img, c.getElement().getCoordonnee().getX() * 40 +8 , c.getElement().getCoordonnee().getY() * 40 +10, 25,
-							21, null);
+					g.drawImage(img, 45+30*i ,
+							18*40 + 5 , 25, 25, null);
 				}
-			 
+		
 		 }
 			
 			

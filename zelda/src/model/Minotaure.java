@@ -5,11 +5,63 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import controleur.ControlKnight;
 import tool.Tool;
 
 public class Minotaure extends Monstre{
 
 	private List<Projectil> listProjectil;
+	private ControlKnight ctr ;
+	
+	public Minotaure(Coordonnee coordonnee ,Hero hero) {
+		super();
+		this.setExist(true);
+		this.setMaxLife(5);
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection(new Direction ("down" ));
+		this.setNom("Minotaure");
+		this.setLife( this.getMaxLife());
+		this.setDamageMonstre( 1,0,0,0);
+		this.listProjectil = new ArrayList<Projectil>();
+		Monstre.setHero(hero);
+		this.ctr = new ControlKnight (this);
+	}
+
+	
+	public Minotaure(int x, int y ,Hero hero) {
+		super();
+		this.setExist(true);
+		this.setMaxLife(5);
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection(new Direction ("down" ));
+		this.setNom("Minotaure");
+		this.setLife( this.getMaxLife());
+		this.setDamageMonstre( 1,0,0,0);
+		this.listProjectil = new ArrayList<Projectil>();
+		Monstre.setHero(hero);
+		this.ctr = new ControlKnight (this);
+
+	}
+	
+	public Minotaure(int x, int y ) {
+		super();
+		this.setExist(true);
+		this.setMaxLife(5);
+		this.setCoordonnee(new Coordonnee(x,y));
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection(new Direction ("down" ));
+		this.setNom("Minotaure");
+		this.setLife( this.getMaxLife());
+		this.setDamageMonstre( 1,0,0,0);
+		this.listProjectil = new ArrayList<Projectil>();
+		Monstre.setHero(Monstre.getHero());
+		this.ctr = new ControlKnight (this);
+
+	}
 	
 	public Minotaure(Coordonnee coordonnee) {
 		super();
@@ -21,24 +73,17 @@ public class Minotaure extends Monstre{
 		this.setDirection(new Direction ("down" ));
 		this.setNom("Minotaure");
 		this.setLife( this.getMaxLife());
-		this.setDamage( 3,0,0,0);
+		this.setDamageMonstre( 1,0,0,0);
 		this.listProjectil = new ArrayList<Projectil>();
+		Monstre.setHero(Monstre.getHero());
+		this.ctr = new ControlKnight (this);
 	}
-
 	
-	public Minotaure(int x, int y) {
-		super();
-		this.setExist(true);
-		this.setMaxLife(5);
-		this.setCoordonnee(new Coordonnee(x,y));
-		this.setFrame(0);
-		this.setCurentAction("nothing") ;
-		this.setDirection(new Direction ("down" ));
-		this.setNom("Minotaure");
-		this.setLife( this.getMaxLife());
-		this.setDamage( 3,0,0,0);
-		this.listProjectil = new ArrayList<Projectil>();
+	
+	public void action(Plateau plateau) {
+		this.ctr.action(plateau);		
 	}
+	
 
 
 	@Override
@@ -200,8 +245,9 @@ public class Minotaure extends Monstre{
 
 	@Override
 	public void perdreVie(Damage damage , Plateau p) {
-		// TODO Auto-generated method stub
-		this.setLife(getLife() -damage.getEpee() - damage.getFleche());
+		if (damage.doDamage(this)) {
+			this.setLife(getLife() -damage.getEpee() - damage.getProjectil());
+		}
 		
 		if (getLife() <= 0) {
 			this.setCurentAction("death");
@@ -250,17 +296,17 @@ public class Minotaure extends Monstre{
 			break;
 		case "left":
 			plateau.getCaseUp(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseUpLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 			plateau.getCaseDown(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 			plateau.getCaseDownLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 			plateau.getCaseLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 
 			break;
 		case "right":
 			plateau.getCaseUp(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseDownLeft(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseUpRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 			plateau.getCaseDown(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 			plateau.getCaseRight(this.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 
 
@@ -295,12 +341,11 @@ public class Minotaure extends Monstre{
 			//System.out.println(num);
 			icon = "hyrule/death/"+num+".png";
 			this.setFrame((getFrame() + 1) % 14);
-
 			if (this.getFrame() == 0) {
-				this.setCurentAction("nothing");
+				this.setCurentAction("dead");
 				int x = (int) (Math.random() * (23 + 1 - 1)) + 1;
 				int y = (int) (Math.random() * (16 + 1 - 1)) + 1;
-				this.mourir(plateau, x, y, true);
+				this.mourir(plateau, x, y, false);
 				
 			}
 			break;
@@ -520,6 +565,28 @@ public class Minotaure extends Monstre{
 		// TODO Auto-generated method stub
 		return this.trouverY();
 	}
+
+
+	public boolean isInRange(Plateau plateau) {
+		boolean res = false ;
+		if (plateau.getCaseUp(this.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseUpLeft(this.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseUpRight(this.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseLeft(this.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseRight(this.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseDownRight(this.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseDown(this.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseDownRight(this.getCoordonnee()).getElement().isHero()) {
+			res = true ;
+		}
+		
+		
+		
+		return res;
+	}
+
+
+	
 
 
 	
