@@ -21,7 +21,6 @@ public class Tomato extends Monstre{
 			super();
 			this.setExist(true);
 			this.setNom("Tomato");
-
 			this.setCoordonnee(new Coordonnee(x, y));
 			this.setFrame(0);
 			this.setCurentAction("appear");
@@ -99,13 +98,16 @@ public class Tomato extends Monstre{
 				this.setFrame((getFrame() + 1) % 4);
 				if (this.getFrame() == 0) {
 					this.setCurentAction("disappear");
+					this.setDirection(new Direction (  Monstre.getHero().getDirection().getDirection()  ));
 				}
 				break;
 			case "disappear":
 				icon = this.imageDisappear();
-				this.setFrame((getFrame() + 1) % 4);
+				this.setFrame((getFrame() + 1) % 1);
 				if (this.getFrame() == 0) {
-					this.setCurentAction("appear");
+					this.setCurentAction("disappear");
+					this.setDirection(new Direction (  Monstre.getHero().getDirection().getDirection()  ) );
+
 				}
 				break;
 				

@@ -9,16 +9,10 @@ public class Case {
 
 	private Element element ;
 	private Item item;
+	
 	private static int compt = 0 ;
 	private int num ;
-	// 0 -> vide 
-	// 1 -> mur 
-	// 100 -> hero 
-	// 101 -> monstre 
-	// 102 -> Minotaure
-	// 2 -> secret 
-	// 102 -> fantome
-	// 8 -> tresort
+	
 
 	public Case(Element element) {
 		super();

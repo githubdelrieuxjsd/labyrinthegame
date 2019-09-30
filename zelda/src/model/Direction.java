@@ -25,6 +25,20 @@ public class Direction {
 			this.direction = "right";
 
 			break;
+		case "Up":
+			this.direction = "up";
+			break;
+		case "Down":
+			this.direction = "down";
+
+			break;
+		case "Left":
+			this.direction = "left";
+
+			break;
+		case "Right":
+			this.direction = "right";
+			break;
 		default:
 			System.out.println( "!!! ERROR DIRECTION CONSTRUCTEUR CAN T ASSIGNE :"+ direction);
 			this.direction = "down";

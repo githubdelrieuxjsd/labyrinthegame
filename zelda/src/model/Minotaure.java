@@ -15,38 +15,6 @@ public class Minotaure extends Monstre{
 	private List<Projectil> listProjectil;
 	private ControlKnight ctr ;
 	
-	public Minotaure(Coordonnee coordonnee ,Hero hero) {
-		super();
-		this.setExist(true);
-		this.setMaxLife(5);
-		this.setFrame(0);
-		this.setCurentAction("nothing") ;
-		this.setDirection(new Direction ("down" ));
-		this.setNom("Minotaure");
-		this.setLife( this.getMaxLife());
-		this.setDamageMonstre( epee ,0,0,0);
-		this.listProjectil = new ArrayList<Projectil>();
-		Monstre.setHero(hero);
-		this.ctr = new ControlKnight (this);
-	}
-
-	
-	public Minotaure(int x, int y ,Hero hero) {
-		super();
-		this.setExist(true);
-		this.setMaxLife(5);
-		this.setCoordonnee(new Coordonnee(x,y));
-		this.setFrame(0);
-		this.setCurentAction("nothing") ;
-		this.setDirection(new Direction ("down" ));
-		this.setNom("Minotaure");
-		this.setLife( this.getMaxLife());
-		this.setDamageMonstre( epee ,0,0,0);
-		this.listProjectil = new ArrayList<Projectil>();
-		Monstre.setHero(hero);
-		this.ctr = new ControlKnight (this);
-
-	}
 	
 	public Minotaure(int x, int y ) {
 		super();

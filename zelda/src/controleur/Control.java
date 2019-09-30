@@ -52,19 +52,25 @@ public class Control {
 		listMonstre = new ArrayList<Monstre>();
 		listBlock = new ArrayList<Block>();
 		hero = new Hero(4, 1);
+		Monstre.setHero(hero);
 		creationBlock();
 		creationMonstre();
 		plateau = new Plateau(hero, listBlock, listMonstre);
 	}
 
-	
+	private void creationBlock() {
+		// TODO Auto-generated method stub
+		creationBush(0);
+		creationArbre(0);
+		creationRock(0);
+	}
 
 	private void creationMonstre() {
 		// TODO Auto-generated method stub
 		creationMinotaure(0);
 		creationChicken(0);
 		creationGoblin(0);
-		creationTomato(50);
+		creationTomato(100);
 	}
 	
 	private void creationTomato(int nombre) {
@@ -101,22 +107,17 @@ public class Control {
 			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
 			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
 
-			listMonstre.add(new Minotaure(random1, random2, this.hero) );
+			listMonstre.add(new Minotaure(random1, random2) );
 
 		}
 		
 	}
 
-	private void creationBlock() {
-		// TODO Auto-generated method stub
-		creationBush();
-		creationArbre();
-		creationRock();
-	}
 
-	private void creationBush() {
+
+	private void creationBush(int nombre) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < nombre; i++) {
 
 			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
 			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
@@ -126,10 +127,10 @@ public class Control {
 		}
 	}
 
-	private void creationRock() {
+	private void creationRock(int nombre) {
 		// TODO Auto-generated method stub
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < nombre; i++) {
 
 			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
 			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
@@ -139,10 +140,10 @@ public class Control {
 		}
 	}
 
-	private void creationArbre() {
+	private void creationArbre(int nombre) {
 		// TODO Auto-generated method stub
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < nombre; i++) {
 
 			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
 			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
