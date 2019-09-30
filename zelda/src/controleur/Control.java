@@ -64,7 +64,7 @@ public class Control {
 		creationMinotaure(0);
 		creationChicken(0);
 		creationGoblin(0);
-		creationTomato(10);
+		creationTomato(50);
 	}
 	
 	private void creationTomato(int nombre) {
