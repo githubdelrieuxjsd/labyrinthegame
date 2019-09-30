@@ -19,11 +19,13 @@ import model.Monstre;
 import model.Plateau;
 import model.Projectil;
 import model.Rock;
+import model.Tomato;
 import model.Vide;
 import tool.Tool;
 
 public class Control {
 	
+	private boolean freegame = true;
 	
 	private ControlRandom ctrRandom ;
 	
@@ -59,10 +61,19 @@ public class Control {
 
 	private void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure(1);
-		creationChicken(20);
-		creationGoblin(10);
+		creationMinotaure(0);
+		creationChicken(0);
+		creationGoblin(0);
+		creationTomato(10);
 	}
+	
+	private void creationTomato(int nombre) {
+		for (int i = 0; i < nombre; i++) {
+			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
+			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
+			listMonstre.add(new Tomato(random1, random2));
+		}		
+}
 
 	private void creationGoblin(int nombre) {
 				for (int i = 0; i < nombre; i++) {
@@ -228,26 +239,71 @@ public class Control {
 
 
 	public void deplacerProgectil() {
+		List <Projectil> projectilDead = new ArrayList<Projectil>();
 
 		if (!hero.getListProjectil().isEmpty()) {
-			if (hero.getListProjectil().get(0).getFrame() == 3) {
-				hero.getListProjectil().get(0).deplacer(plateau);
+			for(Projectil p : hero.getListProjectil() ) {
+				if (p.getFrame() == 3 ) {
+					p.deplacer(plateau);
+				}
+				if ( ! p.getExist()) {
+					projectilDead.add(p);
+				}
 			}
+			
+		}
+		for (Projectil p : projectilDead) {
+			this.hero.getListProjectil().remove(p);
 		}
 	}
 
-	public void action() {
+	public boolean action(String herodescision , boolean heroaction) {
+		
 		this.timer++;
 		deplacerProgectil();
-		if (this.timer%16 == 0) {
+
+		if (this.timer%32 == 0) {
+
 			deplaceChicken();
 			actionMinotaure();
+			if (heroaction) {
+				actionHero(herodescision);
 			}
-		
+			return false;
+		}
+		if (listMonstre.isEmpty() || freegame) {
+			if (heroaction) {
+			//System.out.println("Win");
+			actionHero(herodescision);
+			return false;
+			}
+		}
+		return heroaction;
 	}
 
 
 	
+	private void actionHero(String descision) {
+		switch(descision) {
+		case "moveUp": deplacerHero(new Direction ("up"));
+		break;
+		case "moveDown": deplacerHero(new Direction ("down"));
+			break;
+		case "moveRight": deplacerHero(new Direction ("right"));
+			break;
+		case "moveLeft":deplacerHero(new Direction ("left"));
+			break;
+		case "tirer" : animationBowHero(); 
+			break;
+		case "attaque": animationAttackHero();
+			break;
+		case "bomb": animationPlaceBombHero();
+			break;
+		default :
+			break;
+		}
+	}
+
 	public void deplacerHero(Direction direction) {
 		// TODO Auto-generated method stub
 		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {

@@ -220,12 +220,14 @@ public class Hero extends Unite {
 			HeroProjectil heroProjectil = new HeroProjectil(cord, getDirection()) ;
 
 			// System.out.println(heroProjectil.coordonnee);
-			if (!this.listProjectil.isEmpty()) {
+			/**
+			 * if (!this.listProjectil.isEmpty()) {
 				listProjectil.get(0).setExist(false);
 				listProjectil.get(0).setNom("Vide");
 
 				listProjectil.remove(0);
 			}
+			*/
 			listProjectil.add(heroProjectil);
 
 			placerProjectil(plateau, heroProjectil);
@@ -317,7 +319,7 @@ public class Hero extends Unite {
 			break;
 		case "moving":
 			icon = this.imageMove();
-			this.setFrame((getFrame() + 1) % 6);
+			this.setFrame((getFrame() + 1) % 3);
 
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothing");
@@ -449,7 +451,7 @@ public class Hero extends Unite {
 
 	private String imageMove() {
 		String icon = "hyrule/link/beat/Down1.png";
-		int num =    this.getFrame()  /2  +1;
+		int num =    this.getFrame()    +1;
 
 		// System.out.println(this.getFrame() + " , "+num );
 		

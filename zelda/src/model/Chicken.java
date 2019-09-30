@@ -135,14 +135,15 @@ public class Chicken extends Monstre {
 
 	@Override
 	public void perdreVie(Damage damage, Plateau p) {
-		
+		if (! this.getCurentAction().equals("animationDeath")) {
 			if ( damage.doDamage(this)) {
 			this.setLife(this.getLife() - damage.getEpee() - damage.getProjectil() - damage.getExplosion() );
 			}
 			if (getLife() <= 0) {
-				this.setCurentAction("death");
+				this.setCurentAction("animationDeath");
 				this.setFrame(0);
 			}
+		}
 	}
 
 	@Override
@@ -174,13 +175,6 @@ public class Chicken extends Monstre {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void afficher() {
-		// TODO Auto-generated method stub
-		//System.out.println(this.nom + "," + this.life + "," + this.coordonnee + "," + this.exist + "," + this.damage+ "," + this.direction);
-	}
-
 	
 	@Override
 	public String getImage(Plateau p ,Case c) {
@@ -191,7 +185,7 @@ public class Chicken extends Monstre {
 			icon = this.imageNothing();
 			this.setFrame( (getFrame() + 1) % 8 );
 			break;
-		case "death":
+		case "animationDeath":
 			int num =  this.getFrame() /2 +1;
 			//System.out.println(num);
 			icon = "hyrule/death/"+num+".png";
@@ -202,7 +196,7 @@ public class Chicken extends Monstre {
 
 			}
 			if (this.getFrame() == 0) {
-				this.setCurentAction("nothing");
+				this.setCurentAction("dead");
 				int x = (int) (Math.random() * (23 + 1 - 1)) + 1;
 				int y = (int) (Math.random() * (16 + 1 - 1)) + 1;
 				this.mourir(p, x, y, false);

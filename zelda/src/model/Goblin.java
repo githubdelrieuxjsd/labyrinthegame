@@ -130,13 +130,16 @@ public class Goblin extends Monstre {
 	@Override
 	public void perdreVie(Damage damage, Plateau p) {
 
-		if (damage.doDamage(this)) {
-			this.setLife(this.getLife() - damage.getEpee() - damage.getProjectil() - damage.getExplosion());
+		if (! this.getCurentAction().equals("animationDeath")) {
+			if (damage.doDamage(this)) {
+				this.setLife(this.getLife() - damage.getEpee() - damage.getProjectil() - damage.getExplosion());
+			}
+			if (getLife() <= 0) {
+				this.setCurentAction("animationDeath");
+				this.setFrame(0);
+			}
 		}
-		if (getLife() <= 0) {
-			this.setCurentAction("death");
-			this.setFrame(0);
-		}
+		
 	}
 
 	@Override
@@ -188,12 +191,6 @@ public class Goblin extends Monstre {
 		}
 	}
 
-	@Override
-	public void afficher() {
-		// TODO Auto-generated method stub
-		// System.out.println(this.nom + "," + this.life + "," + this.coordonnee + "," +
-		// this.exist + "," + this.damage+ "," + this.direction);
-	}
 
 	@Override
 	public String getImage(Plateau p, Case c) {
@@ -208,7 +205,7 @@ public class Goblin extends Monstre {
 			this.setFrame((getFrame() + 1) % 6);
 			break;
 
-		case "death":
+		case "animationDeath":
 			int num = this.getFrame() / 2 + 1;
 			// System.out.println(num);
 			icon = "hyrule/death/" + num + ".png";

@@ -23,7 +23,8 @@ public class PanneauJeux extends JPanel {
 	private Control control = new Control();
 	//31,25
 	private long fps = 31 ;
-
+	private String herodescision = "nothing" ;
+	private boolean heroaction = false;
 	public PanneauJeux() {
 
 		this.setLayout(null);
@@ -37,30 +38,43 @@ public class PanneauJeux extends JPanel {
 				// TODO Auto-generated method stub
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
-					control.deplacerHero(new Direction ("up" ));
+					 herodescision = "moveUp" ;
+					 heroaction = true;
+					//control.deplacerHero(new Direction ("up" ));
 					break;
 				case KeyEvent.VK_DOWN:
-					control.deplacerHero(new Direction ("down"));
+					 herodescision = "moveDown" ;
+					 heroaction = true;
+					//control.deplacerHero(new Direction ("down"));
 
 					break;
 
 				case KeyEvent.VK_RIGHT:
-
-					control.deplacerHero(new Direction ("right"));
+					 herodescision = "moveRight" ;
+					 heroaction = true;
+					//control.deplacerHero(new Direction ("right"));
 				
 					break;
 				case KeyEvent.VK_LEFT:
-					control.deplacerHero(new Direction ("left" ));
+					 herodescision = "moveLeft"; 
+					 heroaction = true;
+					//control.deplacerHero(new Direction ("left" ));
 					
 					break;
 				case KeyEvent.VK_S:
-					control.animationBowHero();
+					 herodescision = "tirer" ;
+					 heroaction = true;
+					//control.animationBowHero();
 					break;
 				case KeyEvent.VK_D:
-					control.animationAttackHero();
+					 herodescision = "attaque"; 
+					 heroaction = true;
+					//control.animationAttackHero();
 					break;
 				case KeyEvent.VK_Q:
-					control.animationPlaceBombHero();
+					 herodescision = "bomb"; 
+					 heroaction = true;
+					//control.animationPlaceBombHero();
 					break;
 				case KeyEvent.VK_O:
 					if (fps==31) {
@@ -109,9 +123,8 @@ public class PanneauJeux extends JPanel {
 		
 
 		paintPlateau(g);
-		control.action();
+		heroaction = control.action(this.herodescision , heroaction);
 
-		
 		try {
 			//Thread.sleep(1000);  // 1 fps
 			Thread.sleep(fps);  // 32 fps

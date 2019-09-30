@@ -9,7 +9,6 @@ public class Key extends Item {
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setNom("Key");
-		
 	}
 
 	@Override

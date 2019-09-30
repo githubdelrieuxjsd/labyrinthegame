@@ -247,14 +247,16 @@ public class Minotaure extends Monstre{
 
 	@Override
 	public void perdreVie(Damage damage , Plateau p) {
+		if (! this.getCurentAction().equals("animationDeath")) {
+
 		if (damage.doDamage(this)) {
 			this.setLife(getLife() -damage.getEpee() - damage.getProjectil());
 		}
 		
 		if (getLife() <= 0) {
-			this.setCurentAction("death");
+			this.setCurentAction("animationDeath");
 		}
-		
+		}
 	}
 
 
@@ -321,12 +323,6 @@ public class Minotaure extends Monstre{
 	}
 
 
-	@Override
-	public void afficher() {
-		// TODO Auto-generated method stub
-		System.out.println(this.getNom() +","+this.getLife()+","+this.getCoordonnee()+","+this.isExist()+","+this.getDamage());
-	}	
-	
 	
 	@Override
 	public String getImage(Plateau plateau ,Case c) {
@@ -338,7 +334,7 @@ public class Minotaure extends Monstre{
 			this.setFrame( (getFrame() + 1) % 24 );
 			break;
 			
-		case "death":
+		case "animationDeath":
 			int num =  this.getFrame() /2 +1;
 			//System.out.println(num);
 			icon = "hyrule/death/"+num+".png";
