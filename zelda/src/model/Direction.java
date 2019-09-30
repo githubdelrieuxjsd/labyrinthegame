@@ -75,6 +75,10 @@ public class Direction {
 		this.direction = direction;
 	} 
 	
+	public void setDirection(Direction direction) {
+		this.direction = direction.getDirection();
+	} 
+	
 	
 	
 }

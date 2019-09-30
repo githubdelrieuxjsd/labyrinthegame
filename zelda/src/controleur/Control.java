@@ -70,13 +70,15 @@ public class Control {
 		creationMinotaure(0);
 		creationChicken(0);
 		creationGoblin(0);
-		creationTomato(100);
+		creationTomato(1);
 	}
 	
 	private void creationTomato(int nombre) {
 		for (int i = 0; i < nombre; i++) {
-			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
-			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
+		//	int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
+		//	int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
+			int random1 = (int) (Math.random() * (12 + 1 - 5)) + 5;
+			int random2 = (int) (Math.random() * (12 + 1 - 5)) + 5;
 			listMonstre.add(new Tomato(random1, random2));
 		}		
 }
@@ -198,7 +200,7 @@ public class Control {
 		List <Monstre> monstreDead = new ArrayList<Monstre>();
 
 			for (Monstre m : listMonstre) {
-				if (m.getNom().equals("Chicken") || m.getNom().equals("Goblin")) {
+				if (m.getNom().equals("Chicken") || m.getNom().equals("Goblin") ) {
 					if (m.getCurentAction().equals("transformation")) {
 						monstreTransform.add(m);
 						
@@ -208,6 +210,9 @@ public class Control {
 					else {
 						m.deplacer(ctrRandom.deplacement(), plateau);
 					}
+				}
+				if ( m.getNom().equals("Tomato")) {
+					((Tomato) m).action();
 				}
 			}
 			
@@ -263,10 +268,11 @@ public class Control {
 		this.timer++;
 		deplacerProgectil();
 
-		if (this.timer%32 == 0) {
+		if (this.timer%(32+16) == 0) {
 
 			deplaceChicken();
 			actionMinotaure();
+			
 			if (heroaction) {
 				actionHero(herodescision);
 			}

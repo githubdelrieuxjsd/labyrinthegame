@@ -2,6 +2,7 @@ package model;
 
 public class Tomato extends Monstre{
 
+	int nombreAction = 0;
 	
 		public Tomato(Coordonnee coordonnee) {
 			super();
@@ -9,7 +10,7 @@ public class Tomato extends Monstre{
 
 			this.setCoordonnee(coordonnee);
 			this.setFrame(0);
-			this.setCurentAction("appear");
+			this.setCurentAction("disappear");
 			this.setDirection(new Direction("up"));
 			this.setNom("Tomato");
 			this.setMaxLife(3);
@@ -23,7 +24,7 @@ public class Tomato extends Monstre{
 			this.setNom("Tomato");
 			this.setCoordonnee(new Coordonnee(x, y));
 			this.setFrame(0);
-			this.setCurentAction("appear");
+			this.setCurentAction("disappear");
 			this.setMaxLife(3);
 			this.setLife(this.getMaxLife() );
 			this.setDamageMonstre(0, 0, 0, 0);
@@ -31,9 +32,20 @@ public class Tomato extends Monstre{
 
 		}
 
+		public void action () {
+			int random = (int) (Math.random() * (100 - 1 +1 )) + 1;
+			
+			if (random > 0 &&  random < 33 && nombreAction == 0) {
+				this.setCurentAction("appear");
+				//nombreAction = 0;
+				this.setFrame(0);
+			}
+			
+		}
+		
 		@Override
 		public void deplacer(Direction direction, Plateau plateau) {
-			
+			//this.setCurentAction("disappear");
 		}
 		
 		
@@ -91,25 +103,42 @@ public class Tomato extends Monstre{
 
 			case "nothing":
 				icon = this.imageNothing();
-				this.setFrame((getFrame() + 1) % 6);
+				this.setFrame((getFrame() + 1) % 4);
+				nombreAction ++ ;
+				if (nombreAction > 3*8 && this.getFrame() ==0) {
+					this.setCurentAction("disappear");
+					nombreAction =0;
+				}
 				break;
+				
 			case "appear":
+				this.setDirection( this.getCoordonnee().regardeVers( Monstre.getHero().getCoordonnee()  ) );
 				icon = this.imageAppear();
 				this.setFrame((getFrame() + 1) % 4);
 				if (this.getFrame() == 0) {
-					this.setCurentAction("disappear");
-					this.setDirection(new Direction (  Monstre.getHero().getDirection().getDirection()  ));
+					this.setCurentAction("tirer");
 				}
 				break;
 			case "disappear":
 				icon = this.imageDisappear();
-				this.setFrame((getFrame() + 1) % 1);
+				this.setFrame((getFrame() + 1) % 4);
 				if (this.getFrame() == 0) {
+					this.setFrame(3);
 					this.setCurentAction("disappear");
-					this.setDirection(new Direction (  Monstre.getHero().getDirection().getDirection()  ) );
+					//this.setDirection(new Direction (  Monstre.getHero().getDirection().getDirection()  ) );
 
 				}
 				break;
+			case "tirer":
+				icon = this.imageTirer();
+				this.setFrame((getFrame() + 1) % 4);
+				if (this.getFrame() == 0) {
+					this.setCurentAction("nothing");
+					//this.setDirection(new Direction (  Monstre.getHero().getDirection().getDirection()  ) );
+
+				}
+				break;
+				
 				
 			case "animationDeath":
 				int num = this.getFrame() / 2 + 1;
@@ -141,6 +170,34 @@ public class Tomato extends Monstre{
 		}
 
 		
+
+		private String imageTirer() {
+			int num = this.getFrame() + 1;
+			// System.out.println("frame: "+this.getFrame());
+			// System.out.println("num: "+num);
+
+			String icon = "hyrule/tomato/tirer/Down/" + num + ".png";
+			switch (this.getDirection().getDirection()) {
+
+			case "up":
+				icon = "hyrule/tomato/tirer/Up/" + num + ".png";
+				break;
+			case "down":
+				icon = "hyrule/tomato/tirer/Down/" + num + ".png";
+				break;
+			case "left":
+				icon = "hyrule/tomato/tirer/Left/" + num + ".png";
+				break;
+			case "right":
+				icon = "hyrule/tomato/tirer/Right/" + num + ".png";
+				break;
+			default:
+				break;
+
+			}
+
+			return icon;
+		}
 
 		private String imageDisappear() {
 			int num = this.getFrame() + 1;
@@ -206,20 +263,20 @@ public class Tomato extends Monstre{
 
 			// System.out.println("num: "+num);
 
-			String icon = "hyrule/tomato/beat/R" + num + ".png";
+			String icon = "hyrule/tomato/beat/Down/" + num + ".png";
 			switch (this.getDirection().getDirection()) {
 
 			case "up":
-				icon = "hyrule/tomato/beat/R" + num + ".png";
+				icon = "hyrule/tomato/beat/Up/" + num + ".png";
 				break;
 			case "down":
-				icon = "hyrule/tomato/beat/L" + num + ".png";
+				icon = "hyrule/tomato/beat/Down/" + num + ".png";
 				break;
 			case "left":
-				icon = "hyrule/tomato/beat/L" + num + ".png";
+				icon = "hyrule/tomato/beat/Left/" + num + ".png";
 				break;
 			case "right":
-				icon = "hyrule/tomato/beat/R" + num + ".png";
+				icon = "hyrule/tomato/beat/Right/" + num + ".png";
 				break;
 			default:
 				break;
