@@ -40,13 +40,13 @@ public class Heart extends Item{
 	@Override
 	public int trouverlongeur(Case c) {
 		// TODO Auto-generated method stub
-		return c.getTailleCasePixel()-10;
+		return c.getTailleCasePixel()/2;
 	}
 
 	@Override
 	public int trouverlargeur(Case c) {
 		// TODO Auto-generated method stub
-		return c.getTailleCasePixel()-10;
+		return c.getTailleCasePixel()/2;
 	}
 
 	

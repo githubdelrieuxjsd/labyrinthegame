@@ -81,9 +81,9 @@ public class Control {
 
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(1);
-		creationArbre(1);
-		creationRock(1);
+		creationBush(20);
+		creationArbre(20);
+		creationRock(20);
 	}
 
 	private static void creationMonstre() {

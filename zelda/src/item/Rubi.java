@@ -27,7 +27,7 @@ public class Rubi extends Item{
 	@Override
 	public int trouverX( Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getX() *c.getTailleCasePixel() ;
+		return c.getCoordonnee().getX() *c.getTailleCasePixel()  ;
 	}
 
 	@Override
@@ -39,13 +39,13 @@ public class Rubi extends Item{
 	@Override
 	public int trouverlongeur(Case c) {
 		// TODO Auto-generated method stub
-		return c.getTailleCasePixel()-10;
+		return c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverlargeur(Case c) {
 		// TODO Auto-generated method stub
-		return c.getTailleCasePixel()-10;
+		return c.getTailleCasePixel();
 	}
 
 	

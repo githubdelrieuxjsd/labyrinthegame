@@ -28,25 +28,25 @@ public class Key extends Item {
 	@Override
 	public int trouverX(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getX() *c.getTailleCasePixel() +5;
+		return c.getCoordonnee().getX() *c.getTailleCasePixel()+  c.getTailleCasePixel()*10/15/4;
 	}
 
 	@Override
 	public int trouverY( Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getY() *c.getTailleCasePixel()-10;
+		return c.getCoordonnee().getY() *c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverlongeur(Case c) {
 		// TODO Auto-generated method stub
-		return c.getTailleCasePixel()/2;
+		return c.getTailleCasePixel()*10/15;
 	}
 
 	@Override
 	public int trouverlargeur(Case c) {
 		// TODO Auto-generated method stub
-		return c.getTailleCasePixel()/2;
+		return c.getTailleCasePixel()*10/15;
 	}
 
 	

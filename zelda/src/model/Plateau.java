@@ -7,9 +7,11 @@ import block.Arbre;
 import block.Block;
 import block.Vide;
 import item.Bomb;
+import item.Heart;
 import item.Item;
 import item.Key;
 import item.Rien;
+import item.Rubi;
 import monstre.Monstre;
 import projectil.Aire;
 import projectil.Projectil;
@@ -33,6 +35,7 @@ public class Plateau {
 		
 		placerBlockRandom(listBlock);
 		placerMonstreRandom(listMonstre);
+		
 		if (hero.getNumeroCase() == -1 ) {
 			this.placerElement(hero, new Coordonnee (9,1));
 		}else {
@@ -79,8 +82,8 @@ public class Plateau {
 
 	private void placerBlockRandom(List<Block> listBlock) {
 		for (Block b : listBlock) {
-			int x = (int) (Math.random() * (nombreCaseX-2 + 1 - 1)) + 1;
-			int y = (int) (Math.random() * (nombreCaseY-2 + 1 - 1)) + 1;
+			int x = (int) (Math.random() * (nombreCaseX-1 + 1 - 0)) + 0;
+			int y = (int) (Math.random() * (nombreCaseY-1 + 1 - 0)) + 0;
 
 			this.placerElement(b,new Coordonnee(x,y));		}
 	}
@@ -91,7 +94,9 @@ public class Plateau {
 			for (int j = 0 ; j<nombreCaseX ;j++) {
 					Case vide = new Case( new Coordonnee (j,i)  );
 					vide.setElement(new Vide () );
-					vide.setItem(new Rien () );
+					//vide.setItem(new Rien () );
+					vide.setItem(new Rubi () );
+
 					vide.setProjectil(new Aire() );
 					listCase.add( vide ) ;
 			}

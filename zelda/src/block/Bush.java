@@ -1,12 +1,15 @@
 package block;
 
 import damage.Damage;
+import item.Heart;
+import item.Rubi;
+import mobInterface.DropItem;
 import model.Case;
 import model.Coordonnee;
 import model.Direction;
 import model.Plateau;
 
-public class Bush extends Block {
+public class Bush extends Block implements DropItem {
 
 	private int life;
 
@@ -30,9 +33,26 @@ public class Bush extends Block {
 			this.life = life - damage.getEpee();
 		}
 		if (life < 0) {
+			dropItem(plateau.getListCase().get(this.getNumeroCase()));
 			this.detruir();
 		}
 	}
+	
+	// ######################### DROP ITEM #########################################
+
+		@Override
+		public void dropItem(Case c) {
+			if (c.getItem().getNom().equals("Rien")) {
+				int x = (int) (Math.random() * (100 + 1 - 1)) + 1;
+				if (x > 50) {
+					c.setItem(new Rubi());
+				} else if (x < 20) {
+					c.setItem(new Heart());
+				}
+
+			}
+
+		}
 
 	// #################### IMAGE ######################
 

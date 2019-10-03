@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -8,14 +9,13 @@ import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import controleur.Control;
 
 import model.Case;
-import model.Direction;
-import model.Element;
-import monstre.Knight;
-import monstre.Monstre;
+
 
 public class PanneauJeux extends JPanel {
 
@@ -25,13 +25,22 @@ public class PanneauJeux extends JPanel {
 	private String herodescision = "nothing";
 	private boolean heroaction = false;
 
-	private boolean mapready = false;
+	private JTextField nombreRubi = new JTextField(""+0) {
+	    @Override public void setBorder(Border border) {
+	        // No!
+	    }
+	};
 	
 	public PanneauJeux() {
 
 		this.setLayout(null);
 		// this.setBackground(Color.decode("#5E9D34"));
 		// this.setBackground(Color.green);
+		this.nombreRubi.setOpaque(false);
+		this.nombreRubi.setBounds(5,35,100,30);
+		this.nombreRubi.setFont(new Font ("Segoe Script", Font.BOLD , 25 ));
+		this.nombreRubi.setForeground(Color.WHITE);
+		this.add(this.nombreRubi); 
 
 		this.addKeyListener(new KeyListener() {
 
@@ -39,10 +48,6 @@ public class PanneauJeux extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				switch (e.getKeyCode()) {
-				case KeyEvent.VK_M:
-					Control.generationPlateau();
-					mapready = true;
-					break;
 				
 				case KeyEvent.VK_UP:
 					herodescision = "moveUp";
@@ -120,12 +125,10 @@ public class PanneauJeux extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		if (mapready) {
+			nombreRubi.setText(""+control.getHero().getNombreRubi());
 			paintPlateau(g);
 			heroaction = control.action(this.herodescision, heroaction);
 
-		}
 		
 		
 		try {

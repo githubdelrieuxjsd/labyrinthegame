@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 
 import block.Rock;
 import block.Vide;
-import controleur.ControlKnight;
 import damage.Damage;
 import mobInterface.Attaque;
 import mobInterface.Deplacement;

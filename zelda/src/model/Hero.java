@@ -33,7 +33,8 @@ import tool.Tool;
 public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner {
 
 	// voir inventaire
-
+	private int nombreRubi = 0;
+	
 	public Hero() {
 		super();
 		this.setNumeroCase(-1);
@@ -57,7 +58,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	public void mourir() {
 		this.soigner(this.getMaxLife());
 	}
-	// ######################### A FAIRE Tirer
+	// ######################### Tirer
 	// #########################################
 
 	@Override
@@ -202,6 +203,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		return res;
 	}
 
+	// ######################### RAMASSER ###################################
 	private void Ramasser(Case c) {
 		Item item = c.getItem();
 
@@ -211,8 +213,12 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 			this.soigner(1);
 			break;
 		case "Rubi":
+			nombreRubi++;
 			item.etreRamasser(c);
 			break;
+		case "Key":
+			item.etreRamasser(c);
+			break;	
 		default:
 			break;
 		}
@@ -570,7 +576,20 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		System.out.println(this.getNom() + "," + this.getLife() + "," + this.isExist() + "," + this.getDamage());
 	}
 
+	
+
 	// ######################### GETTER SETTER
 	// #########################################
+	public int getNombreRubi() {
+		return nombreRubi;
+	}
 
+	public void setNombreRubi(int nombreRubi) {
+		this.nombreRubi = nombreRubi;
+	}
+	
+	
+	
+	
+	
 }
