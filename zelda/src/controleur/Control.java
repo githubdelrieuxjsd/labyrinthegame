@@ -81,10 +81,10 @@ public class Control {
 
 	private void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure(0);
-		creationChicken(50);
-		creationGoblin(10);
-		creationTomato(5);
+		creationMinotaure(1);
+		creationChicken(1);
+		creationGoblin(0);
+		creationTomato(0);
 	}
 
 	private void creationTomato(int nombre) {
