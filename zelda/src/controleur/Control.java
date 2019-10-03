@@ -74,15 +74,15 @@ public class Control {
 
 	private void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(10);
-		creationArbre(20);
-		creationRock(20);
+		creationBush(0);
+		creationArbre(0);
+		creationRock(1);
 	}
 
 	private void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure(1);
-		creationChicken(1);
+		creationMinotaure(0);
+		creationChicken(0);
 		creationGoblin(0);
 		creationTomato(0);
 	}

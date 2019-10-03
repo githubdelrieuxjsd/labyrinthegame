@@ -34,7 +34,7 @@ public class Plateau {
 		placerBlockRandom(listBlock);
 		placerMonstreRandom(listMonstre);
 		this.placerElement(hero, new Coordonnee (9,1));
-		contourArbre();
+		//contourArbre();
 		this.afficher();
 		}
 	
@@ -158,33 +158,57 @@ public class Plateau {
 	
 	public Case getCaseUp (Coordonnee coordonnee) {
 		
+		if (this.getCase(coordonnee).getCoordonnee().getY()==0) {
+			return this.getCase(coordonnee);
+		}
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() , coordonnee.getY()-1 ));
 	}
 	public Case getCaseDown (Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getY()==this.nombreCaseY-1) {
+			return this.getCase(coordonnee);
+		}
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() , coordonnee.getY()+1 )) ;
 
 	}
 	public Case getCaseLeft (Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getX()==0) {
+			return this.getCase(coordonnee);
+		}
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1 , coordonnee.getY() )) ;
 	}
 	public Case getCaseRight (Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getX()== this.nombreCaseX-1) {
+			return this.getCase(coordonnee);
+		}
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1 , coordonnee.getY() )) ;
 	}
 	public Case getCaseUpLeft(Coordonnee coordonnee) {
-		// TODO Auto-generated method stub
+		if (this.getCase(coordonnee).getCoordonnee().getY()==0 ||
+				this.getCase(coordonnee).getCoordonnee().getX()==0) {
+			return this.getCase(coordonnee);
+		}
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1 , coordonnee.getY()-1 )) ;
 	}
 	public Case getCaseDownLeft(Coordonnee coordonnee) {
-		// TODO Auto-generated method stub
+		if (this.getCase(coordonnee).getCoordonnee().getY()== this.nombreCaseY-1 ||
+				this.getCase(coordonnee).getCoordonnee().getX()==0) {
+			return this.getCase(coordonnee);
+		}
 		return  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1 , coordonnee.getY()+1 )) ;
 
 	}
 	public Case getCaseUpRight(Coordonnee coordonnee) {
-		// TODO Auto-generated method stub
+		if (this.getCase(coordonnee).getCoordonnee().getY()== 0 ||
+				this.getCase(coordonnee).getCoordonnee().getX()== this.nombreCaseX-1) {
+			return this.getCase(coordonnee);
+		}
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1 , coordonnee.getY()-1 )) ;
 	}
 	public Case getCaseDownRight(Coordonnee coordonnee) {
-		// TODO Auto-generated method stub
+		if (this.getCase(coordonnee).getCoordonnee().getY()== this.nombreCaseY-1 ||
+				this.getCase(coordonnee).getCoordonnee().getX()== this.nombreCaseX-1) {
+			return this.getCase(coordonnee);
+		}
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1 , coordonnee.getY()+1 )) ;
 	}
 
