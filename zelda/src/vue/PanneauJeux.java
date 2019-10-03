@@ -25,6 +25,8 @@ public class PanneauJeux extends JPanel {
 	private String herodescision = "nothing";
 	private boolean heroaction = false;
 
+	private boolean mapready = false;
+	
 	public PanneauJeux() {
 
 		this.setLayout(null);
@@ -37,44 +39,42 @@ public class PanneauJeux extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				switch (e.getKeyCode()) {
+				case KeyEvent.VK_M:
+					Control.generationPlateau();
+					mapready = true;
+					break;
+				
 				case KeyEvent.VK_UP:
 					herodescision = "moveUp";
 					heroaction = true;
-					// control.deplacerHero(new Direction ("up" ));
 					break;
 				case KeyEvent.VK_DOWN:
 					herodescision = "moveDown";
 					heroaction = true;
-					// control.deplacerHero(new Direction ("down"));
 
 					break;
 
 				case KeyEvent.VK_RIGHT:
 					herodescision = "moveRight";
 					heroaction = true;
-					// control.deplacerHero(new Direction ("right"));
 
 					break;
 				case KeyEvent.VK_LEFT:
 					herodescision = "moveLeft";
 					heroaction = true;
-					// control.deplacerHero(new Direction ("left" ));
 
 					break;
 				case KeyEvent.VK_S:
 					herodescision = "tirer";
 					heroaction = true;
-					// control.animationBowHero();
 					break;
 				case KeyEvent.VK_D:
 					herodescision = "attaque";
 					heroaction = true;
-					// control.animationAttackHero();
 					break;
 				case KeyEvent.VK_Q:
 					herodescision = "bomb";
 					heroaction = true;
-					// control.animationPlaceBombHero();
 					break;
 				case KeyEvent.VK_O:
 					if (fps == 31) {
@@ -121,9 +121,13 @@ public class PanneauJeux extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		paintPlateau(g);
-		heroaction = control.action(this.herodescision, heroaction);
+		if (mapready) {
+			paintPlateau(g);
+			heroaction = control.action(this.herodescision, heroaction);
 
+		}
+		
+		
 		try {
 			// Thread.sleep(1000); // 1 fps
 			Thread.sleep(fps); // 32 fps

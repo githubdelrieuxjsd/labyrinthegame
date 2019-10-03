@@ -33,12 +33,20 @@ public class Plateau {
 		
 		placerBlockRandom(listBlock);
 		placerMonstreRandom(listMonstre);
-		this.placerElement(hero, new Coordonnee (9,1));
+		if (hero.getNumeroCase() == -1 ) {
+			this.placerElement(hero, new Coordonnee (9,1));
+		}else {
+			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
+		}
+		
 		//contourArbre();
-		this.afficher();
+		//this.afficher();
 		}
 	
 	
+	
+
+
 	/**
 	 * ajout des arbre tout autour de la carte pour bloquer les unites 
 	 * la map est de 24x17
@@ -216,6 +224,26 @@ public class Plateau {
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() )) ;
 	}
 	
+	
+	
+	
+	
+	public int getNombreCaseX() {
+		return nombreCaseX;
+	}
+
+
+
+
+
+	public int getNombreCaseY() {
+		return nombreCaseY;
+	}
+
+
+
+
+
 	public void afficher(){
 		for (Case c : listCase) {
 			c.afficher();

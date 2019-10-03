@@ -37,7 +37,7 @@ public class Control {
 	private static List <Projectil> listProjectil ;
 	
 	
-	private int timer;
+	private static int timer;
 
 	/**
 	 * Constructeur redefinir ControlRandom creation du hero placer en (4,1) = (x,y)
@@ -56,8 +56,6 @@ public class Control {
 		Monstre.setHero(hero);
 
 		generationPlateau();
-
-		this.timer = 0;
 	}
 
 	/**
@@ -65,41 +63,50 @@ public class Control {
 	 * dans la liste des monstre (knight , goblin tomato , chicken) appele du
 	 * constructeur du plateau
 	 */
-	private void generationPlateau() {
-		// TODO Auto-generated method stub
+	
+	
+	
+	
+	public static void generationPlateau() {
+		listMonstre = new ArrayList<Monstre>();
+		listBlock = new ArrayList<Block>();
+		listProjectil = new ArrayList<Projectil>();
+		
 		creationBlock();
 		creationMonstre();
-		plateau = new Plateau(hero, listBlock, listMonstre);
+		plateau = new Plateau(hero,listBlock, listMonstre);
+
+		timer = 0;
 	}
 
-	private void creationBlock() {
+	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(0);
-		creationArbre(0);
+		creationBush(1);
+		creationArbre(1);
 		creationRock(1);
 	}
 
-	private void creationMonstre() {
+	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure(0);
-		creationChicken(0);
-		creationGoblin(0);
-		creationTomato(0);
+		creationMinotaure(1);
+		creationChicken(1);
+		creationGoblin(1);
+		creationTomato(1);
 	}
 
-	private void creationTomato(int nombre) {
+	private static void creationTomato(int nombre) {
 		for (int i = 0; i < nombre; i++) {
 			listMonstre.add(new Tomato());
 		}
 	}
 
-	private void creationGoblin(int nombre) {
+	private static void creationGoblin(int nombre) {
 		for (int i = 0; i < nombre; i++) {
 			listMonstre.add(new Goblin());
 		}
 	}
 
-	private void creationChicken(int nombre) {
+	private static void creationChicken(int nombre) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < nombre; i++) {
 			listMonstre.add(new Chicken());
@@ -107,7 +114,7 @@ public class Control {
 		}
 	}
 
-	private void creationMinotaure(int nombre) {
+	private static void creationMinotaure(int nombre) {
 		for (int i = 0; i < nombre; i++) {
 			listMonstre.add(new Knight());
 
@@ -115,7 +122,7 @@ public class Control {
 
 	}
 
-	private void creationBush(int nombre) {
+	private static void creationBush(int nombre) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < nombre; i++) {
 			listBlock.add(new Bush());
@@ -123,7 +130,7 @@ public class Control {
 		}
 	}
 
-	private void creationRock(int nombre) {
+	private  static void creationRock(int nombre) {
 		// TODO Auto-generated method stub
 
 		for (int i = 0; i < nombre; i++) {
@@ -132,7 +139,7 @@ public class Control {
 		}
 	}
 
-	private void creationArbre(int nombre) {
+	private static void creationArbre(int nombre) {
 		for (int i = 0; i < nombre; i++) {
 			listBlock.add(new Arbre());
 
