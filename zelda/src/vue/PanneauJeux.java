@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -15,86 +14,87 @@ import controleur.Control;
 import model.Case;
 import model.Direction;
 import model.Element;
-import model.Minotaure;
-import model.Monstre;
+import monstre.Knight;
+import monstre.Monstre;
 
 public class PanneauJeux extends JPanel {
 
 	private Control control = new Control();
-	//31,25
-	private long fps = 31 ;
-	private String herodescision = "nothing" ;
+	// 31,25
+	private long fps = 31;
+	private String herodescision = "nothing";
 	private boolean heroaction = false;
+
 	public PanneauJeux() {
 
 		this.setLayout(null);
-		//this.setBackground(Color.decode("#5E9D34"));
+		// this.setBackground(Color.decode("#5E9D34"));
 		// this.setBackground(Color.green);
 
-		this.addKeyListener( new KeyListener() {
+		this.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
-					 herodescision = "moveUp" ;
-					 heroaction = true;
-					//control.deplacerHero(new Direction ("up" ));
+					herodescision = "moveUp";
+					heroaction = true;
+					// control.deplacerHero(new Direction ("up" ));
 					break;
 				case KeyEvent.VK_DOWN:
-					 herodescision = "moveDown" ;
-					 heroaction = true;
-					//control.deplacerHero(new Direction ("down"));
+					herodescision = "moveDown";
+					heroaction = true;
+					// control.deplacerHero(new Direction ("down"));
 
 					break;
 
 				case KeyEvent.VK_RIGHT:
-					 herodescision = "moveRight" ;
-					 heroaction = true;
-					//control.deplacerHero(new Direction ("right"));
-				
+					herodescision = "moveRight";
+					heroaction = true;
+					// control.deplacerHero(new Direction ("right"));
+
 					break;
 				case KeyEvent.VK_LEFT:
-					 herodescision = "moveLeft"; 
-					 heroaction = true;
-					//control.deplacerHero(new Direction ("left" ));
-					
+					herodescision = "moveLeft";
+					heroaction = true;
+					// control.deplacerHero(new Direction ("left" ));
+
 					break;
 				case KeyEvent.VK_S:
-					 herodescision = "tirer" ;
-					 heroaction = true;
-					//control.animationBowHero();
+					herodescision = "tirer";
+					heroaction = true;
+					// control.animationBowHero();
 					break;
 				case KeyEvent.VK_D:
-					 herodescision = "attaque"; 
-					 heroaction = true;
-					//control.animationAttackHero();
+					herodescision = "attaque";
+					heroaction = true;
+					// control.animationAttackHero();
 					break;
 				case KeyEvent.VK_Q:
-					 herodescision = "bomb"; 
-					 heroaction = true;
-					//control.animationPlaceBombHero();
+					herodescision = "bomb";
+					heroaction = true;
+					// control.animationPlaceBombHero();
 					break;
 				case KeyEvent.VK_O:
-					if (fps==31) {
-						fps = 500; 
-					}else {
-						fps= 31;
-					}					
+					if (fps == 31) {
+						fps = 500;
+					} else {
+						fps = 31;
+					}
 					break;
 				case KeyEvent.VK_P:
-					if (fps==31) {
-						fps = 1000; 
-					}else {
-						fps= 31;
-					}					
+					if (fps == 31) {
+						fps = 1000;
+					} else {
+						fps = 31;
+					}
 					break;
 				case KeyEvent.VK_I:
-					if (fps==31) {
-						fps = 3000; 
-					}else {
-						fps= 31;
+					if (fps == 31) {
+						fps = 3000;
+					} else {
+						fps = 31;
 					}
 					control.information();
 					break;
@@ -120,15 +120,14 @@ public class PanneauJeux extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
 
 		paintPlateau(g);
-		heroaction = control.action(this.herodescision , heroaction);
+		heroaction = control.action(this.herodescision, heroaction);
 
 		try {
-			//Thread.sleep(1000);  // 1 fps
-			Thread.sleep(fps);  // 32 fps
-			//Thread.sleep(16,666666); // 60 fps
+			// Thread.sleep(1000); // 1 fps
+			Thread.sleep(fps); // 32 fps
+			// Thread.sleep(16,666666); // 60 fps
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -138,77 +137,67 @@ public class PanneauJeux extends JPanel {
 	}
 
 	private void paintPlateau(Graphics g) {
-		
+
 		for (Case c : control.getPlateau().getListCase()) {
-			
-		dessinBackground(g , c);
+
+			dessinBackground(g, c);
 		}
 
 		for (Case c : control.getPlateau().getListCase()) {
-			
-			dessinForgroundBlock(g , c);
-		
-			}
-		for (Case c : control.getPlateau().getListCase()) {
-			
-			dessinForgroundUnite(g , c);
 
-			dessinSideBar(g , c);			
-			}
+			dessinForgroundBlock(g, c);
+
+		}
+		for (Case c : control.getPlateau().getListCase()) {
+
+			dessinForgroundUnite(g, c);
+
+			dessinSideBar(g, c);
+		}
 
 	}
-
-	
 
 	private void dessinForgroundBlock(Graphics g, Case c) {
-		c.dessinBlock(control.getPlateau() ,g);
+		c.dessinItemBlockProjectil(control.getPlateau(), g);
 
 	}
 
-	private void dessinForgroundUnite(Graphics g , Case c) {
-			c.dessinUnite(control.getPlateau(), g);
+	private void dessinForgroundUnite(Graphics g, Case c) {
+		c.dessinUnite(control.getPlateau(), g);
 	}
 
 	private void dessinBackground(Graphics g, Case c) {
-			
-			ImageIcon icon = new ImageIcon("hyrule/grass1.png");
-			
-			if ((c.getElement().getCoordonnee().getX()+c.getElement().getCoordonnee().getY() )%2==1) {
-				icon = new ImageIcon("hyrule/grass3.png");
-			}
-			
-			Image img = icon.getImage();
-			g.drawImage(img, c.getElement().getCoordonnee().getX() * 40, c.getElement().getCoordonnee().getY() * 40, 40,
-					40, null);
-			
+
+		ImageIcon icon = new ImageIcon("hyrule/grass1.png");
+
+		if ((c.getCoordonnee().getX() + c.getCoordonnee().getY()) % 2 == 1) {
+			icon = new ImageIcon("hyrule/grass3.png");
+		}
+
+		Image img = icon.getImage();
+		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel(),
+				c.getCoordonnee().getY() * c.getTailleCasePixel(), c.getTailleCasePixel(), c.getTailleCasePixel(),
+				null);
 
 	}
-	
+
 	private void dessinSideBar(Graphics g, Case c) {
 		// TODO Auto-generated method stub
-		
-			ImageIcon icon = new ImageIcon("img/vide.png");
-		 if (c.getElement().getCoordonnee().getY() == 18) {
-			 c.setItem();
-				for (int i = 0 ; i < control.getHero().getMaxLife() ;i ++) {
-					 icon = new ImageIcon("hyrule/heart/noir.png");
-					
-					if (i < control.getHero().getLife()) {
-						icon = new ImageIcon("hyrule/heart/rouge.png");	
-					}
-					Image img = icon.getImage();		
+		ImageIcon icon = new ImageIcon("hyrule/heart/rouge.png");
+		// ImageIcon icon = new ImageIcon("img/vide.png");
+		for (int i = 0; i < control.getHero().getMaxLife(); i++) {
+			icon = new ImageIcon("hyrule/heart/noir.png");
 
-					g.drawImage(img, 45+30*i ,
-							18*40 + 5 , 25, 25, null);
-				}
-		
-		 }
-			
-			
+			if (i < control.getHero().getLife()) {
+				icon = new ImageIcon("hyrule/heart/rouge2.png");
+			}
+			Image img = icon.getImage();
 
-			
+			g.drawImage(img, c.getTailleCasePixel()/10 + 25 * i
+					, c.getTailleCasePixel()/10, 25, 25, null);
 
-		
+		}
+
 	}
 
 	private void gameOver(String reson) {

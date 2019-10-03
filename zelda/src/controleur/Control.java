@@ -3,56 +3,70 @@ package controleur;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Arbre;
-import model.Block;
-import model.Bomb;
-import model.Bush;
+import block.Arbre;
+import block.Block;
+import block.Bush;
+import block.Rock;
+import block.Vide;
+import item.Bomb;
+import item.Key;
 import model.Case;
-import model.Chicken;
 import model.Coordonnee;
 import model.Direction;
-import model.Goblin;
 import model.Hero;
-import model.Key;
-import model.Minotaure;
-import model.Monstre;
 import model.Plateau;
-import model.Projectil;
-import model.Rock;
-import model.Tomato;
-import model.Vide;
+import monstre.Chicken;
+import monstre.Goblin;
+import monstre.Knight;
+import monstre.Monstre;
+import monstre.Tomato;
+import projectil.Aire;
+import projectil.Fleche;
+import projectil.Projectil;
 import tool.Tool;
 
 public class Control {
-	
-	private boolean freegame = true;
-	
-	private ControlRandom ctrRandom ;
-	
-	private Plateau plateau;
-	private Hero hero;
 
+	private boolean freegame = true;
+
+	private static Plateau plateau;
+
+	private static  Hero hero;
 	private static List<Monstre> listMonstre;
-	private List<Block> listBlock;
+	private static List<Block> listBlock;
+	private static List <Projectil> listProjectil ;
 	
-	private int scort;
+	
 	private int timer;
 
-	
+	/**
+	 * Constructeur redefinir ControlRandom creation du hero placer en (4,1) = (x,y)
+	 * creation list monstre vide creation list Block vide gernerer le plateau
+	 * initialisation du timer du jeux a 0;
+	 */
 	public Control() {
 		super();
-		this.ctrRandom = new ControlRandom();
-		start();
-		this.scort = 0;
-		this.timer = 0;
-	}
 
-	public void start() {
+		hero = new Hero();
 
 		listMonstre = new ArrayList<Monstre>();
 		listBlock = new ArrayList<Block>();
-		hero = new Hero(4, 1);
+		listProjectil = new ArrayList<Projectil>();
+
 		Monstre.setHero(hero);
+
+		generationPlateau();
+
+		this.timer = 0;
+	}
+
+	/**
+	 * ajout dans la liste de block des object block (rock , tree , bush ) ajout
+	 * dans la liste des monstre (knight , goblin tomato , chicken) appele du
+	 * constructeur du plateau
+	 */
+	private void generationPlateau() {
+		// TODO Auto-generated method stub
 		creationBlock();
 		creationMonstre();
 		plateau = new Plateau(hero, listBlock, listMonstre);
@@ -60,71 +74,51 @@ public class Control {
 
 	private void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(0);
-		creationArbre(0);
-		creationRock(0);
+		creationBush(10);
+		creationArbre(20);
+		creationRock(20);
 	}
 
 	private void creationMonstre() {
 		// TODO Auto-generated method stub
 		creationMinotaure(0);
-		creationChicken(0);
-		creationGoblin(0);
-		creationTomato(1);
+		creationChicken(50);
+		creationGoblin(10);
+		creationTomato(5);
 	}
-	
+
 	private void creationTomato(int nombre) {
 		for (int i = 0; i < nombre; i++) {
-		//	int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
-		//	int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
-			int random1 = (int) (Math.random() * (12 + 1 - 5)) + 5;
-			int random2 = (int) (Math.random() * (12 + 1 - 5)) + 5;
-			listMonstre.add(new Tomato(random1, random2));
-		}		
-}
+			listMonstre.add(new Tomato());
+		}
+	}
 
 	private void creationGoblin(int nombre) {
-				for (int i = 0; i < nombre; i++) {
-					int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
-					int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
-					listMonstre.add(new Goblin(random1, random2));
-				}		
+		for (int i = 0; i < nombre; i++) {
+			listMonstre.add(new Goblin());
+		}
 	}
 
 	private void creationChicken(int nombre) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < nombre; i++) {
-
-			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
-			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
-
-			listMonstre.add(new Chicken(random1, random2));
+			listMonstre.add(new Chicken());
 
 		}
 	}
 
 	private void creationMinotaure(int nombre) {
 		for (int i = 0; i < nombre; i++) {
-
-			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
-			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
-
-			listMonstre.add(new Minotaure(random1, random2) );
+			listMonstre.add(new Knight());
 
 		}
-		
+
 	}
-
-
 
 	private void creationBush(int nombre) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < nombre; i++) {
-
-			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
-			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
-
-			listBlock.add(new Bush(random1, random2));
+			listBlock.add(new Bush());
 
 		}
 	}
@@ -133,39 +127,101 @@ public class Control {
 		// TODO Auto-generated method stub
 
 		for (int i = 0; i < nombre; i++) {
-
-			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
-			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
-
-			listBlock.add(new Rock(random1, random2));
+			listBlock.add(new Rock());
 
 		}
 	}
 
 	private void creationArbre(int nombre) {
-		// TODO Auto-generated method stub
-
 		for (int i = 0; i < nombre; i++) {
-
-			int random1 = (int) (Math.random() * (23 + 1 - 1)) + 1;
-			int random2 = (int) (Math.random() * (16 + 1 - 1)) + 1;
-
-			listBlock.add(new Arbre(random1, random2));
+			listBlock.add(new Arbre());
 
 		}
 
-		contourArbre();
 	}
 
-	private void contourArbre() {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < 25; i++) {
-			listBlock.add(new Arbre(0, i));
-			listBlock.add(new Arbre(i, 0));
-			listBlock.add(new Arbre(i, 17));
-			listBlock.add(new Arbre(24, i));
+	public boolean action(String herodescision, boolean heroaction) {
+
+		removeProjectil();
+		this.timer++;
+		if (listMonstre.isEmpty() ) {
+			freegame =true;
+		}
+		
+		if (this.timer % 2 == 0) {
+			 deplacerProjectil();
+		}
+		
+		if (this.timer % 15 == 0) {
+
+			for (Monstre monstre : this.listMonstre) {
+				 monstre.action(plateau);
+			}
+		}
+		if (this.timer % 15 == 0 || freegame) {
+			if (heroaction) {
+				this.hero.action(this.plateau, herodescision);
+			}
+			return false;
+		}
+
+		return heroaction;
+	}
+
+	private void deplacerProjectil() {
+		for (Projectil p : this.listProjectil) {
+			 p.interactionDeplacement(plateau, plateau.getListCase().get(p.getNumeroCase()), p.getDirection());
 		}
 	}
+	public static void removeMonstre(Monstre m) {
+		listMonstre.remove(m);
+		plateau.getListCase().get(m.getNumeroCase()).setElement(new Vide());
+	}
+	public static void removeBlock(Block b) {
+		listBlock.remove(b);
+		plateau.getListCase().get(b.getNumeroCase()).setElement(new Vide());
+
+	}
+	public void removeProjectil() {
+		List<Projectil> listProjectildead = new ArrayList<Projectil>();
+		for (Projectil p : this.listProjectil) {
+			if (p.getCurentAction().equals("detruir") ) {
+				listProjectildead.add(p);
+			}
+		}
+		for (Projectil p : listProjectildead) {
+			listProjectil.remove(p);
+			plateau.getListCase().get(p.getNumeroCase()).setProjectil(new Aire());
+
+		}
+	}
+	public static void tirer(Projectil projectil, Case c) {
+			plateau.placerProjectil(projectil, c.getCoordonnee());
+			listProjectil.add(projectil);
+		}
+
+	
+
+	// ########################### Affichage des informations ##################
+	public void information() {
+		System.out.println();
+		System.out.println("Plateau");
+		this.plateau.afficher();
+
+		System.out.println();
+		System.out.println("Hero");
+		this.hero.afficher();
+
+		System.out.println();
+		System.out.println("Monstre");
+
+		for (Monstre m : listMonstre) {
+			m.afficher();
+		}
+
+	}
+
+	// ######################## GETTER SETTER ################################
 
 	public List<Monstre> getListMonstre() {
 		return listMonstre;
@@ -178,7 +234,7 @@ public class Control {
 	public void setListBlock(List<Block> listBlock) {
 		this.listBlock = listBlock;
 	}
-	
+
 	public Plateau getPlateau() {
 		return plateau;
 	}
@@ -195,182 +251,7 @@ public class Control {
 		this.hero = hero;
 	}
 
-	public void deplaceChicken() {
-		List <Monstre> monstreTransform = new ArrayList<Monstre>();
-		List <Monstre> monstreDead = new ArrayList<Monstre>();
-
-			for (Monstre m : listMonstre) {
-				if (m.getNom().equals("Chicken") || m.getNom().equals("Goblin") ) {
-					if (m.getCurentAction().equals("transformation")) {
-						monstreTransform.add(m);
-						
-					}else if (m.getCurentAction().equals("dead")) {
-						monstreDead.add(m);
-					}
-					else {
-						m.deplacer(ctrRandom.deplacement(), plateau);
-					}
-				}
-				if ( m.getNom().equals("Tomato")) {
-					((Tomato) m).action();
-				}
-			}
-			
-			for (Monstre m : monstreTransform) {
-				this.listMonstre.remove(m);
-				Minotaure minotaure = new Minotaure(m.getCoordonnee()) ;
-				this.listMonstre.add(minotaure);
-				this.plateau.getCase(m.getCoordonnee()).setElement(minotaure);
-			}
-			for (Monstre m : monstreDead) {
-				this.listMonstre.remove(m);
-			}
-	}
-	
-	private void actionMinotaure() {
-		List <Monstre> monstreDead = new ArrayList<Monstre>();
-
-		for (Monstre m : listMonstre) {
-			 if (m.getCurentAction().equals("dead")) {
-					monstreDead.add(m);
-				}
-			if (m.getNom().equals("Minotaure")) {
-				((Minotaure) m).action(plateau);
-			}
-		}		
-		for (Monstre m : monstreDead) {
-			this.listMonstre.remove(m);
-		}
-	}
-
-
-	public void deplacerProgectil() {
-		List <Projectil> projectilDead = new ArrayList<Projectil>();
-
-		if (!hero.getListProjectil().isEmpty()) {
-			for(Projectil p : hero.getListProjectil() ) {
-				if (p.getFrame() == 3 ) {
-					p.deplacer(plateau);
-				}
-				if ( ! p.getExist()) {
-					projectilDead.add(p);
-				}
-			}
-			
-		}
-		for (Projectil p : projectilDead) {
-			this.hero.getListProjectil().remove(p);
-		}
-	}
-
-	public boolean action(String herodescision , boolean heroaction) {
-		
-		this.timer++;
-		deplacerProgectil();
-
-		if (this.timer%(32+16) == 0) {
-
-			deplaceChicken();
-			actionMinotaure();
-			
-			if (heroaction) {
-				actionHero(herodescision);
-			}
-			return false;
-		}
-		if (listMonstre.isEmpty() || freegame) {
-			if (heroaction) {
-			//System.out.println("Win");
-			actionHero(herodescision);
-			return false;
-			}
-		}
-		return heroaction;
-	}
-
-
-	
-	private void actionHero(String descision) {
-		switch(descision) {
-		case "moveUp": deplacerHero(new Direction ("up"));
-		break;
-		case "moveDown": deplacerHero(new Direction ("down"));
-			break;
-		case "moveRight": deplacerHero(new Direction ("right"));
-			break;
-		case "moveLeft":deplacerHero(new Direction ("left"));
-			break;
-		case "tirer" : animationBowHero(); 
-			break;
-		case "attaque": animationAttackHero();
-			break;
-		case "bomb": animationPlaceBombHero();
-			break;
-		default :
-			break;
-		}
-	}
-
-	public void deplacerHero(Direction direction) {
-		// TODO Auto-generated method stub
-		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
-			this.hero.deplacer(direction, plateau);
-		}
-	}
-
-	public void animationBowHero() {
-		// TODO Auto-generated method stub
-		if (this.hero.getCurentAction().equals("nothing") && onTheBeat() ) {
-			this.hero.animationBow();;
-		}
-	}
-	public void animationPlaceBombHero() {
-		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
-			this.hero.placerBomb(plateau);
-		}		
-	}
-	
-	public void animationAttackHero() {
-		// TODO Auto-generated method stub
-		if (this.hero.getCurentAction().equals("nothing")&& onTheBeat() ) {
-			this.hero.animationSword();
-		}
-	}
-
-	
-
-
-	
-	private boolean onTheBeat () {
-		if (timer%16 == 0 || timer%16 == 1 || timer%16 == 15 || timer%16 == 14 || timer%16 == 2 
-				 ||timer%16 == 3 || timer%16 == 13 
-				|| timer%16 == 4 || timer%16 == 12
-				|| timer%16 == 5 || timer%16 == 11
-				) {
-			return true ;
-			}
-		return true ;
-		}
-
-	public void information() {
-		System.out.println();
-		System.out.println("Plateau");
-		this.plateau.afficher();
-		
-		System.out.println();
-		System.out.println("Hero");
-		this.hero.afficher();
-		
-		System.out.println();
-		System.out.println("Monstre");
-
-		for (Monstre m : listMonstre) {
-			m.afficher();
-		}
-		
-	}
 	
 	
-	
-	
+
 }

@@ -3,45 +3,34 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import block.Vide;
+import damage.Damage;
+import damage.DamageHero;
+import damage.DamageMonstre;
 import tool.Tool;
 
-public abstract class Unite extends Element{
+public abstract class Unite extends Element {
 
+	// ??
 	private boolean exist ;
-	private int life;
+	
 	private Damage damage;
+	private int MaxLife ;
+	private int life;
+
 	
-
-
-	public abstract void deplacer(Direction direction, Plateau plateau);
+	public abstract void mourir();
 	
-	public abstract void soigner(int soin );
-
-	public abstract void attaquer(Plateau plateau) ;
 	
 	public abstract void afficher();
 
 	
-	public void mourir(Plateau p , int x,int y , boolean respawn) {
-		this.exist = false ;
-		
-		int num = Tool.CoordinateToNum(this.getCoordonnee());
-		Coordonnee cord = new Coordonnee(this.getCoordonnee());
-		p.getListCase().get(num).setElement(new Vide (cord));
-		
-		if (respawn) {
-			
-			num = Tool.CoordinateToNum(x ,y);
-			this.soigner (1000000);
-			this.setCoordonnee(new Coordonnee (x,y) );
-			p.getListCase().get(num).setElement(this);
-			this.exist = true;
-			
-		}
-		
-	}
+	//######################## GETTER SETTER ##########################################
 
 	public boolean isAlive() {
+		return exist;
+	}
+	public boolean isExist() {
 		return exist;
 	}
 
@@ -56,9 +45,15 @@ public abstract class Unite extends Element{
 	public void setLife(int life) {
 		this.life = life;
 	}
+	
+	public int getMaxLife() {
+		return MaxLife;
+	}
 
-	
-	
+	public void setMaxLife(int maxLife) {
+		MaxLife = maxLife;
+	}
+
 	public Damage getDamage() {
 		return damage;
 	}
@@ -70,9 +65,7 @@ public abstract class Unite extends Element{
 		this.damage = new DamageMonstre (epee , magie , bomb , fleche);
 	}
 
-	public boolean isExist() {
-		return exist;
-	}
+	
 
 	
 	

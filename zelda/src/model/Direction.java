@@ -77,7 +77,13 @@ public class Direction {
 	
 	public void setDirection(Direction direction) {
 		this.direction = direction.getDirection();
+	}
+
+	@Override
+	public String toString() {
+		return  direction;
 	} 
+	
 	
 	
 	

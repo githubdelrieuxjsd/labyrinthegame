@@ -13,257 +13,147 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import block.Rock;
+import block.Vide;
+import controleur.Control;
+import damage.Damage;
+import item.Bomb;
+import item.Item;
+import mobInterface.Attaque;
+import mobInterface.Deplacement;
+import mobInterface.Dessin;
+import mobInterface.PerdreVie;
+import mobInterface.Soigner;
+import mobInterface.Tirer;
+import projectil.Fleche;
+import projectil.Projectil;
 import tool.Tool;
 
-public class Hero extends Unite {
+public class Hero extends Unite implements Deplacement,Attaque,Tirer,Soigner  {
 
-	private List<Projectil> listProjectil;
-	private int maxLife = 5;
-	
+	// voir inventaire 
 
-	public Hero(Coordonnee coordonnee) {
+	public Hero( ) {
 		super();
-		this.setExist(true);
-
-		
-		this.setCoordonnee(coordonnee);
-		this.setFrame(0);
-		this.setCurentAction("nothing") ;
-		this.setDirection(new Direction ("down" ));
-
-		this.setLife(5);
-		this.setDamageHero( 2,0,0 );
-		this.listProjectil = new ArrayList<Projectil>();
-	}
-
-	public Hero(int x, int y) {
-		super();
-		this.setExist(true);
-
-		this.setCoordonnee(new Coordonnee(x,y));
-		this.setFrame(0);
-		this.setCurentAction("nothing") ;
-		
 		this.setNom("Hero");
-		this.setLife(5);
-		this.setDamageHero(2,0,0);
-		this.listProjectil = new ArrayList<Projectil>();
-		this.setDirection(new Direction ("down" ));
+		this.setExist(true);
 
+		this.setFrame(0);
+		this.setCurentAction("nothing");
+		this.setDirection( new Direction ("down") );
+
+		this.setMaxLife(5);
+		this.setLife( this.getMaxLife() );
+		
+		this.setDamageHero( 2,0,0 );
+		
+		
 	}
-
-	@Override
-	public void deplacer(Direction direction, Plateau plateau) {
-		// TODO Auto-generated method stub
-		// System.out.println(this.coordonnee +"," + this.getListProjectil().size() );
-		this.setDirection(direction);
-		if (this.isAlive()) {
-			switch (direction.getDirection()) {
-
-			case "up":
-				Case caseUp = plateau.getCaseUp(this.getCoordonnee());
-				interactionDeplacement(plateau, caseUp);
-				break;
-			case "down":
-				Case caseDown = plateau.getCaseDown(this.getCoordonnee());
-				interactionDeplacement(plateau, caseDown);
-				break;
-			case "left":
-				Case caseLeft = plateau.getCaseLeft(this.getCoordonnee());
-				interactionDeplacement(plateau, caseLeft);
-				break;
-			case "right":
-				Case caseRight = plateau.getCaseRight(this.getCoordonnee());
-				interactionDeplacement(plateau, caseRight);
-				break;
-			default:
-				break;
-
-			}
+	
+	//######################### A FAIRE  #########################################	
+		@Override
+		public void mourir() {
+			this.soigner(this.getMaxLife());
 		}
+		//######################### A FAIRE  Tirer #########################################
 
+		@Override
+		public void tirer(Plateau plateau, Case c) {
+			Fleche fleche = new Fleche (this.getDirection());
+			Control.tirer(fleche,c);
+		}
+	//######################### ACTION  #########################################	
+
+	public void action(Plateau plateau, String descision) {
+		
+		Case c = plateau.getListCase().get(this.getNumeroCase()) ;
+		
+		switch (descision) {
+		case "moveUp":
+			this.interactionDeplacement(plateau,c, new Direction("up"));
+			break;
+			
+		case "moveDown":
+			this.interactionDeplacement(plateau,c, new Direction("down"));
+			break;
+			
+		case "moveRight":
+			this.interactionDeplacement(plateau,c, new Direction("right"));
+			break;
+			
+		case "moveLeft":
+			this.interactionDeplacement(plateau,c, new Direction("left"));
+			break;
+			
+		case "tirer":
+			this.setCurentAction("animationTirer");
+			this.setFrame(0);
+			break;
+			
+		case "attaque":
+			this.setCurentAction("animationAttaque");
+			this.setFrame(0);
+			break;
+		case "bomb":
+			this.setCurentAction("animationPlacerBomb");
+			this.setFrame(0);
+			plateau.getCase(c.getCoordonnee()).setItem(new Bomb());
+			break;
+		default:
+			break;
+		}		
 	}
+	
+	
+	//######################### DEPLACEMENT #########################################
+	@Override
+	public void deplacer (Plateau plateau ,Case caseAvant, Case caseApres) {
+		this.setCurentAction("moving");
+		this.setFrame(0);
 
-	private void interactionDeplacement(Plateau plateau, Case c) {
-		// TODO Auto-generated method stub
-		switch (c.getElement().getNom()) {
+		Projectil p = caseApres.getProjectil() ;
+		if ( ! p.getNom().equals("Aire")) {
+			this.perdreVie(p.getDamage(),plateau);
+		}
+		
+		Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
+
+		int num = Tool.CoordinateToNum(caseAvant.getCoordonnee());
+		Vide v = new Vide( );
+		plateau.getListCase().get(num).setElement(v);
+
+		num = Tool.CoordinateToNum(caseApres.getCoordonnee());
+		
+		plateau.getListCase().get(num).setElement(this);
+		this.setNumeroCase(num);
+		
+		this.Ramasser(caseApres);
+		
+	}
+	
+	@Override
+	public void interactionDeplacement(Plateau plateau,Case caseAvant, Direction direction) {
+		this.setDirection(direction);
+		Case caseApres = plateau.getCaseDevant(caseAvant, this.getDirection());
+		
+		
+		
+		
+		switch (caseApres.getElement().getNom()) {
 
 		case "Vide":
-			interactionVide(plateau, c);
-			break;
-		case "Arbre":
-			// System.out.println("hero est rentre dans " + c.getElement().getNom());
+			this.deplacer(plateau,caseAvant, caseApres);
 			break;
 		case "Rock":
-			interactionRock(plateau, c);
-			break;
-		case "Minotaure":
-			break;
-		case "HeroProjectil":
-			if (!((HeroProjectil) c.getElement()).getExist()) {
-				interactionVide(plateau, c);
-			}
+			((Rock) caseApres.getElement()).interactionDeplacement( plateau, caseApres,this.getDirection());
 
+			if (caseApres.getElement().getNom().equals("Vide")) {
+				this.deplacer( plateau ,caseAvant,caseApres);
+			}
 			break;
 		default:
 			// System.out.println("hero est rentrer dans " + c.getElement().getNom());
 			break;
-		}
-	}
-
-	private void interactionRock(Plateau plateau, Case c) {
-		// TODO Auto-generated method stub
-		((Rock) c.getElement()).deplacer(getDirection(), plateau);
-
-		if (c.getElement().getNom().equals("Vide")) {
-			this.deplacer(getDirection(), plateau);
-		}
-	}
-
-	private void interactionVide(Plateau plateau, Case caseApres) {
-		// TODO Auto-generated method stub
-		this.setCurentAction("moving");
-		this.setFrame(0);
-
-		Case caseAvant = plateau.getCase(this.getCoordonnee());
-		Coordonnee cordApres = new Coordonnee(caseApres.getElement().getCoordonnee());
-
-		int num = Tool.CoordinateToNum(caseAvant.getElement().getCoordonnee());
-		Vide v = new Vide(this.getCoordonnee());
-		plateau.getListCase().get(num).setElement(v);
-
-		num = Tool.CoordinateToNum(caseApres.getElement().getCoordonnee());
-		plateau.getListCase().get(num).setElement(this);
-		this.setCoordonnee(cordApres);
-
-		
-		this.Ramasser( caseApres);
-
-	}
-
-	
-
-	@Override
-	public void attaquer(Plateau plateau) {
-		
-		switch (this.getDirection().getDirection()) {
-
-		case "up":
-			Case caseUp = plateau.getCaseUp(this.getCoordonnee());
-			Case caseUpLeft = plateau.getCaseUpLeft(this.getCoordonnee());
-			Case caseUpRight = plateau.getCaseUpRight(this.getCoordonnee());
-
-			caseUp.getElement().perdreVie(this.getDamage(), plateau);
-			caseUpLeft.getElement().perdreVie(this.getDamage(), plateau);
-			caseUpRight.getElement().perdreVie(this.getDamage(), plateau);
-
-//			System.out.println(caseUpLeft+ ","+caseUp +","+caseUpRight);
-			break;
-		case "down":
-			Case caseDownLeft = plateau.getCaseDownLeft(this.getCoordonnee());
-			Case caseDown = plateau.getCaseDown(this.getCoordonnee());
-			Case caseDownRight = plateau.getCaseDownRight(this.getCoordonnee());
-			
-			caseDown.getElement().perdreVie(this.getDamage(), plateau);
-			caseDownLeft.getElement().perdreVie(this.getDamage(), plateau);
-			caseDownRight.getElement().perdreVie(this.getDamage(), plateau);
-
-	//		System.out.println(caseDownLeft+ ","+caseDown +","+caseDownRight);
-
-			break;
-		case "left":
-			Case caseLeft = plateau.getCaseLeft(this.getCoordonnee());
-			caseUpLeft = plateau.getCaseUpLeft(this.getCoordonnee());
-			caseDownLeft = plateau.getCaseDownLeft(this.getCoordonnee());
-
-			caseLeft.getElement().perdreVie(this.getDamage(), plateau);
-			caseUpLeft.getElement().perdreVie(this.getDamage(), plateau);
-			caseDownLeft.getElement().perdreVie(this.getDamage(), plateau);
-			
-		//	System.out.println(caseUpLeft+ ","+caseLeft +","+caseDownLeft);
-
-			
-			break;
-		case "right":
-			Case caseRight = plateau.getCaseRight(this.getCoordonnee());
-			caseUpRight = plateau.getCaseUpRight(this.getCoordonnee());
-			caseDownRight = plateau.getCaseDownRight(this.getCoordonnee());
-
-			caseRight.getElement().perdreVie(this.getDamage(), plateau);
-			caseDownRight.getElement().perdreVie(this.getDamage(), plateau);
-			caseUpRight.getElement().perdreVie(this.getDamage(), plateau);
-			
-			//System.out.println(caseUpRight+ ","+caseRight +","+caseDownRight);
-
-			
-			break;
-		default:
-			break;
-
-		}
-
-	}
-	
-	public void animationBow () {
-		this.setCurentAction("animationBow");
-		this.setFrame(0);
-	}
-	public void animationSword () {
-		this.setCurentAction("animationAttaque");
-		this.setFrame(0);
-	}
-	
-	public void tirer(Plateau plateau) {
-		// TODO Auto-generated method stub
-		if (this.isAlive()) {
-			Coordonnee cord = new Coordonnee(this.getCoordonnee());
-			HeroProjectil heroProjectil = new HeroProjectil(cord, getDirection()) ;
-
-			// System.out.println(heroProjectil.coordonnee);
-			/**
-			 * if (!this.listProjectil.isEmpty()) {
-				listProjectil.get(0).setExist(false);
-				listProjectil.get(0).setNom("Vide");
-
-				listProjectil.remove(0);
-			}
-			*/
-			listProjectil.add(heroProjectil);
-
-			placerProjectil(plateau, heroProjectil);
-
-		}
-
-	}
-
-	public List<Projectil> getListProjectil() {
-		return listProjectil;
-	}
-
-	public void setListProjectil(List<Projectil> listProjectil) {
-		this.listProjectil = listProjectil;
-	}
-
-	private void placerProjectil(Plateau plateau, HeroProjectil heroProjectil) {
-		// TODO Auto-generated method stub
-		int num = Tool.CoordinateToNum(heroProjectil.getCoordonnee());
-		plateau.getListCase().get(num).setElement(heroProjectil);
-		heroProjectil.deplacer(plateau);
-		plateau.getListCase().get(num).setElement(this);
-
-	}
-
-	@Override
-	public void perdreVie(Damage damage, Plateau p) {
-
-		if (damage.doDamage(this)) {
-			this.setLife(this.getLife() - damage.getExplosion() - damage.getEpee() -damage.getMagie() - damage.getProjectil());
-			this.setCurentAction("hurt");
-			this.setFrame(0);
-		}
-		//System.out.println("life : "+this.getLife());
-		if (getLife() <= 0) {
-			this.mourir(p, 4, 1, true);
 		}
 	}
 
@@ -281,32 +171,106 @@ public class Hero extends Unite {
 		}
 	}
 	
+	//######################### ATTAQUE #########################################
+
+	@Override
+	public void attaquer(Plateau plateau, Case c) {
+		
+		switch (this.getDirection().getDirection()) {
+
+		case "up":
+			Case caseUp = plateau.getCaseUp(c.getCoordonnee());
+			Case caseUpLeft = plateau.getCaseUpLeft(c.getCoordonnee());
+			Case caseUpRight = plateau.getCaseUpRight(c.getCoordonnee());
+
+			caseUp.getElement().perdreVie(this.getDamage(), plateau);
+			caseUpLeft.getElement().perdreVie(this.getDamage(), plateau);
+			caseUpRight.getElement().perdreVie(this.getDamage(), plateau);
+
+//			System.out.println(caseUpLeft+ ","+caseUp +","+caseUpRight);
+			break;
+		case "down":
+			Case caseDownLeft = plateau.getCaseDownLeft(c.getCoordonnee());
+			Case caseDown = plateau.getCaseDown(c.getCoordonnee());
+			Case caseDownRight = plateau.getCaseDownRight(c.getCoordonnee());
+			
+			caseDown.getElement().perdreVie(this.getDamage(), plateau);
+			caseDownLeft.getElement().perdreVie(this.getDamage(), plateau);
+			caseDownRight.getElement().perdreVie(this.getDamage(), plateau);
+
+	//		System.out.println(caseDownLeft+ ","+caseDown +","+caseDownRight);
+
+			break;
+		case "left":
+			Case caseLeft = plateau.getCaseLeft(c.getCoordonnee());
+			caseUpLeft = plateau.getCaseUpLeft(c.getCoordonnee());
+			caseDownLeft = plateau.getCaseDownLeft(c.getCoordonnee());
+
+			caseLeft.getElement().perdreVie(this.getDamage(), plateau);
+			caseUpLeft.getElement().perdreVie(this.getDamage(), plateau);
+			caseDownLeft.getElement().perdreVie(this.getDamage(), plateau);
+			
+		//	System.out.println(caseUpLeft+ ","+caseLeft +","+caseDownLeft);
+
+			
+			break;
+		case "right":
+			Case caseRight = plateau.getCaseRight(c.getCoordonnee());
+			caseUpRight = plateau.getCaseUpRight(c.getCoordonnee());
+			caseDownRight = plateau.getCaseDownRight(c.getCoordonnee());
+
+			caseRight.getElement().perdreVie(this.getDamage(), plateau);
+			caseDownRight.getElement().perdreVie(this.getDamage(), plateau);
+			caseUpRight.getElement().perdreVie(this.getDamage(), plateau);
+			
+			//System.out.println(caseUpRight+ ","+caseRight +","+caseDownRight);
+
+			
+			break;
+		default:
+			break;
+
+		}
+
+	}
+	
+	
+
+
+	//######################### PERDRE VIE  #########################################
+
+	@Override
+	public void perdreVie(Damage damage, Plateau p) {
+
+		if (damage.doDamage(this)) {
+			this.setLife(this.getLife() - damage.getExplosion() - damage.getEpee() -damage.getMagie() - damage.getProjectil());
+			this.setCurentAction("hurt");
+			this.setFrame(0);
+		}
+		//System.out.println("life : "+this.getLife());
+		if (getLife() <= 0) {
+			this.mourir();
+		}
+	}
+	
+	
+	//######################### SOIGNER  #########################################
+	
 	@Override
 	public void soigner(int soin) {
 		// TODO Auto-generated method stub
-		if (soin + getLife() >= maxLife) {
-			this.setLife(this.maxLife);
+		if (soin + getLife() >= getMaxLife()) {
+			this.setLife(this.getMaxLife());
 		} else {
 			this.setLife(this.getLife() + soin);
 		}
 
 	}
 
-	public void setCoordonnee(int x, int y) {
-
-		this.setCoordonnee(new Coordonnee(x, y));
-
-	}
+	// ######################### IMAGE #########################################
 
 	@Override
-	public void afficher() {
-		// TODO Auto-generated method stub
-		System.out.println(this.getNom() + "," + this.getLife() + "," + this.getCoordonnee() + "," + this.isExist()
-				+ "," + this.getDamage());
-	}
-
-	@Override
-	public String getImage(Plateau plateau , Case c) {
+	public String trouverImage(Plateau plateau , Case c) {
 		String icon = "hyrule/link/beat/Down1.png";
 		//System.out.println(this.getCurentAction());
 		//System.out.println(this.getFrame());
@@ -338,19 +302,19 @@ public class Hero extends Unite {
 			this.setFrame((getFrame() +1) % 7);
 			
 			if (this.getFrame() == 2) {
-				this.attaquer(plateau);
+				this.attaquer(plateau, c);
 			}
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothing");
 			}
 			
 			break;
-		case "animationBow":
+		case "animationTirer":
 			icon = this.imageBow();
 			this.setFrame((getFrame() +1) % 9);
 			
 			if (this.getFrame() == 5) {
-				this.tirer(plateau);
+				this.tirer(plateau,c);
 			}
 			
 			if (this.getFrame() == 0) {
@@ -518,14 +482,14 @@ public class Hero extends Unite {
 	}
 
 	@Override
-	public int trouverX() {
-		int res = this.getCoordonnee().getX() * 40 -40;
+	public int trouverX(Case c) {
+		int res = c.getCoordonnee().getX() * c.getTailleCasePixel() -c.getTailleCasePixel();
 		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
-			int num =    this.getFrame()  / 2  +1;
-			res = res + num * 13 - 40 ;
+			int num =    this.getFrame()   +1;
+			res = res + num * c.getTailleCasePixel()/3 - c.getTailleCasePixel() ;
 		} else if (this.getDirection().equals("left") && this.getCurentAction().equals("moving")) {
-			int num =    this.getFrame()  /2  +1;
-			res = res - num * 13 +40 ;
+			int num =    this.getFrame()   +1;
+			res = res - num * c.getTailleCasePixel()/3 +c.getTailleCasePixel() ;
 		}
 		
 		
@@ -533,39 +497,51 @@ public class Hero extends Unite {
 	}
 
 	@Override
-	public int trouverY() {
-		int res = this.getCoordonnee().getY() * 40 -40;
+	public int trouverY(Case c) {
+		int res = c.getCoordonnee().getY() * c.getTailleCasePixel() -c.getTailleCasePixel();
 		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
-			int num =    this.getFrame()  /2  +1;
-			res = res - num * 13 +40 ;
+			int num =    this.getFrame()    +1;
+			res = res - num * c.getTailleCasePixel()/3 +c.getTailleCasePixel() ;
 		} else if (this.getDirection().equals("down") && this.getCurentAction().equals("moving")) {
-			int num =    this.getFrame()  /2  +1;
-			res = res + num * 13 - 40;
+			int num =    this.getFrame()    +1;
+			res = res + num * c.getTailleCasePixel()/3 - c.getTailleCasePixel();
 		}
 		
 		return res;
 	}
 
-	@Override
-	public int trouverlargeur() {
-		int res = 120;
-		return res ;
-	}
 
 	@Override
-	public int trouverlongeur() {
-		int res = 120;
-		return res ;
-	}
-
-	public void placerBomb(Plateau plateau) {
-		plateau.getCase(this.getCoordonnee()).setItem(new Bomb());		
-	}
-
-	public int getMaxLife() {
+	public int trouverlongeur(Case c) {
 		// TODO Auto-generated method stub
-		return this.maxLife;
+		return 3*c.getTailleCasePixel();
 	}
+
+	@Override
+	public int trouverlargeur(Case c) {
+		// TODO Auto-generated method stub
+		return 3*c.getTailleCasePixel();
+	}
+
+	//######################### INFORMATION  #########################################
+
+
+	@Override
+	public void afficher() {
+		// TODO Auto-generated method stub
+		System.out.println(this.getNom() + "," + this.getLife() + "," + this.isExist()
+				+ "," + this.getDamage());
+	}
+
+	
+	
+	
+	//######################### GETTER SETTER  #########################################
+
+
+
+
+	
 
 	
 

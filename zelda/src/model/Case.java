@@ -5,120 +5,125 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import block.Vide;
+import item.Item;
+import item.Rien;
+import monstre.Monstre;
+import projectil.Aire;
+import projectil.Projectil;
+
 public class Case {
 
+	private int tailleCasePixel ;
+
+	
+	private Coordonnee coordonnee ;
+	
 	private Element element ;
 	private Item item;
+	private Projectil projectil ;
 	
 	private static int compt = 0 ;
 	private int num ;
 	
 
-	public Case(Element element) {
-		super();
-		compt++;
-		this.num = compt;
-		this.element = element;
-		this.item = new Rien () ;
-	}
-
-
-	public Case(Element element, Item item) {
-		super();
-		compt++;
-		this.num = compt;
-		this.element = element;
-		if (this.estVide()) {
-			this.item = item;
-		}
-		else {
-			this.item = new Rien();
-		}
-	}
-
-	public Element getElement() {
-		return element;
-	}
-
-	
-	public void setElement(Element element) {
-		this.element = element;
-	}
-
-	
-
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
-	public void setItem() {
-		this.setItem(new Rien() );	
-	}
-	public boolean estVide () {
-		return this.getElement().getNom().equals("Vide");
+	public Case(Coordonnee coordonnee ) {
+		this.tailleCasePixel = 40;
 		
+		this.coordonnee = coordonnee;
+		this.num = compt;
+		
+		this.element = new Vide ();
+		this.item = new Rien();
+		this.projectil = new Aire();
+		compt ++;
+
 	}
+	
+	
+	
+	
+
 	
 	private Image trouverElementImage(Plateau plateau ) {
-		Element element = this.getElement();
-		ImageIcon icon = new ImageIcon(element.getImage( plateau ,this));
+		ImageIcon icon = new ImageIcon(this.getElement().trouverImage( plateau ,this));
 		Image img = icon.getImage();
 		return img;
 	}
 	
 	private Image trouverItemImage(Plateau plateau ) {
-		Item item = this.getItem();
-		ImageIcon icon = new ImageIcon(item.getImage( plateau ,this));
+		ImageIcon icon = new ImageIcon(this.getItem().trouverImage( plateau ,this));
 		Image img = icon.getImage();
 		return img;
 	}
 	
+	private Image trouverProjectilImage(Plateau plateau ) {
+		ImageIcon icon = new ImageIcon(this.getProjectil().trouverImage( plateau ,this));
+		Image img = icon.getImage();
+		return img;
+	}
+	
+	
 	private int trouverElementX() {
-		return this.getElement().trouverX() ;
+		return this.getElement().trouverX(this) ;
 	}
 	private int trouverElementY() {
-		int res = this.getElement().trouverY() ;
+		int res = this.getElement().trouverY(this) ;
 		return res ;
 	}
 	private int trouverElementLongeur() {
-		int res = this.getElement().trouverlargeur() ;
+		int res = this.getElement().trouverlargeur(this) ;
 		return res ;
 	}
 	private int trouverElementLargeur() {
-		int res = this.getElement().trouverlongeur() ;
+		int res = this.getElement().trouverlongeur(this) ;
 		return res ;
 	}
-	private int trouverItemX(Plateau plateau, Case c) {
-		return this.getItem().trouverX( plateau,  c) ;
+	private int trouverProjectilX() {
+		return this.getProjectil().trouverX(this) ;
 	}
-	private int trouverItemY(Plateau plateau, Case c) {
-		int res = this.getItem().trouverY(plateau, c) ;
+	private int trouverProjectilY() {
+		int res = this.getProjectil().trouverY(this) ;
+		return res ;
+	}
+	private int trouverProjectilLongeur() {
+		int res = this.getProjectil().trouverlargeur(this) ;
+		return res ;
+	}
+	private int trouverProjectilLargeur() {
+		int res = this.getProjectil().trouverlongeur(this) ;
+		return res ;
+	}
+	private int trouverItemX() {
+		return this.getItem().trouverX(this) ;
+	}
+	private int trouverItemY() {
+		int res = this.getItem().trouverY(this) ;
 		return res ;
 	}
 	private int trouverItemLongeur() {
-		int res = this.getItem().trouverlargeur() ;
+		int res = this.getItem().trouverlargeur(this) ;
 		return res ;
 	}
 	private int trouverItemLargeur() {
-		int res = this.getItem().trouverlongeur() ;
+		int res = this.getItem().trouverlongeur(this) ;
 		return res ;
 	}
 	
-	public void dessinBlock(Plateau plateau , Graphics g) {
+	public void dessinItemBlockProjectil(Plateau plateau , Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(this.trouverItemImage(plateau), this.trouverItemX(plateau , this),
-			this.trouverItemY(plateau, this) , this.trouverItemLongeur(), this.trouverItemLargeur(), null);
+		g.drawImage(this.trouverItemImage(plateau), this.trouverItemX(),
+			this.trouverItemY() , this.trouverItemLongeur(), this.trouverItemLargeur(), null);
 
 		//this.afficherNum(102);
-		
-		if ( ! (this.getElement().getNom().equals("Hero") ||
+		if ( ! (this.getElement().isHero() ||
 				this.getElement().isMonstre()  )) {
 			g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
 					this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
 		}
+		
+		g.drawImage(this.trouverProjectilImage(plateau), this.trouverProjectilX(),
+				this.trouverProjectilY() , this.trouverProjectilLongeur(), this.trouverProjectilLargeur(), null);
 		
 	}
 	public void dessinUnite(Plateau plateau , Graphics g) {
@@ -134,6 +139,7 @@ public class Case {
 			
 			g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
 					this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
+			
 			if ( this.getElement().isMonstre() ) {
 			
 				if ( ((Monstre)this.getElement()).getLife() <  ((Monstre)this.getElement()).getMaxLife() 
@@ -146,52 +152,113 @@ public class Case {
 						}
 						Image img = icon.getImage();		
 
-						g.drawImage(img, ((Monstre) this.getElement()).trouverBarreVieX()+10*i ,
-								((Monstre) this.getElement()).trouverBarreVieY()	 , 10, 10, null);
+						g.drawImage(img, ((Monstre) this.getElement()).trouverBarreVieX(this)+15*i ,
+								((Monstre) this.getElement()).trouverBarreVieY(this)	 , 15, 15, null);
 					}
 			}
 			}
 		}
 		
-		
+		g.drawImage(this.trouverProjectilImage(plateau), this.trouverProjectilX(),
+				this.trouverProjectilY() , this.trouverProjectilLongeur(), this.trouverProjectilLargeur(), null);
 		
 	}
 	
 	
 	
+	//######################## TO STRING ##########################################
+
 	
-	
 
-	public void afficher() {
-		if (this.getElement().getNom().equals("Hero")) {
-			System.out.println( this.getElement().getNom() +"," + this.getElement().getCoordonnee() +","
-		+ ((Hero)this.getElement()).getLife()  +",   "+this.num);
+	public void afficher() {	
+		if (! this.getElement().getNom().equals("Vide")) {
+			System.out.println("###### Case "+num+" ######");
+			System.out.println("Coordonnee "+this.getCoordonnee());
+			System.out.println("Element "+this.getElement());
 
+			System.out.println("Item "+this.getItem());
+			System.out.println("Projectil "+this.getProjectil());
+
+			System.out.println("##########################");
 		}
+		
 
-		if (this.getElement().getNom().equals("Minotaure")) {
-			System.out.println( this.getElement().getNom() +"," + this.getElement().getCoordonnee()  +",   "+this.num );
 
-		}
 	}
 
 	public void afficherNum(int num) {
 		if (this.num == num ) {
+			
+			System.out.println("###### Case "+num+" ######");
+			System.out.println("Coordonnee "+this.getCoordonnee());
+			System.out.println("Element "+this.getElement());
+
+			System.out.println("Item "+this.getItem());
+			System.out.println("Projectil "+this.getProjectil());
+
+			System.out.println("##########################");
+
+
 			System.out.println(this.getElement().getNom() +",  "+this.getItem().getNom());
 		}
 	}
 
 	@Override
 	public String toString() {
-		String res = this.getElement().getNom() ; 
+		String res = "case comport :"+this.getElement().getNom() ; 
 		return res;
 	}
 
 
 	
+	//######################## GETTER SETTER ##########################################
 
+	
+	
+	public Element getElement() {
+		return element;
+	}
+	
+	public Coordonnee getCoordonnee() {
+		return coordonnee;
+	}
+
+	public Projectil getProjectil() {
+		return projectil;
+	}
+
+	public void setProjectil(Projectil projectil) {
+		this.projectil = projectil;
+	}
+
+	public void setElement(Element element) {
+		this.element = element;
+	}
+
+	
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+	public void setItem() {
+		this.setItem(new Rien() );	
+	}
+
+	public int getTailleCasePixel() {
+		return tailleCasePixel;
+	}
+
+	
+	
+	
+	
+	}
+	
 
 	
 	
 		
-}
+

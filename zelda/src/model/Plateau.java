@@ -3,85 +3,130 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import block.Arbre;
+import block.Block;
+import block.Vide;
+import item.Bomb;
+import item.Item;
+import item.Key;
+import item.Rien;
+import monstre.Monstre;
+import projectil.Aire;
+import projectil.Projectil;
 import tool.Tool;
 
 
 public class Plateau {
 	
-
-
 	private List<Case> listCase ;
+	private int nombreCaseX ;
+	private int nombreCaseY;
 
 	public Plateau( Hero hero, List<Block> listBlock, List<Monstre> listMonstre ) {
 		
-		this.listCase = new ArrayList<Case>() ;
-
+		this.nombreCaseX = 30;
+		this.nombreCaseY = 17 ;
 		
-		if (! this.listCase.isEmpty()) {
-			this.listCase.clear();
-		}
+		this.listCase = new ArrayList<Case>() ;
 		
 		placerVide();
-		placerBlock(listBlock);
-		placerMonstre(listMonstre);
-		placerHero(hero );
 		
-		System.out.println(this.getListCase().get(0).getElement().getNom());
+		placerBlockRandom(listBlock);
+		placerMonstreRandom(listMonstre);
+		this.placerElement(hero, new Coordonnee (9,1));
+		contourArbre();
 		this.afficher();
+		}
+	
+	
+	/**
+	 * ajout des arbre tout autour de la carte pour bloquer les unites 
+	 * la map est de 24x17
+	 */
+	private void contourArbre() {
+		for (int i = 0 ; i<nombreCaseY ;i++) {
+			this.placerElement(new Arbre() , new Coordonnee (nombreCaseX -1,i)) ;
+			this.placerElement(new Arbre() , new Coordonnee (i,0)) ;
+			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1 )) ;
+			this.placerElement(new Arbre() , new Coordonnee (0,i)) ;
+
+			
+		}
+		
+		for (int i = nombreCaseY; i < nombreCaseX; i++) {
+			this.placerElement(new Arbre() , new Coordonnee (i,0)) ;
+			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1)) ;
+		}
 	}
 	
 
-	private void placerMonstre(List<Monstre> listMonstre) {
-
+	private void placerMonstreRandom(List<Monstre> listMonstre) {
 		for (Monstre m : listMonstre) {
-				int num = Tool.CoordinateToNum(m.getCoordonnee());
-				this.listCase.get(num).setElement(m);
+			int x = (int) (Math.random() * (nombreCaseX-2 + 1 - 1)) + 1;
+			int y = (int) (Math.random() * (nombreCaseY-2 + 1 - 1)) + 1;
+
+				this.placerElement(m,new Coordonnee(x,y));
 			}
 	}
 
-
-
-	private void placerBlock(List<Block> listBlock) {
-		// TODO Auto-generated method stub
+	private void placerBlockRandom(List<Block> listBlock) {
 		for (Block b : listBlock) {
-			
-			int num = Tool.CoordinateToNum(b.getCoordonnee());
-			this.listCase.get(num).setElement(b);
-			this.listCase.get(num).setItem(new Rien () );
-			
-		}
-		
+			int x = (int) (Math.random() * (nombreCaseX-2 + 1 - 1)) + 1;
+			int y = (int) (Math.random() * (nombreCaseY-2 + 1 - 1)) + 1;
+
+			this.placerElement(b,new Coordonnee(x,y));		}
 	}
-
-
-	
-
-
-	private void placerHero(Hero hero) {
-		// TODO Auto-generated method stub
-		int num = Tool.CoordinateToNum(hero.getCoordonnee());
-		this.listCase.get(num).setElement(hero);
-		this.listCase.get(num).setItem(new Rien ());
-
-	}
-
-
 
 	private void placerVide() {
 		// TODO Auto-generated method stub
-		for (int i =0 ;i < 25 ; i++) {
-			for (int j = 0 ; j<25 ;j++) {
-				int random = (int)(Math.random()* (100+0-1)) + 0;
-				if (random > 101) {
-					listCase.add(new Case(new Vide( new Coordonnee (i,j)), new Key() ) ) ;
-				}
-				else {
-					listCase.add(new Case(new Vide( new Coordonnee (i,j) ) ) ) ;
-				}
+		for (int i =0 ;i < nombreCaseY ; i++) {
+			for (int j = 0 ; j<nombreCaseX ;j++) {
+					Case vide = new Case( new Coordonnee (j,i)  );
+					vide.setElement(new Vide () );
+					vide.setItem(new Rien () );
+					vide.setProjectil(new Aire() );
+					listCase.add( vide ) ;
 			}
 		}
 	}
 	
+	
+	public void placerElement (Element element , Coordonnee coordonnee) {
+		int num = Tool.CoordinateToNum(coordonnee);
+		this.listCase.get(num).setElement(element);
+		element.setNumeroCase(num);
+	}
+	
+	public void placerElement (Element element , int num) {
+		if (num> -1 && num < nombreCaseY*nombreCaseX) {
+			this.listCase.get(num).setElement(element);
+		}
+	}
+	public void placerItem(Item item , Coordonnee coordonnee) {
+		int num = Tool.CoordinateToNum( coordonnee);
+		this.listCase.get(num).setItem(item);
+	}
+	
+	public void placerItem(Item item , int num) {
+		if (num> -1 && num < nombreCaseY*nombreCaseX) {
+			this.listCase.get(num).setItem(item);
+		}
+	}
+	public void placerProjectil(Projectil projectil , Coordonnee coordonnee) {
+		int num = Tool.CoordinateToNum( coordonnee);
+		this.listCase.get(num).setProjectil(projectil);
+		projectil.setNumeroCase(num);
+
+	}
+	
+	public void placerProjectil (Projectil projectil , int num) {
+		if (num> -1 && num < nombreCaseY*nombreCaseX) {
+			this.listCase.get(num).setProjectil(projectil);
+		}
+	}	
+	
+	//######################## GETTER SETTER ##########################################
+
 	public List<Case> getListCase() {
 		return listCase;
 	}
@@ -90,10 +135,30 @@ public class Plateau {
 		this.listCase = listCase;
 	}
 	
-
+	public Case getCaseDevant (Case c,Direction direction) {
+		Case res = this.getCaseUp(c.getCoordonnee());
+		
+		switch (direction.getDirection()) {			
+		case "down":
+			res =  this.getCaseDown(c.getCoordonnee());
+			break;
+			
+		case "right":
+			res =  this.getCaseRight(c.getCoordonnee());
+			break;
+			
+		case "left":
+			res =  this.getCaseLeft(c.getCoordonnee());
+			break;
+		default:
+			break;
+		}
+		return res;
+	}
+	
 	public Case getCaseUp (Coordonnee coordonnee) {
 		
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() , coordonnee.getY()-1 )) ;
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() , coordonnee.getY()-1 ));
 	}
 	public Case getCaseDown (Coordonnee coordonnee) {
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() , coordonnee.getY()+1 )) ;
@@ -136,8 +201,7 @@ public class Plateau {
 
 	public void end() {
 		for (Case c : listCase) {
-			Coordonnee cord = new Coordonnee (c.getElement().getCoordonnee() );
-			c.setElement(new Vide (cord));
+			c.setElement(new Vide ());
 			c.setItem(new Key () );
 		}		
 	}

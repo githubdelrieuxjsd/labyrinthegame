@@ -1,84 +1,78 @@
 package model;
 
-import java.awt.Graphics;
+import mobInterface.Dessin;
+import mobInterface.PerdreVie;
 
-public abstract class Element {
+public abstract class Element implements PerdreVie, Dessin {
 
-	private Coordonnee coordonnee ;
-	private String nom ; 
-	private int frame ;
-	private Direction direction ;
+	private String nom;
+	private Direction direction;
 	private String curentAction;
+	private int numeroCase;
 
-	public boolean isMonstre () {
-		boolean res = false; 
-			switch	(this.getNom()){
-			case "Minotaure" : res = true;
-				break ; 
-			case "Chicken" : res = true ; 
-				break ;
-			case "Goblin" : res = true ; 
-			break ;
-			case "Tomato" : res = true ; 
-			break ;
-			default : 
-				break;
+	private int frame;
+
+	public boolean isMonstre() {
+		boolean res = false;
+		switch (this.getNom()) {
+		case "Knight":
+			res = true;
+			break;
+		case "Chicken":
+			res = true;
+			break;
+		case "Goblin":
+			res = true;
+			break;
+		case "Tomato":
+			res = true;
+			break;
+		default:
+			break;
 		}
-		return res ;		
+		return res;
 	}
-	
+
 	public boolean isHero() {
 		return this.getNom().equals("Hero");
 	}
-	
-	
-	/**
-	public Element(Coordonnee coordonnee) {
-		super();
-		this.coordonnee = coordonnee;
-		this.frame = 0;
-		this.direction = "down";
-		this.curentAction = ("nothing") ;
-	}
 
-	
-	public Element(int x , int y) {
-		super();
-		this.coordonnee = new Coordonnee(x,y);
-		this.frame = 0;
-		this.direction = "down";
-		this.curentAction = ("nothing") ;
+	// ######################## TO STRING ##########################################
+
+	public void afficher() {
+
+		System.out.println("######" + nom + " ######");
+		System.out.println("numero Case " + this.getNumeroCase());
+		System.out.println("Curent action  " + this.getCurentAction());
+
+		System.out.println("Frame " + this.getFrame());
+
+		System.out.println("##########################");
 
 	}
-	*/
-	
-	
+
+	@Override
+	public String toString() {
+		return "nom=" + nom;
+	}
+
+	// ######################## GETTER SETTER
+	// ##########################################
+
 	public String getCurentAction() {
 		return curentAction;
 	}
-
 
 	public void setCurentAction(String curentAction) {
 		this.curentAction = curentAction;
 	}
 
-
 	public Direction getDirection() {
 		return direction;
 	}
 
-
 	public void setDirection(Direction direction) {
-		this.direction = direction ;
-	}
-
-
-	public Coordonnee getCoordonnee() {
-		return coordonnee;
-	}
-
-	public void setCoordonnee(Coordonnee coordonnee) {
-		this.coordonnee = coordonnee;
+		this.direction = direction;
 	}
 
 	public String getNom() {
@@ -88,33 +82,21 @@ public abstract class Element {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
-	public abstract String getImage(Plateau plateau ,Case c) ;
-
 
 	public int getFrame() {
 		return frame;
 	}
 
-
 	public void setFrame(int frame) {
 		this.frame = frame;
 	}
 
-	public abstract void perdreVie(Damage damage , Plateau plateau);
+	public int getNumeroCase() {
+		return numeroCase;
+	}
 
-	protected abstract int trouverX();
+	public void setNumeroCase(int numeroCase) {
+		this.numeroCase = numeroCase;
+	}
 
-
-	protected abstract int trouverY();
-
-
-	protected abstract int trouverlargeur();
-
-
-	protected abstract int trouverlongeur();
-
-
-	
-		
 }

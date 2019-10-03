@@ -4,22 +4,27 @@ import model.Coordonnee;
 
 public abstract class Tool {
 
+	private static int nbCaseX = 30;
+	private static int nbCaseY = 17;
 	
 	public static int CoordinateToNum(Coordonnee c) {
-		return 25*c.getX()+c.getY();
+		return c.getX()+nbCaseX*c.getY()  ;
 	}
+	
 	
 	public static int CoordinateToNum(int x , int y) {
-		return 25*x+y;
+		return x+nbCaseX*y;
 	}
 	
+	/*
 	public static Coordonnee NumToCoordinate(int num) {
-		return new Coordonnee(num/25 , num%25);
+		System.out.println(num/nbCaseY +","+num%nbCaseX);
+		return new Coordonnee(num/nbCaseY , num%nbCaseX);
 	}
 	
 	public static int[] NumToCoordinateTab(int num) {
-		int [] res =  {num/25 , num%25} ;
+		int [] res =  {num/nbCaseY , num%nbCaseX} ;
 		return res  ;
 	}
-	
+	*/
 }
