@@ -3,8 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import baseDonnee.Niveau;
 import block.Arbre;
 import block.Block;
+import block.Bush;
+import block.Rock;
 import block.Vide;
 import item.Bomb;
 import item.Heart;
@@ -33,7 +36,9 @@ public class Plateau {
 		
 		placerVide();
 		
-		placerBlockRandom(listBlock);
+		//placerBlockRandom(listBlock);
+		this.placerBlockBaseDonne(Niveau.jeu3());
+		
 		placerMonstreRandom(listMonstre);
 		
 		if (hero.getNumeroCase() == -1 ) {
@@ -47,23 +52,35 @@ public class Plateau {
 		}
 	
 	
-	
+	private void placerBlockBaseDonne(int [][] tabBlock) {
+		for (int i = 0 ;i< tabBlock.length; i++) {
+			Element block = new Vide();
+			switch (tabBlock[i][0]) {
+			case 1: block = new Arbre();
+				break;
+			case 2: block = new Rock();
+			break;
+			case 3: block = new Bush();
+			break;
+			default : 
+				break;
+			}
+			this.placerElement(block,new Coordonnee( tabBlock [i][1] , tabBlock [i][2] ));
+			}
+	}
 
 
 	/**
 	 * ajout des arbre tout autour de la carte pour bloquer les unites 
-	 * la map est de 24x17
+	 * 
 	 */
 	private void contourArbre() {
 		for (int i = 0 ; i<nombreCaseY ;i++) {
 			this.placerElement(new Arbre() , new Coordonnee (nombreCaseX -1,i)) ;
 			this.placerElement(new Arbre() , new Coordonnee (i,0)) ;
 			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1 )) ;
-			this.placerElement(new Arbre() , new Coordonnee (0,i)) ;
-
-			
+			this.placerElement(new Arbre() , new Coordonnee (0,i)) ;	
 		}
-		
 		for (int i = nombreCaseY; i < nombreCaseX; i++) {
 			this.placerElement(new Arbre() , new Coordonnee (i,0)) ;
 			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1)) ;
@@ -94,8 +111,8 @@ public class Plateau {
 			for (int j = 0 ; j<nombreCaseX ;j++) {
 					Case vide = new Case( new Coordonnee (j,i)  );
 					vide.setElement(new Vide () );
-					//vide.setItem(new Rien () );
-					vide.setItem(new Rubi () );
+					vide.setItem(new Rien () );
+					//vide.setItem(new Rubi () );
 
 					vide.setProjectil(new Aire() );
 					listCase.add( vide ) ;

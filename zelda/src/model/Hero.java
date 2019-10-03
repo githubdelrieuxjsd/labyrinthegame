@@ -56,6 +56,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	// ######################### A FAIRE #########################################
 	@Override
 	public void mourir() {
+		this.nombreRubi = 0;
 		this.soigner(this.getMaxLife());
 	}
 	// ######################### Tirer

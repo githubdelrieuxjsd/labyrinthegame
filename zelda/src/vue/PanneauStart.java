@@ -15,6 +15,7 @@ import tool.Tool;
 
 public class PanneauStart extends JPanel {
 	PanneauJeux jeux = new PanneauJeux();
+	JTextArea petit = new JTextArea("a");
 
 	JTextArea txt_NomJeux = new JTextArea("Labyrinthe");
 	 
@@ -43,10 +44,15 @@ public class PanneauStart extends JPanel {
 
 	private void ajouter() {
 		// TODO Auto-generated method stub
+		petit.setBounds(0,0,4,4);
+		petit.setBackground(Color.PINK);
+		petit.setLineWrap(false);
 
+		this.add(petit);
+		
 		btn_start.setBounds(450,400,100,50);
 		this.add(btn_start); 
-		txt_NomJeux.setBounds(50,100,1000,400);
+		txt_NomJeux.setBounds(50,100,1000,200);
 		txt_NomJeux.setLineWrap(false);
 		txt_NomJeux.setBackground(Color.PINK);
 		txt_NomJeux.setFont(new Font ("Segoe Script", Font.BOLD , 150 ));
@@ -57,6 +63,7 @@ public class PanneauStart extends JPanel {
 
 	private void remove() {
 		// TODO Auto-generated method stub
+		this.remove(petit);
 		this.remove(txt_NomJeux);
 		this.remove(btn_start);
 		

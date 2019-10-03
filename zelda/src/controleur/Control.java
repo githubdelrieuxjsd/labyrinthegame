@@ -3,6 +3,7 @@ package controleur;
 import java.util.ArrayList;
 import java.util.List;
 
+import baseDonnee.Niveau;
 import block.Arbre;
 import block.Block;
 import block.Bush;
@@ -13,6 +14,7 @@ import item.Key;
 import model.Case;
 import model.Coordonnee;
 import model.Direction;
+import model.Element;
 import model.Hero;
 import model.Plateau;
 import monstre.Chicken;
@@ -56,6 +58,7 @@ public class Control {
 		Monstre.setHero(hero);
 
 		generationPlateau();
+		Niveau.generationMapRandom();
 	}
 
 	/**
@@ -88,10 +91,10 @@ public class Control {
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure(1);
-		creationChicken(1);
-		creationGoblin(1);
-		creationTomato(1);
+		creationMinotaure(10);
+		creationChicken(10);
+		creationGoblin(10);
+		creationTomato(10);
 	}
 
 	private static void creationTomato(int nombre) {
@@ -149,6 +152,14 @@ public class Control {
 
 	public boolean action(String herodescision, boolean heroaction) {
 
+		if (this.listMonstre.isEmpty() ) {
+			int x = (int) (Math.random() * (plateau.getNombreCaseX()-1 + 1 - 0)) + 0;
+			int y = (int) (Math.random() * (plateau.getNombreCaseY()-1 + 1 - 0)) + 0;
+			plateau.getCase(new Coordonnee(x,y)).setElement(new Vide());
+			plateau.getCase(new Coordonnee(x,y)).setItem(new Key());
+
+		}
+		
 		removeProjectil();
 		this.timer++;
 		if (listMonstre.isEmpty() ) {

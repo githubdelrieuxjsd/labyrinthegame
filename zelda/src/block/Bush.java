@@ -44,9 +44,9 @@ public class Bush extends Block implements DropItem {
 		public void dropItem(Case c) {
 			if (c.getItem().getNom().equals("Rien")) {
 				int x = (int) (Math.random() * (100 + 1 - 1)) + 1;
-				if (x > 50) {
+				if (x > 30) {
 					c.setItem(new Rubi());
-				} else if (x < 20) {
+				} else if (x < 10) {
 					c.setItem(new Heart());
 				}
 

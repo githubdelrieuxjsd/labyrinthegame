@@ -470,17 +470,6 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 		// TODO Auto-generated method stub
 		return this.trouverY(c);
 	}
-
-
-
-
-
-	
-
-
-	
-	
-
 	
 
 }

@@ -123,9 +123,9 @@ public class Tomato extends Monstre implements DropItem, Tirer {
 	public void dropItem(Case c) {
 		if (c.getItem().getNom().equals("Rien")) {
 			int x = (int) (Math.random() * (100 + 1 - 1)) + 1;
-			if (x < 0 && x > 50) {
+			if (x < 0 && x > 60) {
 				c.setItem(new Rubi());
-			} else if (x > 50 && x < 70) {
+			} else if (x > 60 && x < 70) {
 				c.setItem(new Heart());
 			}
 
