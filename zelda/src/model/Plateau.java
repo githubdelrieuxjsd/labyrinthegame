@@ -26,6 +26,8 @@ public class Plateau {
 	private int nombreCaseX;
 	private int nombreCaseY;
 	private int nombreCaseZ;
+	
+	
 
 	public Plateau(Hero hero, List<Block> listBlock, List<Monstre> listMonstre) {
 
@@ -201,7 +203,7 @@ public class Plateau {
 		int z = nombreCaseZ-1;
 		while (z>-1) {
 			Case avant = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1,z));
-			if (! avant.getElement().getNom().equals("Vide") ) {
+			if ( avant.getElement().getNom().equals("Rock") ) {
 				res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1,z+1));
 			}
 			z--;
@@ -218,7 +220,7 @@ public class Plateau {
 		int z = nombreCaseZ-1;
 		while (z>-1) {
 			Case avant = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1,z));
-			if (! avant.getElement().getNom().equals("Vide") ) {
+			if ( avant.getElement().getNom().equals("Rock") ) {
 				res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1,z+1));
 			}
 			z--;
@@ -234,7 +236,7 @@ public class Plateau {
 		int z = nombreCaseZ-1;
 		while (z>-1) {
 			Case avant = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1, coordonnee.getY(),z));
-			if (! avant.getElement().getNom().equals("Vide") ) {
+			if ( avant.getElement().getNom().equals("Rock") ) {
 				res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1, coordonnee.getY(),z+1));
 			}
 			z--;
@@ -250,7 +252,7 @@ public class Plateau {
 		int z = nombreCaseZ-1;
 		while (z>-1) {
 			Case avant = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY(),z));
-			if (! avant.getElement().getNom().equals("Vide") ) {
+			if ( avant.getElement().getNom().equals("Rock") ) {
 				res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY(),z+1));
 			}
 			z--;

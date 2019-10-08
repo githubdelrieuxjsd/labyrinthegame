@@ -24,6 +24,8 @@ public class Case {
 	private Projectil projectil ;
 	
 	private static int compt = 0 ;
+	
+
 	private int num ;
 	
 
@@ -265,7 +267,9 @@ public class Case {
 	}
 
 
-
+	public static void setCompt(int compt) {
+		Case.compt = compt;
+	}
 
 
 

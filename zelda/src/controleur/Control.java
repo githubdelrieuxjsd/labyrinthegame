@@ -56,7 +56,6 @@ public class Control {
 		listProjectil = new ArrayList<Projectil>();
 
 		Monstre.setHero(hero);
-
 		generationPlateau();
 		//Niveau.generationMapRandom();
 	}
@@ -79,19 +78,23 @@ public class Control {
 		creationMonstre();
 		plateau = new Plateau(hero,listBlock, listMonstre);
 
+		if (!plateau.getListCase().isEmpty()) {
+			plateau.getListCase().get(0).setCompt(0);
+		}
+
 		timer = 0;
 	}
 
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(0);
-		creationArbre(0);
+		creationBush(1);
+		creationArbre(1);
 		creationRock(2);
 	}
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure(0);
+		creationMinotaure(1);
 		creationChicken(0);
 		creationGoblin(0);
 		creationTomato(0);
@@ -172,7 +175,7 @@ public class Control {
 		if (this.timer % 7 == 0) {
 
 			for (Monstre monstre : this.listMonstre) {
-				 monstre.action(plateau);
+				 //monstre.action(plateau);
 			}
 		}
 		if (this.timer % 3 == 0 || freegame) {
