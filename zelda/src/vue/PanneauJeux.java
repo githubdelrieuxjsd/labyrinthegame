@@ -48,7 +48,10 @@ public class PanneauJeux extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				switch (e.getKeyCode()) {
-				
+				case KeyEvent.VK_Z:
+					herodescision = "toucheAction";
+					heroaction = true;
+					break;
 				case KeyEvent.VK_UP:
 					herodescision = "moveUp";
 					heroaction = true;

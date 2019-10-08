@@ -36,8 +36,8 @@ public class Plateau {
 		
 		placerVide();
 		
-		//placerBlockRandom(listBlock);
-		this.placerBlockBaseDonne(Niveau.jeu3());
+		placerBlockRandom(listBlock);
+		//this.placerBlockBaseDonne(Niveau.jeu3());
 		
 		placerMonstreRandom(listMonstre);
 		

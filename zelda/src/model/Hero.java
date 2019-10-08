@@ -32,6 +32,7 @@ import tool.Tool;
 
 public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner {
 
+	private String perso = "link";
 	// voir inventaire
 	private int nombreRubi = 0;
 	
@@ -59,21 +60,65 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		this.nombreRubi = 0;
 		this.soigner(this.getMaxLife());
 	}
-	// ######################### Tirer
-	// #########################################
+	// ######################### A FAIRE INTERATCTIONAction#########################################
+	private void interactionAction(Plateau plateau, Case c) {
+		Case caseDevant = plateau.getCaseDevant(c, this.getDirection());
 
-	@Override
-	public void tirer(Plateau plateau, Case c) {
-		Fleche fleche = new Fleche(this.getDirection());
-		Control.tirer(fleche, c);
+		switch (caseDevant.getElement().getNom()) {
+		case "Rock": lift(plateau , caseDevant) ;
+		break;
+		default :
+			break;
+		}
+		
 	}
+
+	public boolean hold() {
+		return this.getCurentAction().equals("nothingHolding")
+				|| this.getCurentAction().equals("movingHolding")
+				|| this.getCurentAction().equals("animationLift")
+				|| this.getCurentAction().equals("animationThrow");
+	}
+	
+	private void lift(Plateau plateau, Case caseDevant) {
+		this.setCurentAction("animationLift");
+		this.setFrame(0);
+		caseDevant.setElement(new Vide());
+	}
+	private void animationThrow(Plateau plateau, Case c) {
+		// TODO Auto-generated method stub
+		this.setCurentAction("animationThrow");
+		this.setFrame(0);
+	}
+	private void throwObject(Plateau plateau, Case c) {
+		// TODO Auto-generated method stub
+		Case caseDevant = plateau.getCaseDevant(c, this.getDirection());
+		if (caseDevant.getElement().getNom().equals("nothing")) {
+			caseDevant.setElement(new Rock());
+		}
+	}
+
+
 	// ######################### ACTION #########################################
 
+	//Appuie sur bouton action -> le bonhomme se postionne
+	//Touche de deplacement -> tire/pousse
+	//Appuie sur bouton action -> le bonhomme revient a la normale
+
+	
 	public void action(Plateau plateau, String descision) {
 
 		Case c = plateau.getListCase().get(this.getNumeroCase());
 
 		switch (descision) {
+		case "toucheAction": 
+			if (this.getCurentAction().equals("nothingHolding")) {
+				this.animationThrow(plateau, c);
+			}
+			else {
+				interactionAction(plateau,c);
+			}
+			break;
 		case "moveUp":
 			this.interactionDeplacement(plateau, c, new Direction("up"));
 			break;
@@ -91,30 +136,46 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 			break;
 
 		case "tirer":
+			if ( ! this.hold()) {
 			this.setCurentAction("animationTirer");
 			this.setFrame(0);
+			}
 			break;
 
 		case "attaque":
+			if ( ! this.hold()) {
 			this.setCurentAction("animationAttaque");
 			this.setFrame(0);
+			}
 			break;
 		case "bomb":
-			this.setCurentAction("animationPlacerBomb");
+			if ( ! this.hold()) {
+			//this.setCurentAction("animationPlacerBomb");
 			this.setFrame(0);
 			plateau.getCase(c.getCoordonnee()).setItem(new Bomb());
+			}
 			break;
 		default:
 			break;
 		}
 	}
 
+
+	
+	
+
 	// ######################### DEPLACEMENT
 	// #########################################
 	@Override
 	public void deplacer(Plateau plateau, Case caseAvant, Case caseApres) {
-		this.setCurentAction("moving");
-		this.setFrame(0);
+		if (this.hold()) {
+			this.setCurentAction("movingHolding");
+			this.setFrame(0);
+		}
+		else {
+			this.setCurentAction("moving");
+			this.setFrame(0);
+		}
 
 		Projectil p = caseApres.getProjectil();
 		if (!p.getNom().equals("Aire")) {
@@ -285,6 +346,14 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		}
 
 	}
+	// ######################### Tirer
+		// #########################################
+
+		@Override
+		public void tirer(Plateau plateau, Case c) {
+			Fleche fleche = new Fleche(this.getDirection());
+			Control.tirer(fleche, c);
+		}
 
 	// ######################### PERDRE VIE
 	// #########################################
@@ -322,7 +391,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	@Override
 	public String trouverImage(Plateau plateau, Case c) {
 		String icon = "hyrule/link/beat/Down1.png";
-		// System.out.println(this.getCurentAction());
+		//System.out.println(this.getCurentAction());
 		// System.out.println(this.getFrame());
 
 		switch (this.getCurentAction()) {
@@ -331,12 +400,24 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 			icon = this.imageNothing();
 			this.setFrame((getFrame() + 1) % 16);
 			break;
+		case "nothingHolding":
+			icon = this.imageNothingHolding();
+			this.setFrame((getFrame() + 1) % 1);
+			break;
 		case "moving":
 			icon = this.imageMove();
 			this.setFrame((getFrame() + 1) % 3);
 
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothing");
+			}
+			break;
+		case "movingHolding":
+			icon = this.imageMoveHolding();
+			this.setFrame((getFrame() + 1) % 3);
+
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothingHolding");
 			}
 			break;
 		case "hurt":
@@ -372,158 +453,88 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 			}
 
 			break;
+		case "animationLift":
+			icon = this.imagelift();
+			this.setFrame((getFrame() + 1) % 5);
+
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothingHolding");			
+				}
+			break;
+		case "animationThrow":
+			icon = this.imageThrow();
+			this.setFrame((getFrame() + 1) % 5);
+
+			if (this.getFrame() == 3) {
+				this.throwObject(plateau, c);
+				}
+			
+			if (this.getFrame() == 0) {
+				this.setCurentAction("nothing");			
+				}
+			break;
+			
 		default:
 			break;
 
 		}
 
+		return icon;
+	}
+
+	private String imageThrow() {
+		int num = this.getFrame() + 1;
+		String icon = "hyrule/"+perso+"/throw/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
+		return icon;
+	}
+
+	private String imageMoveHolding() {
+		int num = this.getFrame() + 1;
+		String icon = "hyrule/"+perso+"/moveHolding/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
+		return icon;
+	}
+
+	private String imageNothingHolding() {
+		int num = this.getFrame() + 1;
+		String icon = "hyrule/"+perso+"/nothingHolding/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
+		return icon;
+	}
+
+	private String imagelift() {
+		int num = this.getFrame() + 1;
+		String icon = "hyrule/"+perso+"/lift/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
 		return icon;
 	}
 
 	private String imageHurt() {
-		String icon = "hyrule/link/beat/Down1.png";
 		int num = this.getFrame() / 2 + 1;
-		switch (this.getDirection().getDirection()) {
-
-		case "up":
-			icon = "hyrule/link/hurt/U" + num + ".png";
-			break;
-		case "down":
-			icon = "hyrule/link/hurt/D" + num + ".png";
-			break;
-		case "right":
-			icon = "hyrule/link/hurt/R" + num + ".png";
-			break;
-		case "left":
-			icon = "hyrule/link/hurt/L" + num + ".png";
-			break;
-		default:
-			break;
-		}
-		// System.out.println(icon);
-
+		String icon = "hyrule/"+perso+"/hurt/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
 		return icon;
 	}
 
 	private String imageBow() {
-
 		int num = this.getFrame() + 1;
-		String icon = "hyrule/link/arrow/Down/1.png";
-		switch (this.getDirection().getDirection()) {
-
-		case "up":
-			icon = "hyrule/link/arrow/Up/" + num + ".png";
-
-			break;
-		case "down":
-			icon = "hyrule/link/arrow/Down/" + num + ".png";
-
-			break;
-		case "left":
-			icon = "hyrule/link/arrow/Left/" + num + ".png";
-			break;
-		case "right":
-			icon = "hyrule/link/arrow/Right/" + num + ".png";
-
-			break;
-		default:
-			break;
-
-		}
+		String icon = "hyrule/"+perso+"/bow/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
 		return icon;
 	}
 
 	private String imageAttaque() {
 		int num = this.getFrame() + 1;
-		String icon = "hyrule/link/beat/Down1.png";
-		switch (this.getDirection().getDirection()) {
-
-		case "up":
-			icon = "hyrule/link/attaque/Up" + num + ".png";
-
-			break;
-		case "down":
-			icon = "hyrule/link/attaque/Down" + num + ".png";
-
-			break;
-		case "left":
-			icon = "hyrule/link/attaque/Left" + num + ".png";
-			break;
-		case "right":
-			icon = "hyrule/link/attaque/Right" + num + ".png";
-
-			break;
-		default:
-			break;
-
-		}
-		return icon;
+		String icon = "hyrule/"+perso+"/attaque/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
+		return icon ;
 	}
 
 	private String imageMove() {
-		String icon = "hyrule/link/beat/Down1.png";
 		int num = this.getFrame() + 1;
-
-		// System.out.println(this.getFrame() + " , "+num );
-
-		switch (this.getDirection().getDirection()) {
-
-		case "up":
-			// icon = "image/Link/linkMoving"+this.getFrame()%6+"Up24x24.png";
-			icon = "hyrule/link/move/Up" + num + ".png";
-
-			break;
-		case "down":
-			// icon = "image/Link/linkMoving"+this.getFrame()%6+"Down24x24.png";
-			icon = "hyrule/link/move/Down" + num + ".png";
-
-			break;
-		case "right":
-			icon = "hyrule/link/move/Right" + num + ".png";
-			break;
-		case "left":
-			icon = "hyrule/link/move/Left" + num + ".png";
-
-			break;
-		default:
-			break;
-
-		}
-		// System.out.println(icon);
-
+		String icon = "hyrule/"+perso+"/move/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
 		return icon;
 	}
 
 	private String imageNothing() {
-		int num = this.getFrame() / 2 + 1;
+		int num = this.getFrame()/2 + 1;
+		String icon = "hyrule/"+perso+"/beat/"+this.getDirection().getDirection().substring(0,1).toUpperCase()+""+num+".png";
 		// System.out.println("frame: "+this.getFrame());
-
-		// System.out.println("num: "+num);
-
-		String icon = "hyrule/link/beat/Down1.png";
-		switch (this.getDirection().getDirection()) {
-
-		case "up":
-			icon = "hyrule/link/beat/Up" + num + ".png";
-
-			break;
-		case "down":
-			icon = "hyrule/link/beat/Down" + num + ".png";
-
-			break;
-		case "left":
-			icon = "hyrule/link/beat/Left" + num + ".png";
-			break;
-		case "right":
-			icon = "hyrule/link/beat/Right" + num + ".png";
-
-			break;
-		default:
-			break;
-
-		}
-		// System.out.println(icon);
-
+		//System.out.println(icon);
 		return icon;
 
 	}

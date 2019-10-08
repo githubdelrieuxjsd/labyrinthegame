@@ -133,8 +133,18 @@ public class Case {
 		if (this.getElement().getNom().equals("Hero") ) {
 			g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),
 					this.trouverElementY() , this.trouverElementLongeur(), this.trouverElementLargeur(), null);
+			
+			if ( ((Hero)this.getElement()).hold() ) {
+				ImageIcon icon = new ImageIcon("hyrule/block/rock.png");
+				Image img = icon.getImage();		
+
+					g.drawImage(img, ((Hero) this.getElement()).trouverX(this),
+							((Hero) this.getElement()).trouverY(this) - this.getTailleCasePixel() + this.getTailleCasePixel()/6  , 3*this.getTailleCasePixel(), 3*this.getTailleCasePixel(), null);
+				
+			
+			
 		}
-		
+		}
 		else if ( this.getElement().isMonstre() ) {
 			
 			g.drawImage(this.trouverElementImage(plateau), this.trouverElementX(),

@@ -29,7 +29,7 @@ import tool.Tool;
 
 public class Control {
 
-	private boolean freegame = true;
+	private boolean freegame = false;
 
 	private static Plateau plateau;
 
@@ -58,7 +58,7 @@ public class Control {
 		Monstre.setHero(hero);
 
 		generationPlateau();
-		Niveau.generationMapRandom();
+		//Niveau.generationMapRandom();
 	}
 
 	/**
@@ -84,17 +84,17 @@ public class Control {
 
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(20);
-		creationArbre(20);
-		creationRock(20);
+		creationBush(0);
+		creationArbre(0);
+		creationRock(100);
 	}
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure(10);
-		creationChicken(10);
-		creationGoblin(10);
-		creationTomato(10);
+		creationMinotaure(0);
+		creationChicken(0);
+		creationGoblin(0);
+		creationTomato(0);
 	}
 
 	private static void creationTomato(int nombre) {
@@ -152,7 +152,7 @@ public class Control {
 
 	public boolean action(String herodescision, boolean heroaction) {
 
-		if (this.listMonstre.isEmpty() ) {
+		if (this.listMonstre.isEmpty() && false) {
 			int x = (int) (Math.random() * (plateau.getNombreCaseX()-1 + 1 - 0)) + 0;
 			int y = (int) (Math.random() * (plateau.getNombreCaseY()-1 + 1 - 0)) + 0;
 			plateau.getCase(new Coordonnee(x,y)).setElement(new Vide());
@@ -170,13 +170,13 @@ public class Control {
 			 deplacerProjectil();
 		}
 		
-		if (this.timer % 15 == 0) {
+		if (this.timer % 7 == 0) {
 
 			for (Monstre monstre : this.listMonstre) {
 				 monstre.action(plateau);
 			}
 		}
-		if (this.timer % 15 == 0 || freegame) {
+		if (this.timer % 3 == 0 || freegame) {
 			if (heroaction) {
 				this.hero.action(this.plateau, herodescision);
 			}

@@ -56,7 +56,7 @@ public class Rock extends Block implements Deplacement {
 		
 		if (caseApres.getElement().getNom().equals("Vide")) {
 			
-			this.deplacer(plateau,caseAvant, caseApres);
+			//this.deplacer(plateau,caseAvant, caseApres);
 		}
 		
 	}
