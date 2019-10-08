@@ -86,7 +86,7 @@ public class Control {
 		// TODO Auto-generated method stub
 		creationBush(0);
 		creationArbre(0);
-		creationRock(100);
+		creationRock(2);
 	}
 
 	private static void creationMonstre() {
@@ -155,9 +155,8 @@ public class Control {
 		if (this.listMonstre.isEmpty() && false) {
 			int x = (int) (Math.random() * (plateau.getNombreCaseX()-1 + 1 - 0)) + 0;
 			int y = (int) (Math.random() * (plateau.getNombreCaseY()-1 + 1 - 0)) + 0;
-			plateau.getCase(new Coordonnee(x,y)).setElement(new Vide());
-			plateau.getCase(new Coordonnee(x,y)).setItem(new Key());
-
+			plateau.getCase(new Coordonnee(x,y,0)).setElement(new Vide());
+			plateau.getCase(new Coordonnee(x,y,0)).setItem(new Key());
 		}
 		
 		removeProjectil();

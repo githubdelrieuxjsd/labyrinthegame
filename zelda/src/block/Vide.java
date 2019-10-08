@@ -32,31 +32,34 @@ public class Vide extends Element {
 	public String trouverImage(Plateau plateau ,Case c ) {
 		Element element = c.getElement() ;
 		String icon = "img/vide.png";
+		if ( ! (c.getCoordonnee().getZ() == 0) ) {
+			icon = "hyrule/block/sol.png";
+		}
 		return icon;
 	}
 	
 	@Override
 	public int trouverX(Case c ) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getX()*40;
+		return c.getCoordonnee().getX()*c.getTailleCasePixel() - c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverY(Case c ) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getY()*40;
+		return c.getCoordonnee().getY()*c.getTailleCasePixel() - c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverlargeur(Case c) {
 		// TODO Auto-generated method stub
-		return 40;
+		return c.getTailleCasePixel()*3;
 	}
 
 	@Override
 	public int trouverlongeur(Case c) {
 		// TODO Auto-generated method stub
-		return 40;
+		return c.getTailleCasePixel()*3;
 	}
 
 	

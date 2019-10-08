@@ -53,7 +53,7 @@ public abstract class Element implements PerdreVie, Dessin {
 
 	@Override
 	public String toString() {
-		return "nom=" + nom;
+		return nom;
 	}
 
 	// ######################## GETTER SETTER

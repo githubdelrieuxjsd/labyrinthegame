@@ -42,7 +42,10 @@ public class Case {
 	
 	
 	
-	
+	public void setHauteur(int z) {
+		this.getCoordonnee().setZ(z);		
+
+	}
 
 	
 	private Image trouverElementImage(Plateau plateau ) {
@@ -181,7 +184,7 @@ public class Case {
 	
 
 	public void afficher() {	
-		if (! this.getElement().getNom().equals("Vide")) {
+		if ( this.getElement().getNom().equals("Vide")) {
 			System.out.println("###### Case "+num+" ######");
 			System.out.println("Coordonnee "+this.getCoordonnee());
 			System.out.println("Element "+this.getElement());
@@ -260,6 +263,13 @@ public class Case {
 	public int getTailleCasePixel() {
 		return tailleCasePixel;
 	}
+
+
+
+
+
+
+	
 
 	
 	

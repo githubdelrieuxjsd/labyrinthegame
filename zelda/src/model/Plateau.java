@@ -42,7 +42,7 @@ public class Plateau {
 		placerMonstreRandom(listMonstre);
 		
 		if (hero.getNumeroCase() == -1 ) {
-			this.placerElement(hero, new Coordonnee (9,1));
+			this.placerElement(hero, new Coordonnee (9,1,0));
 		}else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
@@ -65,7 +65,7 @@ public class Plateau {
 			default : 
 				break;
 			}
-			this.placerElement(block,new Coordonnee( tabBlock [i][1] , tabBlock [i][2] ));
+			this.placerElement(block,new Coordonnee( tabBlock [i][1] , tabBlock [i][2], tabBlock [i][2] ));
 			}
 	}
 
@@ -76,14 +76,14 @@ public class Plateau {
 	 */
 	private void contourArbre() {
 		for (int i = 0 ; i<nombreCaseY ;i++) {
-			this.placerElement(new Arbre() , new Coordonnee (nombreCaseX -1,i)) ;
-			this.placerElement(new Arbre() , new Coordonnee (i,0)) ;
-			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1 )) ;
-			this.placerElement(new Arbre() , new Coordonnee (0,i)) ;	
+			this.placerElement(new Arbre() , new Coordonnee (nombreCaseX -1,i,0)) ;
+			this.placerElement(new Arbre() , new Coordonnee (i,0,0)) ;
+			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1 ,0)) ;
+			this.placerElement(new Arbre() , new Coordonnee (0,i,0)) ;	
 		}
 		for (int i = nombreCaseY; i < nombreCaseX; i++) {
-			this.placerElement(new Arbre() , new Coordonnee (i,0)) ;
-			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1)) ;
+			this.placerElement(new Arbre() , new Coordonnee (i,0,0)) ;
+			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1,0)) ;
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class Plateau {
 			int x = (int) (Math.random() * (nombreCaseX-2 + 1 - 1)) + 1;
 			int y = (int) (Math.random() * (nombreCaseY-2 + 1 - 1)) + 1;
 
-				this.placerElement(m,new Coordonnee(x,y));
+				this.placerElement(m,new Coordonnee(x,y,0));
 			}
 	}
 
@@ -101,21 +101,22 @@ public class Plateau {
 		for (Block b : listBlock) {
 			int x = (int) (Math.random() * (nombreCaseX-1 + 1 - 0)) + 0;
 			int y = (int) (Math.random() * (nombreCaseY-1 + 1 - 0)) + 0;
-
-			this.placerElement(b,new Coordonnee(x,y));		}
+			this.placerElement(b,new Coordonnee(x,y,0));}
 	}
 
 	private void placerVide() {
 		// TODO Auto-generated method stub
 		for (int i =0 ;i < nombreCaseY ; i++) {
 			for (int j = 0 ; j<nombreCaseX ;j++) {
-					Case vide = new Case( new Coordonnee (j,i)  );
-					vide.setElement(new Vide () );
-					vide.setItem(new Rien () );
-					//vide.setItem(new Rubi () );
-
-					vide.setProjectil(new Aire() );
-					listCase.add( vide ) ;
+					Case caseVide = new Case( new Coordonnee (j,i,0)  );
+					caseVide.setElement(new Vide () );
+					caseVide.setItem(new Rien () );
+					//caseVide.setItem(new Rubi () );
+					caseVide.setProjectil(new Aire() );
+					listCase.add( caseVide ) ;
+					if (i==4 && j==6) {
+						caseVide.setHauteur(1);
+					}
 			}
 		}
 	}

@@ -11,10 +11,15 @@ public abstract class Tool {
 		return c.getX()+nbCaseX*c.getY()  ;
 	}
 	
-	
 	public static int CoordinateToNum(int x , int y) {
 		return x+nbCaseX*y;
 	}
+	
+	/**
+	public static int CoordinateToNum(int x , int y,int z) {
+		return nbCaseX*nbCaseX*z+x+nbCaseX*y;
+	}
+	*/
 	
 	/*
 	public static Coordonnee NumToCoordinate(int num) {
