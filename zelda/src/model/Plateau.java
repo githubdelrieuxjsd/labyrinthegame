@@ -20,143 +20,149 @@ import projectil.Aire;
 import projectil.Projectil;
 import tool.Tool;
 
-
 public class Plateau {
-	
-	private List<Case> listCase ;
-	private int nombreCaseX ;
-	private int nombreCaseY;
 
-	public Plateau( Hero hero, List<Block> listBlock, List<Monstre> listMonstre ) {
-		
+	private List<Case> listCase;
+	private int nombreCaseX;
+	private int nombreCaseY;
+	private int nombreCaseZ;
+
+	public Plateau(Hero hero, List<Block> listBlock, List<Monstre> listMonstre) {
+
 		this.nombreCaseX = 30;
-		this.nombreCaseY = 17 ;
-		
-		this.listCase = new ArrayList<Case>() ;
-		
+		this.nombreCaseY = 17;
+		this.nombreCaseZ = 2;
+
+		this.listCase = new ArrayList<Case>();
+
 		placerVide();
-		
+
 		placerBlockRandom(listBlock);
-		//this.placerBlockBaseDonne(Niveau.jeu3());
-		
+		// this.placerBlockBaseDonne(Niveau.jeu3());
+
 		placerMonstreRandom(listMonstre);
-		
-		if (hero.getNumeroCase() == -1 ) {
-			this.placerElement(hero, new Coordonnee (9,1,0));
-		}else {
+
+		if (hero.getNumeroCase() == -1) {
+			this.placerElement(hero, new Coordonnee(9, 1, 1));
+			this.placerElement(new Rock(), new Coordonnee(9,1,0));
+		} else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
-		
-		//contourArbre();
+
+		// contourArbre();
 		//this.afficher();
-		}
-	
-	
-	private void placerBlockBaseDonne(int [][] tabBlock) {
-		for (int i = 0 ;i< tabBlock.length; i++) {
-			Element block = new Vide();
-			switch (tabBlock[i][0]) {
-			case 1: block = new Arbre();
-				break;
-			case 2: block = new Rock();
-			break;
-			case 3: block = new Bush();
-			break;
-			default : 
-				break;
-			}
-			this.placerElement(block,new Coordonnee( tabBlock [i][1] , tabBlock [i][2], tabBlock [i][2] ));
-			}
+
+
 	}
 
+	private void placerBlockBaseDonne(int[][] tabBlock) {
+		for (int i = 0; i < tabBlock.length; i++) {
+			Element block = new Vide();
+			switch (tabBlock[i][0]) {
+			case 1:
+				block = new Arbre();
+				break;
+			case 2:
+				block = new Rock();
+				break;
+			case 3:
+				block = new Bush();
+				break;
+			default:
+				break;
+			}
+			this.placerElement(block, new Coordonnee(tabBlock[i][1], tabBlock[i][2], tabBlock[i][2]));
+		}
+	}
 
 	/**
-	 * ajout des arbre tout autour de la carte pour bloquer les unites 
+	 * ajout des arbre tout autour de la carte pour bloquer les unites
 	 * 
 	 */
 	private void contourArbre() {
-		for (int i = 0 ; i<nombreCaseY ;i++) {
-			this.placerElement(new Arbre() , new Coordonnee (nombreCaseX -1,i,0)) ;
-			this.placerElement(new Arbre() , new Coordonnee (i,0,0)) ;
-			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1 ,0)) ;
-			this.placerElement(new Arbre() , new Coordonnee (0,i,0)) ;	
+		for (int i = 0; i < nombreCaseY; i++) {
+			this.placerElement(new Arbre(), new Coordonnee(nombreCaseX - 1, i, 0));
+			this.placerElement(new Arbre(), new Coordonnee(i, 0, 0));
+			this.placerElement(new Arbre(), new Coordonnee(i, nombreCaseY - 1, 0));
+			this.placerElement(new Arbre(), new Coordonnee(0, i, 0));
 		}
 		for (int i = nombreCaseY; i < nombreCaseX; i++) {
-			this.placerElement(new Arbre() , new Coordonnee (i,0,0)) ;
-			this.placerElement(new Arbre() , new Coordonnee (i,nombreCaseY -1,0)) ;
+			this.placerElement(new Arbre(), new Coordonnee(i, 0, 0));
+			this.placerElement(new Arbre(), new Coordonnee(i, nombreCaseY - 1, 0));
 		}
 	}
-	
 
 	private void placerMonstreRandom(List<Monstre> listMonstre) {
 		for (Monstre m : listMonstre) {
-			int x = (int) (Math.random() * (nombreCaseX-2 + 1 - 1)) + 1;
-			int y = (int) (Math.random() * (nombreCaseY-2 + 1 - 1)) + 1;
+			int x = (int) (Math.random() * (nombreCaseX - 2 + 1 - 1)) + 1;
+			int y = (int) (Math.random() * (nombreCaseY - 2 + 1 - 1)) + 1;
 
-				this.placerElement(m,new Coordonnee(x,y,0));
-			}
+			this.placerElement(m, new Coordonnee(x, y, 0));
+		}
 	}
 
 	private void placerBlockRandom(List<Block> listBlock) {
 		for (Block b : listBlock) {
-			int x = (int) (Math.random() * (nombreCaseX-1 + 1 - 0)) + 0;
-			int y = (int) (Math.random() * (nombreCaseY-1 + 1 - 0)) + 0;
-			this.placerElement(b,new Coordonnee(x,y,0));}
+			int x = (int) (Math.random() * (nombreCaseX - 1 + 1 - 0)) + 0;
+			int y = (int) (Math.random() * (nombreCaseY - 1 + 1 - 0)) + 0;
+			this.placerElement(b, new Coordonnee(x, y, 0));
+		}
 	}
 
 	private void placerVide() {
-		// TODO Auto-generated method stub
-		for (int i =0 ;i < nombreCaseY ; i++) {
-			for (int j = 0 ; j<nombreCaseX ;j++) {
-					Case caseVide = new Case( new Coordonnee (j,i,0)  );
-					caseVide.setElement(new Vide () );
-					caseVide.setItem(new Rien () );
-					//caseVide.setItem(new Rubi () );
-					caseVide.setProjectil(new Aire() );
-					listCase.add( caseVide ) ;
-					if (i==4 && j==6) {
-						caseVide.setHauteur(1);
-					}
+		for (int z = 0; z < nombreCaseZ; z++) {
+			for (int i = 0; i < nombreCaseY; i++) {
+				for (int j = 0; j < nombreCaseX; j++) {
+					Case caseVide = new Case(new Coordonnee(j, i, z));
+					caseVide.setElement(new Vide());
+					caseVide.setItem(new Rien());
+					// caseVide.setItem(new Rubi () );
+					caseVide.setProjectil(new Aire());
+					listCase.add(caseVide);
+				}
 			}
 		}
 	}
-	
-	
-	public void placerElement (Element element , Coordonnee coordonnee) {
+
+	public void placerElement(Element element, Coordonnee coordonnee) {
 		int num = Tool.CoordinateToNum(coordonnee);
-		this.listCase.get(num).setElement(element);
+		Case c = this.listCase.get(num);
+		c.setElement(element);
 		element.setNumeroCase(num);
 	}
-	
-	public void placerElement (Element element , int num) {
-		if (num> -1 && num < nombreCaseY*nombreCaseX) {
+
+	public void placerElement(Element element, int num) {
+		if (num > -1 && num < nombreCaseY * nombreCaseX) {
 			this.listCase.get(num).setElement(element);
 		}
 	}
-	public void placerItem(Item item , Coordonnee coordonnee) {
-		int num = Tool.CoordinateToNum( coordonnee);
+
+	public void placerItem(Item item, Coordonnee coordonnee) {
+		int num = Tool.CoordinateToNum(coordonnee);
 		this.listCase.get(num).setItem(item);
 	}
-	
-	public void placerItem(Item item , int num) {
-		if (num> -1 && num < nombreCaseY*nombreCaseX) {
+
+	public void placerItem(Item item, int num) {
+		if (num > -1 && num < nombreCaseY * nombreCaseX) {
 			this.listCase.get(num).setItem(item);
 		}
 	}
-	public void placerProjectil(Projectil projectil , Coordonnee coordonnee) {
-		int num = Tool.CoordinateToNum( coordonnee);
+
+	public void placerProjectil(Projectil projectil, Coordonnee coordonnee) {
+		int num = Tool.CoordinateToNum(coordonnee);
 		this.listCase.get(num).setProjectil(projectil);
 		projectil.setNumeroCase(num);
 
 	}
-	
-	public void placerProjectil (Projectil projectil , int num) {
-		if (num> -1 && num < nombreCaseY*nombreCaseX) {
+
+	public void placerProjectil(Projectil projectil, int num) {
+		if (num > -1 && num < nombreCaseY * nombreCaseX) {
 			this.listCase.get(num).setProjectil(projectil);
 		}
-	}	
-	
-	//######################## GETTER SETTER ##########################################
+	}
+
+	// ######################## GETTER SETTER
+	// ##########################################
 
 	public List<Case> getListCase() {
 		return listCase;
@@ -165,122 +171,149 @@ public class Plateau {
 	public void setListCase(List<Case> listCase) {
 		this.listCase = listCase;
 	}
-	
-	public Case getCaseDevant (Case c,Direction direction) {
+
+	public Case getCaseDevant(Case c, Direction direction) {
 		Case res = this.getCaseUp(c.getCoordonnee());
-		
-		switch (direction.getDirection()) {			
+
+		switch (direction.getDirection()) {
 		case "down":
-			res =  this.getCaseDown(c.getCoordonnee());
+			res = this.getCaseDown(c.getCoordonnee());
 			break;
-			
+
 		case "right":
-			res =  this.getCaseRight(c.getCoordonnee());
+			res = this.getCaseRight(c.getCoordonnee());
 			break;
-			
+
 		case "left":
-			res =  this.getCaseLeft(c.getCoordonnee());
+			res = this.getCaseLeft(c.getCoordonnee());
 			break;
 		default:
 			break;
 		}
 		return res;
 	}
-	
-	public Case getCaseUp (Coordonnee coordonnee) {
+
+	public Case getCaseUp(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getY() == 0) {
+			return this.getCase(coordonnee);
+		}
+		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1));
+		int z = nombreCaseZ-1;
+		while (z>-1) {
+			Case avant = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1,z));
+			if (! avant.getElement().getNom().equals("Vide") ) {
+				res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1,z+1));
+			}
+			z--;
+		}
 		
-		if (this.getCase(coordonnee).getCoordonnee().getY()==0) {
-			return this.getCase(coordonnee);
-		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() , coordonnee.getY()-1 ));
+		return res;
 	}
-	public Case getCaseDown (Coordonnee coordonnee) {
-		if (this.getCase(coordonnee).getCoordonnee().getY()==this.nombreCaseY-1) {
-			return this.getCase(coordonnee);
-		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() , coordonnee.getY()+1 )) ;
 
-	}
-	public Case getCaseLeft (Coordonnee coordonnee) {
-		if (this.getCase(coordonnee).getCoordonnee().getX()==0) {
+	public Case getCaseDown(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getY() == this.nombreCaseY - 1) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1 , coordonnee.getY() )) ;
+		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1));
+		int z = nombreCaseZ-1;
+		while (z>-1) {
+			Case avant = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1,z));
+			if (! avant.getElement().getNom().equals("Vide") ) {
+				res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1,z+1));
+			}
+			z--;
+		}
+		return res;
 	}
-	public Case getCaseRight (Coordonnee coordonnee) {
-		if (this.getCase(coordonnee).getCoordonnee().getX()== this.nombreCaseX-1) {
+
+	public Case getCaseLeft(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1 , coordonnee.getY() )) ;
-	}
+		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1, coordonnee.getY() ));
+		int z = nombreCaseZ-1;
+		while (z>-1) {
+			Case avant = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1, coordonnee.getY(),z));
+			if (! avant.getElement().getNom().equals("Vide") ) {
+				res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1, coordonnee.getY(),z+1));
+			}
+			z--;
+		}
+		
+		return res;	}
+
+	public Case getCaseRight(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
+			return this.getCase(coordonnee);
+		}
+		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY()));
+		int z = nombreCaseZ-1;
+		while (z>-1) {
+			Case avant = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY(),z));
+			if (! avant.getElement().getNom().equals("Vide") ) {
+				res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY(),z+1));
+			}
+			z--;
+		}
+		
+		return res;	}
+
 	public Case getCaseUpLeft(Coordonnee coordonnee) {
-		if (this.getCase(coordonnee).getCoordonnee().getY()==0 ||
-				this.getCase(coordonnee).getCoordonnee().getX()==0) {
+		if (this.getCase(coordonnee).getCoordonnee().getY() == 0
+				|| this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1 , coordonnee.getY()-1 )) ;
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() - 1));
 	}
+
 	public Case getCaseDownLeft(Coordonnee coordonnee) {
-		if (this.getCase(coordonnee).getCoordonnee().getY()== this.nombreCaseY-1 ||
-				this.getCase(coordonnee).getCoordonnee().getX()==0) {
+		if (this.getCase(coordonnee).getCoordonnee().getY() == this.nombreCaseY - 1
+				|| this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		return  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1 , coordonnee.getY()+1 )) ;
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() + 1));
 
 	}
+
 	public Case getCaseUpRight(Coordonnee coordonnee) {
-		if (this.getCase(coordonnee).getCoordonnee().getY()== 0 ||
-				this.getCase(coordonnee).getCoordonnee().getX()== this.nombreCaseX-1) {
+		if (this.getCase(coordonnee).getCoordonnee().getY() == 0
+				|| this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1 , coordonnee.getY()-1 )) ;
-	}
-	public Case getCaseDownRight(Coordonnee coordonnee) {
-		if (this.getCase(coordonnee).getCoordonnee().getY()== this.nombreCaseY-1 ||
-				this.getCase(coordonnee).getCoordonnee().getX()== this.nombreCaseX-1) {
-			return this.getCase(coordonnee);
-		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1 , coordonnee.getY()+1 )) ;
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() - 1));
 	}
 
-	public Case getCase(Coordonnee coordonnee){
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() )) ;
+	public Case getCaseDownRight(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getY() == this.nombreCaseY - 1
+				|| this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
+			return this.getCase(coordonnee);
+		}
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() + 1));
 	}
-	
-	
-	
-	
-	
+
+	public Case getCase(Coordonnee coordonnee) {
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY()));
+	}
+
 	public int getNombreCaseX() {
 		return nombreCaseX;
 	}
-
-
-
-
 
 	public int getNombreCaseY() {
 		return nombreCaseY;
 	}
 
-
-
-
-
-	public void afficher(){
+	public void afficher() {
 		for (Case c : listCase) {
 			c.afficher();
 		}
 	}
 
-
 	public void end() {
 		for (Case c : listCase) {
-			c.setElement(new Vide ());
-			c.setItem(new Key () );
-		}		
+			c.setElement(new Vide());
+			c.setItem(new Key());
+		}
 	}
 
-
-	
 }

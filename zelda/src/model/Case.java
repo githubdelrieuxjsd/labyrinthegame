@@ -184,7 +184,7 @@ public class Case {
 	
 
 	public void afficher() {	
-		if ( this.getElement().getNom().equals("Vide")) {
+		if ( this.getElement().getNom().equals("Hero")) {
 			System.out.println("###### Case "+num+" ######");
 			System.out.println("Coordonnee "+this.getCoordonnee());
 			System.out.println("Element "+this.getElement());

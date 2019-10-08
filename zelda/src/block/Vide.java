@@ -33,7 +33,7 @@ public class Vide extends Element {
 		Element element = c.getElement() ;
 		String icon = "img/vide.png";
 		if ( ! (c.getCoordonnee().getZ() == 0) ) {
-			icon = "hyrule/block/sol.png";
+			//icon = "hyrule/block/sol.png";
 		}
 		return icon;
 	}

@@ -8,18 +8,18 @@ public abstract class Tool {
 	private static int nbCaseY = 17;
 	
 	public static int CoordinateToNum(Coordonnee c) {
-		return c.getX()+nbCaseX*c.getY()  ;
+		return c.getX()+nbCaseX*c.getY()+c.getZ()*nbCaseX*nbCaseY  ;
 	}
 	
 	public static int CoordinateToNum(int x , int y) {
 		return x+nbCaseX*y;
 	}
 	
-	/**
+	
 	public static int CoordinateToNum(int x , int y,int z) {
-		return nbCaseX*nbCaseX*z+x+nbCaseX*y;
+		return nbCaseX*nbCaseY*z+x+nbCaseX*y;
 	}
-	*/
+	
 	
 	/*
 	public static Coordonnee NumToCoordinate(int num) {
