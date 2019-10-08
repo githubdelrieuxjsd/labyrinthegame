@@ -93,7 +93,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	private void throwObject(Plateau plateau, Case c) {
 		// TODO Auto-generated method stub
 		Case caseDevant = plateau.getCaseDevant(c, this.getDirection());
-		if (caseDevant.getElement().getNom().equals("nothing")) {
+		if (caseDevant.getElement().getNom().equals("Vide")) {
 			caseDevant.setElement(new Rock());
 		}
 	}
