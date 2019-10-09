@@ -122,65 +122,69 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 
 	
 	public void action(Plateau plateau, String descision) {
+		if (this.canDoAction()) {
+			Case c = plateau.getListCase().get(this.getNumeroCase());
+			switch (descision) {
+			case "toucheAction": 
+				if (this.getCurentAction().equals("nothingHolding")) {
+					this.animationThrow(plateau, c);
+				}
+				else {
+					interactionAction(plateau,c);
+				}
+				break;
+			case "moveUp":
+				this.interactionDeplacement(plateau, c, new Direction("up"));
+				break;
 
-		Case c = plateau.getListCase().get(this.getNumeroCase());
-		switch (descision) {
-		case "toucheAction": 
-			if (this.getCurentAction().equals("nothingHolding")) {
-				this.animationThrow(plateau, c);
+			case "moveDown":
+				this.interactionDeplacement(plateau, c, new Direction("down"));
+				break;
+
+			case "moveRight":
+				this.interactionDeplacement(plateau, c, new Direction("right"));
+				break;
+
+			case "moveLeft":
+				this.interactionDeplacement(plateau, c, new Direction("left"));
+				break;
+
+			case "tirer":
+				if ( ! this.hold()) {
+				this.setCurentAction("animationTirer");
+				this.setFrame(0);
+				}
+				break;
+
+			case "attaque":
+				if ( ! this.hold()) {
+				this.setCurentAction("animationAttaque");
+				this.setFrame(0);
+				}
+				break;
+			case "bomb":
+				if ( ! this.hold()) {
+				//this.setCurentAction("animationPlacerBomb");
+				this.setFrame(0);
+				plateau.getCase(c.getCoordonnee()).setItem(new Bomb());
+
+				}
+				break;
+			default:
+				break;
 			}
-			else {
-				interactionAction(plateau,c);
-			}
-			break;
-		case "moveUp":
-			this.interactionDeplacement(plateau, c, new Direction("up"));
-			break;
-
-		case "moveDown":
-			this.interactionDeplacement(plateau, c, new Direction("down"));
-			break;
-
-		case "moveRight":
-			this.interactionDeplacement(plateau, c, new Direction("right"));
-			break;
-
-		case "moveLeft":
-			this.interactionDeplacement(plateau, c, new Direction("left"));
-			break;
-
-		case "tirer":
-			if ( ! this.hold()) {
-			this.setCurentAction("animationTirer");
-			this.setFrame(0);
-			}
-			break;
-
-		case "attaque":
-			if ( ! this.hold()) {
-			this.setCurentAction("animationAttaque");
-			this.setFrame(0);
-			}
-			break;
-		case "bomb":
-			if ( ! this.hold()) {
-			//this.setCurentAction("animationPlacerBomb");
-			this.setFrame(0);
-			plateau.getCase(c.getCoordonnee()).setItem(new Bomb());
-
-			}
-			break;
-		default:
-			break;
 		}
+		
 	}
 
+	private boolean canDoAction() {
+		
+		return this.getCurentAction().equals("nothing")||this.getCurentAction().equals("nothingHolding");
+	}
 
 	
 	
-
-	// ######################### DEPLACEMENT
-	// #########################################
+	// ######################### DEPLACEMENT  #########################################
 	@Override
 	public void deplacer(Plateau plateau, Case caseAvant, Case caseApres) {
 		if (this.hold()) {

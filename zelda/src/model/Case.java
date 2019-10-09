@@ -30,7 +30,7 @@ public class Case {
 	
 
 	public Case(Coordonnee coordonnee ) {
-		this.tailleCasePixel = 40;
+		this.tailleCasePixel = 60;
 		
 		this.coordonnee = coordonnee;
 		this.num = compt;

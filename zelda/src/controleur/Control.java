@@ -156,6 +156,7 @@ public class Control {
 	public boolean action(String herodescision, boolean heroaction) {
 
 		if (this.listMonstre.isEmpty() && false) {
+			freegame =true;
 			int x = (int) (Math.random() * (plateau.getNombreCaseX()-1 + 1 - 0)) + 0;
 			int y = (int) (Math.random() * (plateau.getNombreCaseY()-1 + 1 - 0)) + 0;
 			plateau.getCase(new Coordonnee(x,y,0)).setElement(new Vide());
@@ -164,28 +165,26 @@ public class Control {
 		
 		removeProjectil();
 		this.timer++;
-		if (listMonstre.isEmpty() ) {
-			freegame =true;
-		}
 		
 		if (this.timer % 2 == 0) {
 			 deplacerProjectil();
 		}
 		
-		if (this.timer % 7 == 0) {
+		if (this.timer % 16 == 0) {
 
 			for (Monstre monstre : this.listMonstre) {
 				 monstre.action(plateau);
 			}
 		}
-		if (this.timer % 3 == 0 || freegame) {
+		// change betwen 3 and 16
+		if (this.timer % 16 == 0 || freegame) {
 			if (heroaction) {
 				this.hero.action(this.plateau, herodescision);
 				//this.plateau.afficher();
 			}
 			return false;
 		}
-
+		//System.out.println(heroaction);
 		return heroaction;
 	}
 
