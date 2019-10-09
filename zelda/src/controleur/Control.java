@@ -87,14 +87,14 @@ public class Control {
 
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(1);
-		creationArbre(1);
-		creationRock(2);
+		creationBush(0);
+		creationArbre(0);
+		creationRock(50);
 	}
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationMinotaure(1);
+		creationKnight(0);
 		creationChicken(0);
 		creationGoblin(0);
 		creationTomato(0);
@@ -120,7 +120,7 @@ public class Control {
 		}
 	}
 
-	private static void creationMinotaure(int nombre) {
+	private static void creationKnight(int nombre) {
 		for (int i = 0; i < nombre; i++) {
 			listMonstre.add(new Knight());
 
@@ -175,7 +175,7 @@ public class Control {
 		if (this.timer % 7 == 0) {
 
 			for (Monstre monstre : this.listMonstre) {
-				 //monstre.action(plateau);
+				 monstre.action(plateau);
 			}
 		}
 		if (this.timer % 3 == 0 || freegame) {

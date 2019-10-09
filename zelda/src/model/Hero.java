@@ -62,7 +62,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	}
 	// ######################### A FAIRE INTERATCTIONAction#########################################
 	private void interactionAction(Plateau plateau, Case c) {
-		Case caseDevant = plateau.getCaseDevant(c, this.getDirection());
+		Case caseDevant = plateau.getCaseDevantMemeZ(c, this.getDirection());
 
 		switch (caseDevant.getElement().getNom()) {
 		case "Rock": lift(plateau , caseDevant) ;
@@ -92,7 +92,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	}
 	private void throwObject(Plateau plateau, Case c) {
 		// TODO Auto-generated method stub
-		Case caseDevant = plateau.getCaseDevant(c, this.getDirection());
+		Case caseDevant = plateau.getCaseDevantMemeZ(c, this.getDirection());
 		if (caseDevant.getElement().getNom().equals("Vide")) {
 			caseDevant.setElement(new Rock());
 		}
@@ -294,9 +294,9 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		switch (this.getDirection().getDirection()) {
 
 		case "up":
-			Case caseUp = plateau.getCaseUp(c.getCoordonnee());
-			Case caseUpLeft = plateau.getCaseUpLeft(c.getCoordonnee());
-			Case caseUpRight = plateau.getCaseUpRight(c.getCoordonnee());
+			Case caseUp = plateau.getCaseUpMemeZ(c.getCoordonnee());
+			Case caseUpLeft = plateau.getCaseUpLeftMemeZ(c.getCoordonnee());
+			Case caseUpRight = plateau.getCaseUpRightMemeZ(c.getCoordonnee());
 
 			caseUp.getElement().perdreVie(this.getDamage(), plateau);
 			caseUpLeft.getElement().perdreVie(this.getDamage(), plateau);
@@ -305,9 +305,9 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 //			System.out.println(caseUpLeft+ ","+caseUp +","+caseUpRight);
 			break;
 		case "down":
-			Case caseDownLeft = plateau.getCaseDownLeft(c.getCoordonnee());
+			Case caseDownLeft = plateau.getCaseDownLeftMemeZ(c.getCoordonnee());
 			Case caseDown = plateau.getCaseDown(c.getCoordonnee());
-			Case caseDownRight = plateau.getCaseDownRight(c.getCoordonnee());
+			Case caseDownRight = plateau.getCaseDownRightMemeZ(c.getCoordonnee());
 
 			caseDown.getElement().perdreVie(this.getDamage(), plateau);
 			caseDownLeft.getElement().perdreVie(this.getDamage(), plateau);
@@ -317,9 +317,9 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 
 			break;
 		case "left":
-			Case caseLeft = plateau.getCaseLeft(c.getCoordonnee());
-			caseUpLeft = plateau.getCaseUpLeft(c.getCoordonnee());
-			caseDownLeft = plateau.getCaseDownLeft(c.getCoordonnee());
+			Case caseLeft = plateau.getCaseLeftMemeZ(c.getCoordonnee());
+			caseUpLeft = plateau.getCaseUpLeftMemeZ(c.getCoordonnee());
+			caseDownLeft = plateau.getCaseDownLeftMemeZ(c.getCoordonnee());
 
 			caseLeft.getElement().perdreVie(this.getDamage(), plateau);
 			caseUpLeft.getElement().perdreVie(this.getDamage(), plateau);
@@ -329,9 +329,9 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 
 			break;
 		case "right":
-			Case caseRight = plateau.getCaseRight(c.getCoordonnee());
-			caseUpRight = plateau.getCaseUpRight(c.getCoordonnee());
-			caseDownRight = plateau.getCaseDownRight(c.getCoordonnee());
+			Case caseRight = plateau.getCaseRightMemeZ(c.getCoordonnee());
+			caseUpRight = plateau.getCaseUpRightMemeZ(c.getCoordonnee());
+			caseDownRight = plateau.getCaseDownRightMemeZ(c.getCoordonnee());
 
 			caseRight.getElement().perdreVie(this.getDamage(), plateau);
 			caseDownRight.getElement().perdreVie(this.getDamage(), plateau);

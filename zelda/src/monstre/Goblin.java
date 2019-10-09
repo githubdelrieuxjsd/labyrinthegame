@@ -98,7 +98,7 @@ public class Goblin extends Monstre implements Deplacement,DropItem,Attaque{
 		@Override
 		public void interactionDeplacement(Plateau plateau, Case caseAvant, Direction direction) {
 			this.setDirection(direction);
-			Case caseApres = plateau.getCaseDevant(caseAvant, this.getDirection());
+			Case caseApres = plateau.getCaseDevantMemeZ(caseAvant, this.getDirection());
 
 			switch (caseApres.getElement().getNom()) {
 
@@ -122,7 +122,7 @@ public class Goblin extends Monstre implements Deplacement,DropItem,Attaque{
 		@Override
 		public void attaquer(Plateau plateau, Case c) {
 			
-			plateau.getCaseDevant(c, this.getDirection()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDevantMemeZ(c, this.getDirection()).getElement().perdreVie(this.getDamage(), plateau);
 			
 		}
 		

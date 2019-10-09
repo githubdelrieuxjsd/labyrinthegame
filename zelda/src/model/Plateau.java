@@ -33,7 +33,7 @@ public class Plateau {
 
 		this.nombreCaseX = 30;
 		this.nombreCaseY = 17;
-		this.nombreCaseZ = 2;
+		this.nombreCaseZ = 3;
 
 		this.listCase = new ArrayList<Case>();
 
@@ -174,6 +174,59 @@ public class Plateau {
 		this.listCase = listCase;
 	}
 
+	public Case getCaseDevantMemeZ(Case c, Direction direction) {
+		Case res = this.getCaseUpMemeZ(c.getCoordonnee());
+
+		switch (direction.getDirection()) {
+		case "down":
+			res = this.getCaseDownMemeZ(c.getCoordonnee());
+			break;
+
+		case "right":
+			res = this.getCaseRightMemeZ(c.getCoordonnee());
+			break;
+
+		case "left":
+			res = this.getCaseLeftMemeZ(c.getCoordonnee());
+			break;
+		default:
+			break;
+		}
+		return res;
+	}
+
+	public Case getCaseUpMemeZ(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getY() == 0) {
+			return this.getCase(coordonnee);
+		}
+		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1 , coordonnee.getZ()));
+		return res;
+	}
+
+	public Case getCaseDownMemeZ(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getY() == this.nombreCaseY - 1) {
+			return this.getCase(coordonnee);
+		}
+		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1,coordonnee.getZ()));
+		return res;
+	}
+
+	public Case getCaseLeftMemeZ(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getX() == 0) {
+			return this.getCase(coordonnee);
+		}
+		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()-1, coordonnee.getY(), coordonnee.getZ() ));
+		return res;	}
+
+	public Case getCaseRightMemeZ(Coordonnee coordonnee) {
+		if (this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
+			return this.getCase(coordonnee);
+		}
+		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY(), coordonnee.getZ()));
+		return res;	}
+
+	
+	
 	public Case getCaseDevant(Case c, Direction direction) {
 		Case res = this.getCaseUp(c.getCoordonnee());
 
@@ -194,7 +247,8 @@ public class Plateau {
 		}
 		return res;
 	}
-
+	
+	
 	public Case getCaseUp(Coordonnee coordonnee) {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == 0) {
 			return this.getCase(coordonnee);
@@ -260,7 +314,7 @@ public class Plateau {
 		
 		return res;	}
 
-	public Case getCaseUpLeft(Coordonnee coordonnee) {
+	public Case getCaseUpLeftMemeZ(Coordonnee coordonnee) {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == 0
 				|| this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
@@ -268,7 +322,7 @@ public class Plateau {
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() - 1));
 	}
 
-	public Case getCaseDownLeft(Coordonnee coordonnee) {
+	public Case getCaseDownLeftMemeZ(Coordonnee coordonnee) {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == this.nombreCaseY - 1
 				|| this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
@@ -277,7 +331,7 @@ public class Plateau {
 
 	}
 
-	public Case getCaseUpRight(Coordonnee coordonnee) {
+	public Case getCaseUpRightMemeZ(Coordonnee coordonnee) {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == 0
 				|| this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);
@@ -285,7 +339,7 @@ public class Plateau {
 		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() - 1));
 	}
 
-	public Case getCaseDownRight(Coordonnee coordonnee) {
+	public Case getCaseDownRightMemeZ(Coordonnee coordonnee) {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == this.nombreCaseY - 1
 				|| this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);

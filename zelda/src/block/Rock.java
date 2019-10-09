@@ -119,7 +119,7 @@ public class Rock extends Block implements Deplacement {
 	@Override
 	public int trouverY(Case c) {
 		int res = c.getCoordonnee().getY() * c.getTailleCasePixel() - c.getTailleCasePixel()
-				- c.getCoordonnee().getZ()*c.getTailleCasePixel();
+				- c.getCoordonnee().getZ()*c.getTailleCasePixel()/2;
 		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
 			res = res - this.getFrame() * c.getTailleCasePixel()/3 +c.getTailleCasePixel() ;
 		} else if (this.getDirection().equals("down") && this.getCurentAction().equals("moving")) {

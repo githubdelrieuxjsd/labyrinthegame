@@ -22,14 +22,14 @@ public class Bomb extends Item {
 	private void exploser(Plateau plateau, Case c){
 		Coordonnee coord = c.getCoordonnee() ;
 		Case c1 = plateau.getCase(coord);
-		Case c2 = plateau.getCaseUp(coord);
-		Case c3 = plateau.getCaseUpRight(coord);
-		Case c4 = plateau.getCaseUpLeft(coord);
-		Case c5 = plateau.getCaseDown(coord);
-		Case c6 = plateau.getCaseDownRight(coord);
-		Case c7 = plateau.getCaseDownLeft(coord);
-		Case c8= plateau.getCaseLeft(coord);
-		Case c9= plateau.getCaseRight(coord);
+		Case c2 = plateau.getCaseUpMemeZ(coord);
+		Case c3 = plateau.getCaseUpRightMemeZ(coord);
+		Case c4 = plateau.getCaseUpLeftMemeZ(coord);
+		Case c5 = plateau.getCaseDownMemeZ(coord);
+		Case c6 = plateau.getCaseDownRightMemeZ(coord);
+		Case c7 = plateau.getCaseDownLeftMemeZ(coord);
+		Case c8= plateau.getCaseLeftMemeZ(coord);
+		Case c9= plateau.getCaseRightMemeZ(coord);
 		
 		c1.getElement().perdreVie(this.damage, plateau);
 		c2.getElement().perdreVie(this.damage, plateau);

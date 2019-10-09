@@ -106,7 +106,7 @@ public class Chicken extends Monstre implements Deplacement, DropItem {
 	@Override
 	public void interactionDeplacement(Plateau plateau, Case caseAvant, Direction direction) {
 		this.setDirection(direction);
-		Case caseApres = plateau.getCaseDevant(caseAvant, this.getDirection());
+		Case caseApres = plateau.getCaseDevantMemeZ(caseAvant, this.getDirection());
 
 		if (caseApres.getElement().getNom().equals("Vide")) {
 			this.deplacer(plateau, caseAvant, caseApres);

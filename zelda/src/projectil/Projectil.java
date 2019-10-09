@@ -49,7 +49,7 @@ public abstract class Projectil implements Dessin, Deplacement {
 	@Override
 	public void interactionDeplacement(Plateau plateau, Case caseAvant, Direction direction) {
 		this.setDirection(direction);
-		Case caseApres = plateau.getCaseDevant(caseAvant, this.getDirection());
+		Case caseApres = plateau.getCaseDevantMemeZ(caseAvant, this.getDirection());
 		Element element = caseApres.getElement();
 
 		if (!caseApres.getProjectil().getNom().equals("Aire")) {

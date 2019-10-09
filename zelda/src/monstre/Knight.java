@@ -63,14 +63,14 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 	
 	public boolean isInRange(Plateau plateau, Case c) {
 		boolean res = false ;
-		if (plateau.getCaseUp(c.getCoordonnee()).getElement().isHero()
-		|| plateau.getCaseUpLeft(c.getCoordonnee()).getElement().isHero()
-		|| plateau.getCaseUpRight(c.getCoordonnee()).getElement().isHero()
-		|| plateau.getCaseLeft(c.getCoordonnee()).getElement().isHero()
-		|| plateau.getCaseRight(c.getCoordonnee()).getElement().isHero()
-		|| plateau.getCaseDownRight(c.getCoordonnee()).getElement().isHero()
-		|| plateau.getCaseDown(c.getCoordonnee()).getElement().isHero()
-		|| plateau.getCaseDownRight(c.getCoordonnee()).getElement().isHero()) {
+		if (plateau.getCaseUpMemeZ(c.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseUpLeftMemeZ(c.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseUpRightMemeZ(c.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseLeftMemeZ(c.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseRightMemeZ(c.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseDownRightMemeZ(c.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseDownMemeZ(c.getCoordonnee()).getElement().isHero()
+		|| plateau.getCaseDownRightMemeZ(c.getCoordonnee()).getElement().isHero()) {
 			res = true ;
 		}
 		return res;
@@ -133,7 +133,7 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 		@Override
 		public void interactionDeplacement(Plateau plateau,Case caseAvant, Direction direction) {
 			this.setDirection(direction);
-			Case caseApres = plateau.getCaseDevant(caseAvant, this.getDirection());
+			Case caseApres = plateau.getCaseDevantMemeZ(caseAvant, this.getDirection());
 			
 			switch (caseApres.getElement().getNom()) {
 
@@ -170,36 +170,36 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 		switch (this.getDirection().getDirection()) {
 
 		case "up":
-			plateau.getCaseUp(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseUpLeft(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseUpRight(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseLeft(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseRight(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpLeftMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpRightMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseLeftMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseRightMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 
 //			System.out.println(caseUpLeft+ ","+caseUp +","+caseUpRight);
 			break;
 		case "down":
-			plateau.getCaseDown(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseDownLeft(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseDownRight(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseLeft(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseRight(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownLeftMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownRightMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseLeftMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseRightMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 
 			break;
 		case "left":
-			plateau.getCaseUp(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseDown(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseUpLeft(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseDownLeft(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseLeft(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpLeftMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownLeftMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseLeftMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 
 			break;
 		case "right":
-			plateau.getCaseUp(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseDown(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseDownRight(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseUpRight(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
-			plateau.getCaseRight(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseDownRightMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseUpRightMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
+			plateau.getCaseRightMemeZ(c.getCoordonnee()).getElement().perdreVie(this.getDamage(), plateau);
 			
 			break;
 		default:
