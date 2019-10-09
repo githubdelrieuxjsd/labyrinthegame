@@ -366,6 +366,9 @@ public class Plateau {
 	public int getNombreCaseY() {
 		return nombreCaseY;
 	}
+	public int getNombreCaseZ() {
+		return nombreCaseZ;
+	}
 
 	public void afficher() {
 		for (Case c : listCase) {

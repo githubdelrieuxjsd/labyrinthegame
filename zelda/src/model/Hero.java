@@ -81,9 +81,24 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	}
 	
 	private void lift(Plateau plateau, Case caseDevant) {
-		this.setCurentAction("animationLift");
-		this.setFrame(0);
-		caseDevant.setElement(new Vide());
+		if (caseDevant.getCoordonnee().getZ()< plateau.getNombreCaseZ()-1) {
+			if (
+					plateau.getListCase().get(
+					Tool.CoordinateToNum(caseDevant.getCoordonnee().getX(), caseDevant.getCoordonnee().getY(), caseDevant.getCoordonnee().getZ()+1)
+					).isEmpty()
+					){
+				this.setCurentAction("animationLift");
+				this.setFrame(0);
+				caseDevant.setElement(new Vide());
+
+			}
+		}
+		else{
+			this.setCurentAction("animationLift");
+			this.setFrame(0);
+			caseDevant.setElement(new Vide());
+		}
+		
 	}
 	private void animationThrow(Plateau plateau, Case c) {
 		// TODO Auto-generated method stub

@@ -42,6 +42,10 @@ public class Case {
 
 	}
 	
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return this.getElement().getNom().equals("Vide")&&this.getItem().getNom().equals("Rien")&&this.getProjectil().getNom().equals("Aire");
+	}
 	
 	
 	public void setHauteur(int z) {
@@ -279,6 +283,10 @@ public class Case {
 	public static void setCompt(int compt) {
 		Case.compt = compt;
 	}
+
+
+
+	
 
 		
 	
