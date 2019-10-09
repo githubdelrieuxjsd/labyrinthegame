@@ -181,7 +181,7 @@ public class Control {
 		if (this.timer % 3 == 0 || freegame) {
 			if (heroaction) {
 				this.hero.action(this.plateau, herodescision);
-				this.plateau.afficher();
+				//this.plateau.afficher();
 			}
 			return false;
 		}

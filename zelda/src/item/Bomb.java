@@ -93,7 +93,9 @@ public class Bomb extends Item {
 	@Override
 	public int trouverY(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getY() *c.getTailleCasePixel() -c.getTailleCasePixel() ;
+		return c.getCoordonnee().getY() *c.getTailleCasePixel() -c.getTailleCasePixel() 
+				- c.getCoordonnee().getZ()*c.getTailleCasePixel()/2;
+
 	}
 
 	@Override

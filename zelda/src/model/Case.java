@@ -117,6 +117,9 @@ public class Case {
 	
 	public void dessinItemBlockProjectil(Plateau plateau , Graphics g) {
 		// TODO Auto-generated method stub
+		if ( ! ( this.getElement().getNom().equals("Vide") && this.getItem().getNom().equals("Rien")
+				&&this.getProjectil().getNom().equals("Aire") ) ) {
+			
 		g.drawImage(this.trouverItemImage(plateau), this.trouverItemX(),
 			this.trouverItemY() , this.trouverItemLongeur(), this.trouverItemLargeur(), null);
 
@@ -129,8 +132,9 @@ public class Case {
 		
 		g.drawImage(this.trouverProjectilImage(plateau), this.trouverProjectilX(),
 				this.trouverProjectilY() , this.trouverProjectilLongeur(), this.trouverProjectilLargeur(), null);
-		
+		}
 	}
+	
 	public void dessinUnite(Plateau plateau , Graphics g) {
 		// TODO Auto-generated method stub
 
@@ -186,7 +190,7 @@ public class Case {
 	
 
 	public void afficher() {	
-		if ( this.getElement().getNom().equals("Hero")) {
+		if ( this.getElement().getNom().equals("Hero")|| true) {
 			System.out.println("###### Case "+num+" ######");
 			System.out.println("Coordonnee "+this.getCoordonnee());
 			System.out.println("Element "+this.getElement());
@@ -271,12 +275,7 @@ public class Case {
 		Case.compt = compt;
 	}
 
-
-
-	
-
-	
-	
+		
 	
 	
 	}
