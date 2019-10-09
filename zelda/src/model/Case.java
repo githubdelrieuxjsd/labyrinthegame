@@ -248,10 +248,13 @@ public class Case {
 
 	public void setProjectil(Projectil projectil) {
 		this.projectil = projectil;
+		this.projectil.setNumeroCase(num);
+
 	}
 
 	public void setElement(Element element) {
 		this.element = element;
+		this.element.setNumeroCase(num);
 	}
 
 	
@@ -261,6 +264,8 @@ public class Case {
 
 	public void setItem(Item item) {
 		this.item = item;
+		this.item.setNumeroCase(num);
+
 	}
 	public void setItem() {
 		this.setItem(new Rien() );	

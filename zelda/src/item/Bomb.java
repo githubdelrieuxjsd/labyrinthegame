@@ -31,6 +31,17 @@ public class Bomb extends Item {
 		Case c8= plateau.getCaseLeftMemeZ(coord);
 		Case c9= plateau.getCaseRightMemeZ(coord);
 		
+		c1.afficher();
+		c2.afficher();
+		c3.afficher();
+		c4.afficher();
+		c5.afficher();
+		c6.afficher();
+		c7.afficher();
+		c8.afficher();
+		c9.afficher();
+		
+		
 		c1.getElement().perdreVie(this.damage, plateau);
 		c2.getElement().perdreVie(this.damage, plateau);
 		c3.getElement().perdreVie(this.damage, plateau);

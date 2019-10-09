@@ -22,7 +22,6 @@ public class Rock extends Block implements Deplacement {
 		this.setNom("Rock");
 		this.setFrame(0);
 		this.life = 1;
-
 	}
 	
 	// ####################A FAIRE ######################

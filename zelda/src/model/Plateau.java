@@ -327,7 +327,7 @@ public class Plateau {
 				|| this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() - 1));
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() - 1 , coordonnee.getZ()));
 	}
 
 	public Case getCaseDownLeftMemeZ(Coordonnee coordonnee) {
@@ -335,7 +335,7 @@ public class Plateau {
 				|| this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() + 1));
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() + 1 , coordonnee.getZ()));
 
 	}
 
@@ -344,7 +344,7 @@ public class Plateau {
 				|| this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() - 1));
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() - 1 , coordonnee.getZ()));
 	}
 
 	public Case getCaseDownRightMemeZ(Coordonnee coordonnee) {
@@ -352,7 +352,7 @@ public class Plateau {
 				|| this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() + 1));
+		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() + 1 , coordonnee.getZ()));
 	}
 
 	public Case getCase(Coordonnee coordonnee) {

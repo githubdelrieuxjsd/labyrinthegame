@@ -9,9 +9,14 @@ public abstract class Item implements Dessin{
 	private String nom;
 	private int frame ;
 	private String curentAction;
+	private int numeroCase ;
 	
 	
-	
+
+
+
+
+
 	public abstract void etreRamasser(Case c) ;
 	
 	
@@ -49,6 +54,10 @@ public abstract class Item implements Dessin{
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	public void setNumeroCase(int numeroCase) {
+		this.numeroCase = numeroCase;
+	}
+
 
 	
 	
