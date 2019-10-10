@@ -29,7 +29,7 @@ import tool.Tool;
 
 public class Control {
 
-	private boolean freegame = false;
+	private boolean freegame = true;
 
 	private static Plateau plateau;
 
@@ -87,17 +87,17 @@ public class Control {
 
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(0);
-		creationArbre(0);
-		creationRock(50);
+		creationBush(20);
+		creationArbre(50);
+		creationRock(40);
 	}
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationKnight(0);
-		creationChicken(0);
-		creationGoblin(0);
-		creationTomato(0);
+		creationKnight(10);
+		creationChicken(40);
+		creationGoblin(30);
+		creationTomato(10);
 	}
 
 	private static void creationTomato(int nombre) {

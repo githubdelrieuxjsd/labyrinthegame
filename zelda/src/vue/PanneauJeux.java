@@ -24,6 +24,7 @@ public class PanneauJeux extends JPanel {
 	private long fps = 31;
 	private String herodescision = "nothing";
 	private boolean heroaction = false;
+	
 
 	private JTextField nombreRubi = new JTextField(""+0) {
 	    @Override public void setBorder(Border border) {
@@ -147,23 +148,28 @@ public class PanneauJeux extends JPanel {
 	}
 
 	private void paintPlateau(Graphics g) {
-
-		for (Case c : control.getPlateau().getListCase()) {
-
+		for (int i =0 ; i<control.getPlateau().getNombreCaseX()*control.getPlateau().getNombreCaseY();i++ ) {
+			Case c = control.getPlateau().getListCase().get(i);
 			dessinBackground(g, c);
+
 		}
-
+		
+		
+		
 		for (Case c : control.getPlateau().getListCase()) {
-
+			
+		
 			dessinForgroundBlock(g, c);
-
-		}
-		for (Case c : control.getPlateau().getListCase()) {
-
 			dessinForgroundUnite(g, c);
 
-			dessinSideBar(g, c);
 		}
+
+		dessinSideBar(g, control.getPlateau().getListCase().get(0));
+
+		//for (Case c : control.getPlateau().getListCase()) {
+
+
+		//}
 
 	}
 

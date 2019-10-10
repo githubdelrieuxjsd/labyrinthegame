@@ -30,7 +30,7 @@ public class Case {
 	
 
 	public Case(Coordonnee coordonnee ) {
-		this.tailleCasePixel = 60;
+		this.tailleCasePixel = 40;
 		
 		this.coordonnee = coordonnee;
 		this.num = compt;
@@ -42,6 +42,8 @@ public class Case {
 
 	}
 	
+	
+
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return this.getElement().getNom().equals("Vide")&&this.getItem().getNom().equals("Rien")&&this.getProjectil().getNom().equals("Aire");
@@ -284,8 +286,9 @@ public class Case {
 		Case.compt = compt;
 	}
 
-
-
+	public int getNum() {
+		return num;
+	}
 	
 
 		

@@ -11,7 +11,7 @@ public class Principale {
 		
 		JFrame frame = new JFrame();
 		
-		frame.setPreferredSize(new Dimension(1200,600));
+		frame.setPreferredSize(new Dimension(40*30,17*40));
 		frame.setLocation(50, 25);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 	 //  frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
