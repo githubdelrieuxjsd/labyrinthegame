@@ -8,7 +8,7 @@ import model.Plateau;
 
 public class PanneauAffichage extends Block{
 	
-	public PanneauAffichage( ) {
+	public PanneauAffichage ( ) {
 		super();
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
