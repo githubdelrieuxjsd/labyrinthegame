@@ -15,7 +15,8 @@ import javax.swing.border.Border;
 import controleur.Control;
 
 import model.Case;
-
+import model.Plateau;
+import tool.Tool;
 
 public class PanneauJeux extends JPanel {
 
@@ -24,24 +25,24 @@ public class PanneauJeux extends JPanel {
 	private long fps = 31;
 	private String herodescision = "nothing";
 	private boolean heroaction = false;
-	
 
-	private JTextField nombreRubi = new JTextField(""+0) {
-	    @Override public void setBorder(Border border) {
-	        // No!
-	    }
+	private JTextField nombreRubi = new JTextField("" + 0) {
+		@Override
+		public void setBorder(Border border) {
+			// No!
+		}
 	};
-	
-	public PanneauJeux() {
 
+	public PanneauJeux() {
+		
 		this.setLayout(null);
 		// this.setBackground(Color.decode("#5E9D34"));
 		// this.setBackground(Color.green);
 		this.nombreRubi.setOpaque(false);
-		this.nombreRubi.setBounds(5,35,100,30);
-		this.nombreRubi.setFont(new Font ("Segoe Script", Font.BOLD , 25 ));
+		this.nombreRubi.setBounds(5, 35, 100, 30);
+		this.nombreRubi.setFont(new Font("Segoe Script", Font.BOLD, 25));
 		this.nombreRubi.setForeground(Color.WHITE);
-		this.add(this.nombreRubi); 
+		this.add(this.nombreRubi);
 
 		this.addKeyListener(new KeyListener() {
 
@@ -129,12 +130,10 @@ public class PanneauJeux extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-			nombreRubi.setText(""+control.getHero().getNombreRubi());
-			paintPlateau(g);
-			heroaction = control.action(this.herodescision, heroaction);
+		nombreRubi.setText("" + control.getHero().getNombreRubi());
+		paintPlateau(g);
+		heroaction = control.action(this.herodescision, heroaction);
 
-		
-		
 		try {
 			// Thread.sleep(1000); // 1 fps
 			Thread.sleep(fps); // 32 fps
@@ -148,28 +147,33 @@ public class PanneauJeux extends JPanel {
 	}
 
 	private void paintPlateau(Graphics g) {
-		for (int i =0 ; i<control.getPlateau().getNombreCaseX()*control.getPlateau().getNombreCaseY();i++ ) {
+		Plateau plateau = control.getPlateau() ;
+		for (int i = 0; i < plateau.getNombreCaseX() * plateau.getNombreCaseY(); i++) {
 			Case c = control.getPlateau().getListCase().get(i);
 			dessinBackground(g, c);
 
 		}
-		
-		
-		
+
+			for (int y = 0; y < plateau.getNombreCaseY(); y++) {
+				for (int x = 0; x < plateau.getNombreCaseX(); x++) {
+					for (int z = 0; z < plateau.getNombreCaseZ(); z++) {
+						Case c = plateau.getListCase().get(Tool.CoordinateToNum(x, y, z));
+						dessinForgroundBlock(g, c);
+						dessinForgroundUnite(g, c);
+				}
+			}
+		}
+/**
 		for (Case c : control.getPlateau().getListCase()) {
-			
-		
 			dessinForgroundBlock(g, c);
 			dessinForgroundUnite(g, c);
-
 		}
-
+*/
 		dessinSideBar(g, control.getPlateau().getListCase().get(0));
 
-		//for (Case c : control.getPlateau().getListCase()) {
+		// for (Case c : control.getPlateau().getListCase()) {
 
-
-		//}
+		// }
 
 	}
 
@@ -209,8 +213,7 @@ public class PanneauJeux extends JPanel {
 			}
 			Image img = icon.getImage();
 
-			g.drawImage(img, c.getTailleCasePixel()/10 + 25 * i
-					, c.getTailleCasePixel()/10, 25, 25, null);
+			g.drawImage(img, c.getTailleCasePixel() / 10 + 25 * i, c.getTailleCasePixel() / 10, 25, 25, null);
 
 		}
 

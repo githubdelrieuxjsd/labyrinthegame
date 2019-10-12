@@ -2,6 +2,7 @@ package block;
 
 import damage.Damage;
 import item.Heart;
+import item.Key;
 import item.Rubi;
 import mobInterface.DropItem;
 import model.Case;
@@ -43,13 +44,16 @@ public class Bush extends Block implements DropItem {
 		@Override
 		public void dropItem(Case c) {
 			if (c.getItem().getNom().equals("Rien")) {
+				c.setItem(new Key());
+				/**
+				 * 
 				int x = (int) (Math.random() * (100 + 1 - 1)) + 1;
 				if (x > 30) {
 					c.setItem(new Rubi());
 				} else if (x < 10) {
 					c.setItem(new Heart());
 				}
-
+				*/
 			}
 
 		}

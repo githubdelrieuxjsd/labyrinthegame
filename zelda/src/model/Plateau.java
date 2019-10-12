@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import baseDonnee.Niveau;
 import block.Arbre;
 import block.Block;
 import block.Bush;
+import block.Chest;
 import block.Rock;
 import block.Vide;
 import item.Bomb;
@@ -31,9 +33,9 @@ public class Plateau {
 
 	public Plateau(Hero hero, List<Block> listBlock, List<Monstre> listMonstre) {
 
-		this.nombreCaseX = 30;
-		this.nombreCaseY = 17;
-		this.nombreCaseZ = 30;
+		this.nombreCaseX = 20;
+		this.nombreCaseY = 20;
+		this.nombreCaseZ = 2;
 
 		this.listCase = new ArrayList<Case>();
 
@@ -45,16 +47,32 @@ public class Plateau {
 		placerMonstreRandom(listMonstre);
 
 		if (hero.getNumeroCase() == -1) {
-			this.placerElement(hero, new Coordonnee(9, 1, 0));
-			this.placerElement(new Rock(), new Coordonnee(9,2,0));
+			this.placerElement(hero, new Coordonnee(0, 6, 0));
 		} else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
-
 		// contourArbre();
 		//this.afficher();
+	}
+	
+	public Plateau(Hero hero,int numJeu) {
 
+		this.nombreCaseX = 20;
+		this.nombreCaseY = 20;
+		this.nombreCaseZ = 2;
 
+		this.listCase = new ArrayList<Case>();
+
+		placerVide();
+
+		this.placerBlockBaseDonne(Niveau.mapLabyrinthe(numJeu));
+
+		if (hero.getNumeroCase() == -1) {
+			this.placerElement(hero, new Coordonnee(0, 5, 0));
+		} else {
+			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
+		}
+		this.placerElement(new Rock(), new Coordonnee(1,5,0));
 	}
 
 	private void placerBlockBaseDonne(int[][] tabBlock) {
@@ -70,10 +88,14 @@ public class Plateau {
 			case 3:
 				block = new Bush();
 				break;
+			case 4:
+				block = new Chest();
+				break;
 			default:
 				break;
 			}
-			this.placerElement(block, new Coordonnee(tabBlock[i][1], tabBlock[i][2], tabBlock[i][2]));
+			
+			this.placerElement(block, new Coordonnee(tabBlock[i][1], tabBlock[i][2], tabBlock[i][3]));
 		}
 	}
 
@@ -310,10 +332,11 @@ public class Plateau {
 		}
 		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY()));
 		int z = 0;
+		System.out.print(coordonnee.getZ()+1);
+
 		while (z < coordonnee.getZ()+1 && z<this.nombreCaseZ-1) {
 			Case caseAuDessus = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY(),z+1));
 			Case caseAuDessous = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY(),z));
-
 			if ( caseAuDessus.getElement().getNom().equals("Vide")&& caseAuDessous.getElement().getNom().equals("Rock") ) {
 				return caseAuDessus ;
 			}
