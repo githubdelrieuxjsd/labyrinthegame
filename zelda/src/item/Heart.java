@@ -3,7 +3,7 @@ package item;
 import model.Case;
 import model.Plateau;
 
-public class Heart extends Item{
+public class Heart extends Item {
 
 	
 	public Heart() {
