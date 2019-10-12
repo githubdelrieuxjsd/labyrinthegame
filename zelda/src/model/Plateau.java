@@ -31,9 +31,9 @@ public class Plateau {
 
 	public Plateau(Hero hero, List<Block> listBlock, List<Monstre> listMonstre) {
 
-		this.nombreCaseX = 20;
-		this.nombreCaseY = 10;
-		this.nombreCaseZ = 5;
+		this.nombreCaseX = 30;
+		this.nombreCaseY = 17;
+		this.nombreCaseZ = 30;
 
 		this.listCase = new ArrayList<Case>();
 
