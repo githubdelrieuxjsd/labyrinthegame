@@ -36,7 +36,7 @@ public class Plateau {
 
 		this.nombreCaseX = 22;
 		this.nombreCaseY = 22;
-		this.nombreCaseZ = 2;
+		this.nombreCaseZ = 10;
 
 		this.listCase = new ArrayList<Case>();
 
@@ -48,11 +48,13 @@ public class Plateau {
 		placerMonstreRandom(listMonstre);
 
 		if (hero.getNumeroCase() == -1) {
-			this.placerElement(hero, new Coordonnee(0, 6, 0));
+			this.placerElement(hero, new Coordonnee(3, 3, 0));
 		} else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
-		
+		this.placerTrap(new Stairs(new Coordonnee(15,5,0)), new Coordonnee(10,10,0));
+		this.placerTrap(new Stairs(new Coordonnee(10,10,0)), new Coordonnee(15,5,0));
+
 		contourTrap();
 		// contourArbre();
 		//this.afficher();

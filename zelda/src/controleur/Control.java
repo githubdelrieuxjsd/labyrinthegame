@@ -8,6 +8,7 @@ import baseDonnee.Niveau;
 import block.Arbre;
 import block.Block;
 import block.Bush;
+import block.Chest;
 import block.Rock;
 import block.Vide;
 import item.Bomb;
@@ -123,15 +124,16 @@ public class Control {
 		// TODO Auto-generated method stub
 		creationBush(20);
 		creationArbre(50);
-		creationRock(40);
+		creationRock(0);
+		creationChest(10);
 	}
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationKnight(10);
-		creationChicken(40);
-		creationGoblin(30);
-		creationTomato(10);
+		creationKnight(0);
+		creationChicken(0);
+		creationGoblin(0);
+		creationTomato(0);
 	}
 
 	private static void creationTomato(int nombre) {
@@ -162,6 +164,14 @@ public class Control {
 
 	}
 
+	private static void creationChest(int nombre) {
+		for (int i = 0; i < nombre; i++) {
+			listBlock.add(new Chest());
+
+		}		
+	}
+
+	
 	private static void creationBush(int nombre) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < nombre; i++) {

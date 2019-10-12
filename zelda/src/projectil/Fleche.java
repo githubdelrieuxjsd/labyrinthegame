@@ -63,7 +63,7 @@ public class Fleche extends Projectil {
 
 	@Override
 	public int trouverY(Case c) {
-		int res = c.getCoordonnee().getY()*c.getTailleCasePixel() -15 
+		int res = c.getCoordonnee().getY()*c.getTailleCasePixel() -17
 				- c.getCoordonnee().getZ()*c.getTailleCasePixel()/2;
 		if (this.getDirection().equals("up")) {
 			res = res - this.getFrame()*10 ;

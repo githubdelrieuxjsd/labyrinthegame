@@ -185,6 +185,13 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	// #########################################
 	@Override
 	public void deplacer(Plateau plateau, Case caseAvant, Case caseApres) {
+		
+		if (caseApres.getTrap().getNom().equals("Stairs")) {
+
+			caseApres = plateau.getListCase().get(Tool.CoordinateToNum(((Stairs) caseApres.getTrap()).getCoordonnee()));
+			
+		}
+		
 		if (this.hold()) {
 			this.setCurentAction("movingHolding");
 			this.setFrame(0);
@@ -209,6 +216,13 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		plateau.getListCase().get(num).setElement(this);
 		this.setNumeroCase(num);
 		this.Ramasser(caseApres);
+		
+		if (caseApres.getTrap().getNom().equals("Stairs")) {
+			int random = (int) (Math.random() * (plateau.getNombreCaseX()*plateau.getNombreCaseY() - 0 +1 )) + 0;
+			Control.generationPlateau();
+			//caseApres = plateau.getListCase().get(random);
+			
+		}
 
 	}
 
