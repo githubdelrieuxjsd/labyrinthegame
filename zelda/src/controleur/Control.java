@@ -29,7 +29,7 @@ import tool.Tool;
 
 public class Control {
 
-	private boolean freegame = false;
+	private boolean freegame = true;
 
 	private static Plateau plateau;
 
