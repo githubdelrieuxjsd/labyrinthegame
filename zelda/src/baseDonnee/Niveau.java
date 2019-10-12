@@ -1,5 +1,12 @@
 package baseDonnee;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+
 public class Niveau {
 
 	// 1 tree
@@ -46,5 +53,53 @@ public class Niveau {
 		return tab;
 	}
 
+
+
+	public static int[][] mapLabyrinthe(int numPlateau) {
+		int [][] res = { {1,0,0,0} , {1,2,2,0} } ; 
+		if (numPlateau > 9 || numPlateau < 0) {
+			numPlateau = 0;
+		}
+		res = lireMap("Map/labyrinthe"+numPlateau+".txt") ;
+	
+		
+		return res;
+	}
+
+	
+	private static int[][] lireMap(String nomMap) {
+		int [][] res = new int [400][4];  
+		File f = new File(nomMap);
+		BufferedReader fR;
+		try {
+			fR = new BufferedReader(new FileReader(f));
+		
+		String chaine = "";
+		int y = 0;
+		do {
+			chaine = fR.readLine();
+			//System.out.println(y);
+			if (chaine != null) {
+				//System.out.println(chaine);
+				for (int x = 0 ;x< chaine.length(); x++) {
+						res [x+y*20][0] =  Integer.parseInt( chaine.substring(x,x+1) ) ;
+						res [x+y*20][1] = x ;
+						res [x+y*20][2] = y ;
+						res [x+y*20][3] = 0 ;
+						//System.out.println(res [x+y*20][0] +","+res [x+y*20][1]+","+res [x+y*20][2]);
+					
+				}
+				
+			}
+			y++;
+		} while (chaine != null);
+		fR.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
 	
 }

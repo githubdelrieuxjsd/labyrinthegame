@@ -1,5 +1,6 @@
 package controleur;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,18 +34,20 @@ public class Control {
 
 	private static Plateau plateau;
 
-	private static  Hero hero;
+	private static Hero hero;
 	private static List<Monstre> listMonstre;
 	private static List<Block> listBlock;
-	private static List <Projectil> listProjectil ;
-	
-	
+	private static List<Projectil> listProjectil;
+
+	private static int numPlateau = 0;
 	private static int timer;
 
 	/**
 	 * Constructeur redefinir ControlRandom creation du hero placer en (4,1) = (x,y)
 	 * creation list monstre vide creation list Block vide gernerer le plateau
 	 * initialisation du timer du jeux a 0;
+	 * 
+	 * @throws IOException
 	 */
 	public Control() {
 		super();
@@ -57,32 +60,63 @@ public class Control {
 
 		Monstre.setHero(hero);
 		generationPlateau();
-		//Niveau.generationMapRandom();
+		// Niveau.generationMapRandom();
 	}
 
 	/**
 	 * ajout dans la liste de block des object block (rock , tree , bush ) ajout
 	 * dans la liste des monstre (knight , goblin tomato , chicken) appele du
 	 * constructeur du plateau
+	 * 
+	 * @throws IOException
 	 */
-	
-	
-	
-	
+
 	public static void generationPlateau() {
 		listMonstre = new ArrayList<Monstre>();
 		listBlock = new ArrayList<Block>();
 		listProjectil = new ArrayList<Projectil>();
-		
-		creationBlock();
-		creationMonstre();
-		plateau = new Plateau(hero,listBlock, listMonstre);
 
+		// creationBlock();
+		// creationMonstre();
+		//plateau = new Plateau(hero , listBlock, listMonstre);
+
+		plateau = new Plateau(hero, getMapNum());
 		if (!plateau.getListCase().isEmpty()) {
 			plateau.getListCase().get(0).setCompt(0);
 		}
-
 		timer = 0;
+	}
+
+	private static int getMapNum() {
+		int res = numPlateau;
+		switch (hero.getDirection().getDirection()) {
+		case "up":
+			res = res - 3;
+			break;
+		case "down":
+			res = res + 3;
+			break;
+		case "left":
+			if (numPlateau == 4 || numPlateau == 7 ) {
+				res = 0;
+			}
+			else {
+				res = res - 1;
+			}
+			break;
+		case "right":
+			if (numPlateau == 3 || numPlateau == 6 ) {
+				res = 0;
+			}
+			else {
+				res = res + 1;
+			}
+			break;
+		default:
+		}
+		//System.out.println("numPlateau :" + res);
+		numPlateau = res;
+		return res;
 	}
 
 	private static void creationBlock() {
@@ -136,7 +170,7 @@ public class Control {
 		}
 	}
 
-	private  static void creationRock(int nombre) {
+	private static void creationRock(int nombre) {
 		// TODO Auto-generated method stub
 
 		for (int i = 0; i < nombre; i++) {
@@ -156,56 +190,59 @@ public class Control {
 	public boolean action(String herodescision, boolean heroaction) {
 
 		if (this.listMonstre.isEmpty() && false) {
-			freegame =true;
-			int x = (int) (Math.random() * (plateau.getNombreCaseX()-1 + 1 - 0)) + 0;
-			int y = (int) (Math.random() * (plateau.getNombreCaseY()-1 + 1 - 0)) + 0;
-			plateau.getCase(new Coordonnee(x,y,0)).setElement(new Vide());
-			plateau.getCase(new Coordonnee(x,y,0)).setItem(new Key());
+			freegame = true;
+			int x = (int) (Math.random() * (plateau.getNombreCaseX() - 1 + 1 - 0)) + 0;
+			int y = (int) (Math.random() * (plateau.getNombreCaseY() - 1 + 1 - 0)) + 0;
+			plateau.getCase(new Coordonnee(x, y, 0)).setElement(new Vide());
+			plateau.getCase(new Coordonnee(x, y, 0)).setItem(new Key());
 		}
-		
+
 		removeProjectil();
 		this.timer++;
-		
+
 		if (this.timer % 2 == 0) {
-			 deplacerProjectil();
+			deplacerProjectil();
 		}
-		
+
 		if (this.timer % 16 == 0) {
 
 			for (Monstre monstre : this.listMonstre) {
-				 monstre.action(plateau);
+				monstre.action(plateau);
 			}
 		}
 		// change betwen 3 and 16
 		if (this.timer % 16 == 0 || freegame) {
 			if (heroaction) {
 				this.hero.action(this.plateau, herodescision);
-				//this.plateau.afficher();
+				// this.plateau.afficher();
 			}
 			return false;
 		}
-		//System.out.println(heroaction);
+		// System.out.println(heroaction);
 		return heroaction;
 	}
 
 	private void deplacerProjectil() {
 		for (Projectil p : this.listProjectil) {
-			 p.interactionDeplacement(plateau, plateau.getListCase().get(p.getNumeroCase()), p.getDirection());
+			p.interactionDeplacement(plateau, plateau.getListCase().get(p.getNumeroCase()), p.getDirection());
 		}
 	}
+
 	public static void removeMonstre(Monstre m) {
 		listMonstre.remove(m);
 		plateau.getListCase().get(m.getNumeroCase()).setElement(new Vide());
 	}
+
 	public static void removeBlock(Block b) {
 		listBlock.remove(b);
 		plateau.getListCase().get(b.getNumeroCase()).setElement(new Vide());
 
 	}
+
 	public void removeProjectil() {
 		List<Projectil> listProjectildead = new ArrayList<Projectil>();
 		for (Projectil p : this.listProjectil) {
-			if (p.getCurentAction().equals("detruir") ) {
+			if (p.getCurentAction().equals("detruir")) {
 				listProjectildead.add(p);
 			}
 		}
@@ -215,12 +252,11 @@ public class Control {
 
 		}
 	}
-	public static void tirer(Projectil projectil, Case c) {
-			plateau.placerProjectil(projectil, c.getCoordonnee());
-			listProjectil.add(projectil);
-		}
 
-	
+	public static void tirer(Projectil projectil, Case c) {
+		plateau.placerProjectil(projectil, c.getCoordonnee());
+		listProjectil.add(projectil);
+	}
 
 	// ########################### Affichage des informations ##################
 	public void information() {
@@ -270,8 +306,5 @@ public class Control {
 	public void setHero(Hero hero) {
 		this.hero = hero;
 	}
-
-	
-	
 
 }

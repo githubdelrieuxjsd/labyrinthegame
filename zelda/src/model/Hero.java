@@ -45,7 +45,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 
 		this.setFrame(0);
 		this.setCurentAction("nothing");
-		this.setDirection(new Direction("down"));
+		this.setDirection(new Direction("right"));
 
 		this.setMaxLife(5);
 		this.setLife(this.getMaxLife());
@@ -66,6 +66,8 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 
 		switch (caseDevant.getElement().getNom()) {
 		case "Rock": lift(plateau , caseDevant) ;
+		break;
+		case "Chest": this.setCurentAction("movingHolding");
 		break;
 		default :
 			break;
@@ -224,6 +226,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		} else {
 
 			Case caseApres = plateau.getCaseDevant(caseAvant, this.getDirection());
+			caseApres.afficher();
 
 			switch (caseApres.getElement().getNom()) {
 
