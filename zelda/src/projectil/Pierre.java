@@ -45,7 +45,7 @@ public class Pierre  extends Projectil {
 
 	@Override
 	public int trouverX(Case c) {
-		int res =  c.getCoordonnee().getX()*c.getTailleCasePixel() ;
+		int res = c.getCoordonnee().getX()*c.getTailleCasePixel()+15 -c.getTailleCasePixel() ;
 		if (this.getDirection().equals("right")) {
 			res = res + this.getFrame()*10 ;
 		}
@@ -57,7 +57,7 @@ public class Pierre  extends Projectil {
 
 	@Override
 	public int trouverY(Case c) {
-		int res =  c.getCoordonnee().getY()*c.getTailleCasePixel() ;
+		int res = c.getCoordonnee().getY()*c.getTailleCasePixel() -15 ;
 		if (this.getDirection().equals("up")) {
 			res = res - this.getFrame()*10 ;
 		}

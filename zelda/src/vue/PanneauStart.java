@@ -57,7 +57,7 @@ public class PanneauStart extends JPanel {
 		txt_NomJeux.setBounds(50,100,1000,200);
 		txt_NomJeux.setLineWrap(false);
 		txt_NomJeux.setBackground(Color.PINK);
-		txt_NomJeux.setFont(new Font ("Segoe Script", Font.BOLD , 150 ));
+		txt_NomJeux.setFont(new Font ("Segoe Script", Font.BOLD , 90 ));
 		txt_NomJeux.setForeground(Color.BLUE);
 		this.add(txt_NomJeux); 
 		

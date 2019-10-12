@@ -222,7 +222,7 @@ public class Chicken extends Monstre implements Deplacement, DropItem {
 
 	@Override
 	public int trouverX(Case c) {
-		int res = c.getCoordonnee().getX() * c.getTailleCasePixel() - c.getTailleCasePixel();
+		int res = c.getCoordonnee().getX()*c.getTailleCasePixel()+15-2*c.getTailleCasePixel();
 		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
 			int num = this.getFrame() + 1;
 			res = res + num * 7 - c.getTailleCasePixel();
@@ -235,7 +235,7 @@ public class Chicken extends Monstre implements Deplacement, DropItem {
 
 	@Override
 	public int trouverY(Case c) {
-		int res = c.getCoordonnee().getY() * c.getTailleCasePixel() - c.getTailleCasePixel();
+		int res = c.getCoordonnee().getY()*c.getTailleCasePixel() -15 -c.getTailleCasePixel();
 		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
 			int num = this.getFrame() / 2 + 1;
 			res = res - num * c.getTailleCasePixel()/4 + c.getTailleCasePixel();

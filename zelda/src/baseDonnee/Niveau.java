@@ -68,7 +68,7 @@ public class Niveau {
 
 	
 	private static int[][] lireMap(String nomMap) {
-		int [][] res = new int [400][4];  
+		int [][] res = new int [22*22][4];  
 		File f = new File(nomMap);
 		BufferedReader fR;
 		try {
@@ -82,10 +82,10 @@ public class Niveau {
 			if (chaine != null) {
 				//System.out.println(chaine);
 				for (int x = 0 ;x< chaine.length(); x++) {
-						res [x+y*20][0] =  Integer.parseInt( chaine.substring(x,x+1) ) ;
-						res [x+y*20][1] = x ;
-						res [x+y*20][2] = y ;
-						res [x+y*20][3] = 0 ;
+						res [x+y*22][0] =  Integer.parseInt( chaine.substring(x,x+1) ) ;
+						res [x+y*22][1] = x ;
+						res [x+y*22][2] = y ;
+						res [x+y*22][3] = 0 ;
 						//System.out.println(res [x+y*20][0] +","+res [x+y*20][1]+","+res [x+y*20][2]);
 					
 				}

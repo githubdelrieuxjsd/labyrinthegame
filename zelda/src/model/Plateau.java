@@ -60,8 +60,8 @@ public class Plateau {
 	
 	public Plateau(Hero hero,int numJeu) {
 
-		this.nombreCaseX = 20;
-		this.nombreCaseY = 20;
+		this.nombreCaseX = 22;
+		this.nombreCaseY = 22;
 		this.nombreCaseZ = 2;
 
 		this.listCase = new ArrayList<Case>();
@@ -71,13 +71,11 @@ public class Plateau {
 		this.placerBlockBaseDonne(Niveau.mapLabyrinthe(numJeu));
 
 		if (hero.getNumeroCase() == -1) {
-			this.placerElement(hero, new Coordonnee(0, 5, 0));
+			this.placerElement(hero, new Coordonnee(1, 6, 0));
 		} else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
-		
-		
-		this.placerElement(new PanneauAffichage(), new Coordonnee(3, 8, 0));
+		contourTrap();
 	}
 
 	private void placerBlockBaseDonne(int[][] tabBlock) {
@@ -120,6 +118,18 @@ public class Plateau {
 			this.placerElement(new Arbre(), new Coordonnee(i, nombreCaseY - 1, 0));
 		}
 	}
+	private void contourTrap() {
+		for (int i = 0; i < nombreCaseY; i++) {
+			this.placerTrap(new ChangementPlateau(), new Coordonnee(nombreCaseX - 1, i, 0));
+			this.placerTrap(new ChangementPlateau(), new Coordonnee(i, 0, 0));
+			this.placerTrap(new ChangementPlateau(), new Coordonnee(i, nombreCaseY - 1, 0));
+			this.placerTrap(new ChangementPlateau(), new Coordonnee(0, i, 0));
+		}
+		for (int i = nombreCaseY; i < nombreCaseX; i++) {
+			this.placerTrap(new ChangementPlateau(), new Coordonnee(i, 0, 0));
+			this.placerTrap(new ChangementPlateau(), new Coordonnee(i, nombreCaseY - 1, 0));
+		}
+	}
 
 	private void placerMonstreRandom(List<Monstre> listMonstre) {
 		for (Monstre m : listMonstre) {
@@ -147,6 +157,7 @@ public class Plateau {
 					caseVide.setItem(new Rien());
 					// caseVide.setItem(new Rubi () );
 					caseVide.setProjectil(new Aire());
+					caseVide.setTrap(new TrapVide());
 					listCase.add(caseVide);
 				}
 			}
@@ -174,6 +185,17 @@ public class Plateau {
 	public void placerItem(Item item, int num) {
 		if (num > -1 && num < nombreCaseY * nombreCaseX) {
 			this.listCase.get(num).setItem(item);
+		}
+	}
+	
+	public void placerTrap(Trap trap, Coordonnee coordonnee) {
+		int num = Tool.CoordinateToNum(coordonnee);
+			this.listCase.get(num).setTrap(trap);
+	}
+
+	public void placerTrap(Trap trap, int num) {
+		if (num > -1 && num < nombreCaseY * nombreCaseX) {
+			this.listCase.get(num).setTrap(trap);
 		}
 	}
 

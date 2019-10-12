@@ -106,7 +106,7 @@ public class Rock extends Block implements Deplacement {
 
 	@Override
 	public int trouverX(Case c) {
-		int res = c.getCoordonnee().getX() * c.getTailleCasePixel() - c.getTailleCasePixel();
+		int res = c.getCoordonnee().getX()*c.getTailleCasePixel()+15-2*c.getTailleCasePixel();
 		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
 			res = res + this.getFrame() * c.getTailleCasePixel()/3 - c.getTailleCasePixel() ;
 		} else if (this.getDirection().equals("left") && this.getCurentAction().equals("moving")) {
@@ -117,7 +117,7 @@ public class Rock extends Block implements Deplacement {
 
 	@Override
 	public int trouverY(Case c) {
-		int res = c.getCoordonnee().getY() * c.getTailleCasePixel() - c.getTailleCasePixel()
+		int res = c.getCoordonnee().getY()*c.getTailleCasePixel() -15 -c.getTailleCasePixel()
 				- c.getCoordonnee().getZ()*c.getTailleCasePixel()/2;
 		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
 			res = res - this.getFrame() * c.getTailleCasePixel()/3 +c.getTailleCasePixel() ;

@@ -19,31 +19,31 @@ public class PanneauAffichage extends Block{
 	@Override
 	public String trouverImage(Plateau plateau ,Case c) {
 		// TODO Auto-generated method stub
-		return "hyrule/block/chest.png";
+		return "hyrule/block/panneauAffichage.png";
 	}
 
 	@Override
 	public int trouverX(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getX()*c.getTailleCasePixel()-c.getTailleCasePixel();
+		return c.getCoordonnee().getX()*c.getTailleCasePixel()+15-2*c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverY(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getY()*c.getTailleCasePixel()-c.getTailleCasePixel();
+		return c.getCoordonnee().getY()*c.getTailleCasePixel() -15 ;
 	}
 
 	@Override
 	public int trouverlargeur(Case c) {
 		// TODO Auto-generated method stub
-		return 3*c.getTailleCasePixel();
+		return c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverlongeur(Case c) {
 		// TODO Auto-generated method stub
-		return 3*c.getTailleCasePixel();
+		return c.getTailleCasePixel();
 	}
 
 

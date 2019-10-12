@@ -1,42 +1,35 @@
-package block;
+package model;
 
 import damage.Damage;
-import model.Case;
-import model.Coordonnee;
-import model.Direction;
-import model.Plateau;
 
-public class Arbre extends  Block {
+public class TrapVide extends Trap{
 
-	
-	public Arbre( ) {
+	public TrapVide( ) {
 		super();
-		this.setFrame(0);
-		this.setCurentAction("nothing") ;
-		this.setDirection( new Direction ("down" ) );		
-		this.setNom("Arbre"); 
+		this.setNom("TrapVide"); 
 	}
 
 	
 	// #################### IMAGE ######################
 
 	
+	
 	@Override
 	public String trouverImage(Plateau plateau ,Case c) {
 		// TODO Auto-generated method stub
-		return "hyrule/block/tree.png";
+		return "hyrule/block/vide.png";
 	}
 
 	@Override
 	public int trouverX(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getX()*c.getTailleCasePixel()+15-2*c.getTailleCasePixel();
+		return c.getCoordonnee().getX()*c.getTailleCasePixel()-2*c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverY(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getY()*c.getTailleCasePixel() -15 -c.getTailleCasePixel();
+		return c.getCoordonnee().getY()*c.getTailleCasePixel()-2*c.getTailleCasePixel();
 	}
 
 	@Override
@@ -50,18 +43,6 @@ public class Arbre extends  Block {
 		// TODO Auto-generated method stub
 		return 3*c.getTailleCasePixel();
 	}
-
-
-	@Override
-	public void perdreVie(Damage damage, Plateau plateau) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	
-	
 
 	
 	

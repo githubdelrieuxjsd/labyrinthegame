@@ -324,14 +324,14 @@ public class Tomato extends Monstre implements DropItem, Tirer {
 
 	@Override
 	public int trouverX(Case c) {
-		int res = c.getCoordonnee().getX() * c.getTailleCasePixel() - c.getTailleCasePixel();
+		int res =c.getCoordonnee().getX()*c.getTailleCasePixel()+15-2*c.getTailleCasePixel();
 
 		return res;
 	}
 
 	@Override
 	public int trouverY(Case c) {
-		int res = c.getCoordonnee().getY() * c.getTailleCasePixel() - c.getTailleCasePixel();
+		int res = c.getCoordonnee().getY()*c.getTailleCasePixel() -15 -c.getTailleCasePixel();
 
 		// System.out.println(this.getFrame() +","+ (num) );
 

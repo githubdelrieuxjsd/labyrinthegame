@@ -3,9 +3,14 @@ package vue;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.RectangularShape;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -162,6 +167,7 @@ public class PanneauJeux extends JPanel {
 						dessinForgroundUnite(g, c);
 				}
 			}
+				
 		}
 /**
 		for (Case c : control.getPlateau().getListCase()) {
@@ -169,12 +175,34 @@ public class PanneauJeux extends JPanel {
 			dessinForgroundUnite(g, c);
 		}
 */
+		dessinDark(g);
 		dessinSideBar(g, control.getPlateau().getListCase().get(0));
 
-		// for (Case c : control.getPlateau().getListCase()) {
 
-		// }
 
+	}
+
+	private void dessinDark(Graphics g) {
+		 Graphics2D g2d = (Graphics2D) g.create();
+			ImageIcon icon = new ImageIcon( "hyrule/transparant.png");
+			Image img = icon.getImage();
+
+		
+         if (img != null) {
+             
+             g2d.drawImage(img, 0, 0,38*20+15,38*20+15, this);
+
+             Area outter = new Area(new Rectangle(0, 0, 38*20+30,38*20+30 ));
+             Case c = control.getPlateau().getListCase().get( control.getHero().getNumeroCase() );
+             int diametre = 300;
+             Ellipse2D.Double inner = new Ellipse2D.Double(c.getCoordonnee().getX()*c.getTailleCasePixel() - c.getTailleCasePixel()-diametre/3,
+            		 c.getCoordonnee().getY()*c.getTailleCasePixel() -c.getTailleCasePixel() -diametre/3, diametre, diametre);
+             outter.subtract(new Area(inner));// remove the ellipse from the original area
+
+             g2d.setColor(new Color(89,89,89));
+             g2d.fill(outter);
+         }
+         g2d.dispose()	;
 	}
 
 	private void dessinForgroundBlock(Graphics g, Case c) {
@@ -195,8 +223,8 @@ public class PanneauJeux extends JPanel {
 		}
 
 		Image img = icon.getImage();
-		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel(),
-				c.getCoordonnee().getY() * c.getTailleCasePixel(), c.getTailleCasePixel(), c.getTailleCasePixel(),
+		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel() +15 - c.getTailleCasePixel(),
+				c.getCoordonnee().getY()* c.getTailleCasePixel() -15, c.getTailleCasePixel(), c.getTailleCasePixel(),
 				null);
 
 	}

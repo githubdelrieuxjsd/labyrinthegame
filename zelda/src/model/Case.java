@@ -22,6 +22,7 @@ public class Case {
 	private Element element ;
 	private Item item;
 	private Projectil projectil ;
+	private Trap trap ;
 	
 	private static int compt = 0 ;
 	
@@ -30,7 +31,7 @@ public class Case {
 	
 
 	public Case(Coordonnee coordonnee ) {
-		this.tailleCasePixel = 40;
+		this.tailleCasePixel = 38;
 		
 		this.coordonnee = coordonnee;
 		this.num = compt;
@@ -38,6 +39,7 @@ public class Case {
 		this.element = new Vide ();
 		this.item = new Rien();
 		this.projectil = new Aire();
+		this.trap = new TrapVide();
 		compt ++;
 
 	}
@@ -46,7 +48,9 @@ public class Case {
 
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return this.getElement().getNom().equals("Vide")&&this.getItem().getNom().equals("Rien")&&this.getProjectil().getNom().equals("Aire");
+		return this.getElement().getNom().equals("Vide")&&this.getItem().getNom().equals("Rien")
+				&&this.getProjectil().getNom().equals("Aire")
+				&&this.getTrap().getNom().equals("TrapVide");
 	}
 	
 	
@@ -70,6 +74,12 @@ public class Case {
 	
 	private Image trouverProjectilImage(Plateau plateau ) {
 		ImageIcon icon = new ImageIcon(this.getProjectil().trouverImage( plateau ,this));
+		Image img = icon.getImage();
+		return img;
+	}
+	
+	private Image trouverTrapImage(Plateau plateau ) {
+		ImageIcon icon = new ImageIcon(this.getTrap().trouverImage( plateau ,this));
 		Image img = icon.getImage();
 		return img;
 	}
@@ -120,14 +130,31 @@ public class Case {
 		int res = this.getItem().trouverlongeur(this) ;
 		return res ;
 	}
+	private int trouverTrapX() {
+		return this.getTrap().trouverX(this) ;
+	}
+	private int trouverTrapY() {
+		int res = this.getTrap().trouverY(this) ;
+		return res ;
+	}
+	private int trouverTrapLongeur() {
+		int res = this.getTrap().trouverlargeur(this) ;
+		return res ;
+	}
+	private int trouverTrapLargeur() {
+		int res = this.getTrap().trouverlongeur(this) ;
+		return res ;
+	}
 	
 	public void dessinItemBlockProjectil(Plateau plateau , Graphics g) {
 		// TODO Auto-generated method stub
-		if ( ! ( this.getElement().getNom().equals("Vide") && this.getItem().getNom().equals("Rien")
-				&&this.getProjectil().getNom().equals("Aire") ) ) {
+		if ( ! (this.isEmpty() ) ) {
 			
 		g.drawImage(this.trouverItemImage(plateau), this.trouverItemX(),
 			this.trouverItemY() , this.trouverItemLongeur(), this.trouverItemLargeur(), null);
+		
+		g.drawImage(this.trouverTrapImage(plateau), this.trouverTrapX(),
+				this.trouverTrapY() , this.trouverTrapLongeur(), this.trouverTrapLargeur(), null);
 
 		//this.afficherNum(102);
 		if ( ! (this.getElement().isHero() ||
@@ -203,6 +230,7 @@ public class Case {
 
 			System.out.println("Item "+this.getItem());
 			System.out.println("Projectil "+this.getProjectil());
+			System.out.println("Trap "+this.getTrap());
 
 			System.out.println("##########################");
 		}
@@ -220,6 +248,8 @@ public class Case {
 
 			System.out.println("Item "+this.getItem());
 			System.out.println("Projectil "+this.getProjectil());
+			System.out.println("Trap "+this.getTrap());
+
 
 			System.out.println("##########################");
 
@@ -277,6 +307,19 @@ public class Case {
 		this.setItem(new Rien() );	
 	}
 
+	public Trap getTrap() {
+		return trap;
+	}
+
+	public void setTrap(Trap trap) {
+		this.trap = trap;
+		this.trap.setNumeroCase(num);
+
+	}
+	public void setTrap() {
+		this.setTrap(new TrapVide() );	
+	}
+	
 	public int getTailleCasePixel() {
 		return tailleCasePixel;
 	}

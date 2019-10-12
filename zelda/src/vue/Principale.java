@@ -10,8 +10,7 @@ public class Principale {
 	public static void main(String[] args) {
 		
 		JFrame frame = new JFrame();
-		String s = "un truc de merde";
-		frame.setPreferredSize(new Dimension(40*20,20*40));
+		frame.setPreferredSize(new Dimension(38*20+30,20*38+30));
 		frame.setLocation(200, 10);//50/25
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 	 //  frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
