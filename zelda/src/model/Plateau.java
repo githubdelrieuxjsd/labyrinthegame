@@ -72,7 +72,6 @@ public class Plateau {
 		} else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
-		this.placerElement(new Rock(), new Coordonnee(1,5,0));
 	}
 
 	private void placerBlockBaseDonne(int[][] tabBlock) {
@@ -332,7 +331,6 @@ public class Plateau {
 		}
 		Case res =  this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY()));
 		int z = 0;
-		System.out.print(coordonnee.getZ()+1);
 
 		while (z < coordonnee.getZ()+1 && z<this.nombreCaseZ-1) {
 			Case caseAuDessus = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX()+1, coordonnee.getY(),z+1));
