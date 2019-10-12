@@ -16,7 +16,7 @@ import tool.Tool;
 public class PanneauStart extends JPanel {
 	PanneauJeux jeux = new PanneauJeux();
 	JTextArea petit = new JTextArea("a");
-	JTextArea c = new JTextArea("a");
+	//JTextArea c = new JTextArea("a");
 
 
 	JTextArea txt_NomJeux = new JTextArea("Labyrinthe");
