@@ -158,7 +158,6 @@ public class PanneauJeux extends JPanel {
 			dessinBackground(g, c);
 
 		}
-
 			for (int y = 0; y < plateau.getNombreCaseY(); y++) {
 				for (int x = 0; x < plateau.getNombreCaseX(); x++) {
 					for (int z = 0; z < plateau.getNombreCaseZ(); z++) {
@@ -175,7 +174,7 @@ public class PanneauJeux extends JPanel {
 			dessinForgroundUnite(g, c);
 		}
 */
-		dessinDark(g);
+		//dessinDark(g);
 		dessinSideBar(g, control.getPlateau().getListCase().get(0));
 
 

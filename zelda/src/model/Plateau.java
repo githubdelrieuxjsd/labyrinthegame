@@ -34,8 +34,8 @@ public class Plateau {
 
 	public Plateau(Hero hero, List<Block> listBlock, List<Monstre> listMonstre) {
 
-		this.nombreCaseX = 20;
-		this.nombreCaseY = 20;
+		this.nombreCaseX = 22;
+		this.nombreCaseY = 22;
 		this.nombreCaseZ = 2;
 
 		this.listCase = new ArrayList<Case>();
@@ -53,7 +53,7 @@ public class Plateau {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
 		
-
+		contourTrap();
 		// contourArbre();
 		//this.afficher();
 	}

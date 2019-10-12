@@ -76,11 +76,11 @@ public class Control {
 		listBlock = new ArrayList<Block>();
 		listProjectil = new ArrayList<Projectil>();
 
-		// creationBlock();
-		// creationMonstre();
-		//plateau = new Plateau(hero , listBlock, listMonstre);
+		creationBlock();
+		creationMonstre();
+		plateau = new Plateau(hero , listBlock, listMonstre);
 
-		plateau = new Plateau(hero, getMapNum());
+		//plateau = new Plateau(hero, getMapNum());
 		if (!plateau.getListCase().isEmpty()) {
 			plateau.getListCase().get(0).setCompt(0);
 		}
