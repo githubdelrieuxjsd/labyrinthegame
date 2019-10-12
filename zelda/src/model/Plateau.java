@@ -9,6 +9,7 @@ import block.Arbre;
 import block.Block;
 import block.Bush;
 import block.Chest;
+import block.PanneauAffichage;
 import block.Rock;
 import block.Vide;
 import item.Bomb;
@@ -51,6 +52,8 @@ public class Plateau {
 		} else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
+		
+
 		// contourArbre();
 		//this.afficher();
 	}
@@ -72,6 +75,9 @@ public class Plateau {
 		} else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
+		
+		
+		this.placerElement(new PanneauAffichage(), new Coordonnee(3, 8, 0));
 	}
 
 	private void placerBlockBaseDonne(int[][] tabBlock) {

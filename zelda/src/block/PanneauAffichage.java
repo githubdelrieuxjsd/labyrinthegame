@@ -19,7 +19,7 @@ public class PanneauAffichage extends Block{
 	@Override
 	public String trouverImage(Plateau plateau ,Case c) {
 		// TODO Auto-generated method stub
-		return "hyrule/block/tree.png";
+		return "hyrule/block/chest.png";
 	}
 
 	@Override
