@@ -174,7 +174,7 @@ public class PanneauJeux extends JPanel {
 			dessinForgroundUnite(g, c);
 		}
 */
-		dessinDark(g);
+		//dessinDark(g);
 		dessinSideBar(g, control.getPlateau().getListCase().get(0));
 
 

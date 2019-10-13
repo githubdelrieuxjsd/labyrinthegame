@@ -150,12 +150,14 @@ public class Case {
 		// TODO Auto-generated method stub
 		if ( ! (this.isEmpty() ) ) {
 			
-		g.drawImage(this.trouverItemImage(plateau), this.trouverItemX(),
-			this.trouverItemY() , this.trouverItemLongeur(), this.trouverItemLargeur(), null);
-		
 		g.drawImage(this.trouverTrapImage(plateau), this.trouverTrapX(),
 				this.trouverTrapY() , this.trouverTrapLongeur(), this.trouverTrapLargeur(), null);
 
+			
+		g.drawImage(this.trouverItemImage(plateau), this.trouverItemX(),
+			this.trouverItemY() , this.trouverItemLongeur(), this.trouverItemLargeur(), null);
+		
+		
 		//this.afficherNum(102);
 		if ( ! (this.getElement().isHero() ||
 				this.getElement().isMonstre()  )) {
