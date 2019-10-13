@@ -174,7 +174,7 @@ public class PanneauJeux extends JPanel {
 			dessinForgroundUnite(g, c);
 		}
 */
-		//dessinDark(g);
+		dessinDark(g);
 		dessinSideBar(g, control.getPlateau().getListCase().get(0));
 
 
@@ -193,12 +193,18 @@ public class PanneauJeux extends JPanel {
 
              Area outter = new Area(new Rectangle(0, 0, 38*20+30,38*20+30 ));
              Case c = control.getPlateau().getListCase().get( control.getHero().getNumeroCase() );
-             int diametre = 300;
+             int diametre = 200;
              Ellipse2D.Double inner = new Ellipse2D.Double(c.getCoordonnee().getX()*c.getTailleCasePixel() - c.getTailleCasePixel()-diametre/3,
             		 c.getCoordonnee().getY()*c.getTailleCasePixel() -c.getTailleCasePixel() -diametre/3, diametre, diametre);
              outter.subtract(new Area(inner));// remove the ellipse from the original area
 
+             Ellipse2D.Double inner2 = new Ellipse2D.Double(10*c.getTailleCasePixel()-diametre/3,
+            		 10*c.getTailleCasePixel() -c.getTailleCasePixel() -diametre/3, diametre, diametre);
+             outter.subtract(new Area(inner2));
+             
              g2d.setColor(new Color(89,89,89));
+             g2d.setColor(Color.BLACK);
+
              g2d.fill(outter);
          }
          g2d.dispose()	;
