@@ -4,8 +4,8 @@ import model.Coordonnee;
 
 public abstract class Tool {
 
-	private static int nbCaseX = 22;
-	private static int nbCaseY = 22;
+	private static int nbCaseX = 60;
+	private static int nbCaseY = 60;
 	
 	public static int CoordinateToNum(Coordonnee c) {
 		return c.getX()+nbCaseX*c.getY()+c.getZ()*nbCaseX*nbCaseY  ;

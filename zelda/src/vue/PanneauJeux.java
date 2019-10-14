@@ -142,14 +142,14 @@ public class PanneauJeux extends JPanel {
 		heroaction = control.action(this.herodescision, heroaction);
 
 		try {
-			 Thread.sleep(1000); // 1 fps
-			//Thread.sleep(fps); // 32 fps
+			//Thread.sleep(1000); // 1 fps
+			Thread.sleep(fps); // 32 fps
 			// Thread.sleep(16,666666); // 60 fps
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		//repaint();
+		repaint();
 
 	}
 
@@ -181,28 +181,27 @@ public class PanneauJeux extends JPanel {
 		Plateau plateau = control.getPlateau() ;
 		int x = 0;
 		int y = 0;
-		plateau.getListCase().get(control.getHero().getNumeroCase()).afficher();
-
+		//plateau.getListCase().get(control.getHero().getNumeroCase()).afficher();
+		//System.out.println(listCaseAfficher.size());
 		for (Case c : listCaseAfficher) {
-			c.afficher();
-
+			//System.out.println(x+" , "+y);
 			if ( ! (c.isEmpty() ) ) {
 				
 				g.drawImage(c.trouverTrapImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
 						y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
 					
-				g.drawImage(c.trouverItemImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
-						y*c.getTailleCasePixel()-c.getTailleCasePixel() , c.getTailleCasePixel()/2, c.getTailleCasePixel()/2, null);
+				g.drawImage(c.trouverItemImage(plateau), x*c.getTailleCasePixel(),
+						y*c.getTailleCasePixel() , c.getTailleCasePixel()/2, c.getTailleCasePixel()/2, null);
 				
 				g.drawImage(c.trouverElementImage(plateau),x*c.getTailleCasePixel()-c.getTailleCasePixel(),
-						x*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
+						y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
 							
 				g.drawImage(c.trouverProjectilImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
-						x*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
+						y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
 				}
 			
 			x++;
-			if (x == 19) {
+			if (x == 20) {
 				x = 0;
 				y++;
 			}
