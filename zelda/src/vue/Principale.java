@@ -10,8 +10,8 @@ public class Principale {
 	public static void main(String[] args) {
 		
 		JFrame frame = new JFrame();
-		frame.setPreferredSize(new Dimension(38*20+30,20*38+30));
-		frame.setLocation(200, 10);//50/25
+		frame.setPreferredSize(new Dimension(60*20,60*10));
+		frame.setLocation(50, 25);//50/25
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 	 //  frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	    frame.setUndecorated(true);

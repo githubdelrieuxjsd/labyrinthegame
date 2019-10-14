@@ -4,6 +4,11 @@ import mobInterface.Dessin;
 
 public abstract class Trap implements Dessin{
 	
+	@Override
+	public String toString() {
+		return nom ;
+	}
+
 	String nom ;
 	int numeroCase ;
 

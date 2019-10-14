@@ -122,10 +122,10 @@ public class Control {
 
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(20);
-		creationArbre(50);
+		creationBush(0);
+		creationArbre(0);
 		creationRock(0);
-		creationChest(10);
+		creationChest(1);
 	}
 
 	private static void creationMonstre() {

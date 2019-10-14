@@ -36,7 +36,7 @@ public class Plateau {
 
 		this.nombreCaseX = 22;
 		this.nombreCaseY = 22;
-		this.nombreCaseZ = 10;
+		this.nombreCaseZ = 1;
 
 		this.listCase = new ArrayList<Case>();
 
@@ -48,15 +48,15 @@ public class Plateau {
 		placerMonstreRandom(listMonstre);
 
 		if (hero.getNumeroCase() == -1) {
-			this.placerElement(hero, new Coordonnee(3, 3, 0));
+			this.placerElement(hero, new Coordonnee(10, 5, 0));
 		} else {
 			this.placerElement(hero, this.getListCase().get(hero.getNumeroCase()).getCoordonnee());
 		}
-		this.placerTrap(new Stairs(new Coordonnee(15,5,0)), new Coordonnee(10,10,0));
-		this.placerTrap(new Stairs(new Coordonnee(10,10,0)), new Coordonnee(15,5,0));
+		//this.placerTrap(new Stairs(new Coordonnee(15,5,0)), new Coordonnee(10,10,0));
+		//this.placerTrap(new Stairs(new Coordonnee(10,10,0)), new Coordonnee(15,5,0));
 
-		contourTrap();
-		// contourArbre();
+		//contourTrap();
+		contourArbre();
 		//this.afficher();
 	}
 	
@@ -156,8 +156,8 @@ public class Plateau {
 				for (int j = 0; j < nombreCaseX; j++) {
 					Case caseVide = new Case(new Coordonnee(j, i, z));
 					caseVide.setElement(new Vide());
-					caseVide.setItem(new Rien());
-					// caseVide.setItem(new Rubi () );
+					//caseVide.setItem(new Rien());
+					caseVide.setItem(new Rubi () );
 					caseVide.setProjectil(new Aire());
 					caseVide.setTrap(new TrapVide());
 					listCase.add(caseVide);
@@ -427,6 +427,24 @@ public class Plateau {
 		}
 	}
 
+	public List<Case> getListCaseAfficher(Hero hero){
+		Coordonnee heroCoordonnee = this.getListCase().get(hero.getNumeroCase()).getCoordonnee();
+		System.out.println("hero"+ heroCoordonnee);
+		List <Case> res = new  ArrayList<Case>();
+		
+		for (int x = heroCoordonnee.getX()-4 ; x< heroCoordonnee.getX()+4 ; x++) {
+			for (int y = heroCoordonnee.getY()-4 ; x< heroCoordonnee.getY()+4; x++) {
+				System.out.println(x +","+y);
+				Case c = this.listCase.get(Tool.CoordinateToNum(x, 2,0));
+				res.add(c);
+				System.out.println("hero"+ heroCoordonnee);
+
+			}				
+			}
+		return res;
+	}
+	
+	
 	public void end() {
 		for (Case c : listCase) {
 			c.setElement(new Vide());

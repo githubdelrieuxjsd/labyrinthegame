@@ -31,7 +31,7 @@ public class Case {
 	
 
 	public Case(Coordonnee coordonnee ) {
-		this.tailleCasePixel = 38;
+		this.tailleCasePixel = 20;
 		
 		this.coordonnee = coordonnee;
 		this.num = compt;
@@ -60,25 +60,25 @@ public class Case {
 	}
 
 	
-	private Image trouverElementImage(Plateau plateau ) {
+	public Image trouverElementImage(Plateau plateau ) {
 		ImageIcon icon = new ImageIcon(this.getElement().trouverImage( plateau ,this));
 		Image img = icon.getImage();
 		return img;
 	}
 	
-	private Image trouverItemImage(Plateau plateau ) {
+	public Image trouverItemImage(Plateau plateau ) {
 		ImageIcon icon = new ImageIcon(this.getItem().trouverImage( plateau ,this));
 		Image img = icon.getImage();
 		return img;
 	}
 	
-	private Image trouverProjectilImage(Plateau plateau ) {
+	public Image trouverProjectilImage(Plateau plateau ) {
 		ImageIcon icon = new ImageIcon(this.getProjectil().trouverImage( plateau ,this));
 		Image img = icon.getImage();
 		return img;
 	}
 	
-	private Image trouverTrapImage(Plateau plateau ) {
+	public Image trouverTrapImage(Plateau plateau ) {
 		ImageIcon icon = new ImageIcon(this.getTrap().trouverImage( plateau ,this));
 		Image img = icon.getImage();
 		return img;
@@ -217,6 +217,7 @@ public class Case {
 				this.trouverProjectilY() , this.trouverProjectilLongeur(), this.trouverProjectilLargeur(), null);
 		
 	}
+	
 	
 	
 	

@@ -11,6 +11,8 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -39,7 +41,7 @@ public class PanneauJeux extends JPanel {
 	};
 
 	public PanneauJeux() {
-		
+
 		this.setLayout(null);
 		// this.setBackground(Color.decode("#5E9D34"));
 		// this.setBackground(Color.green);
@@ -47,7 +49,6 @@ public class PanneauJeux extends JPanel {
 		this.nombreRubi.setBounds(5, 35, 100, 30);
 		this.nombreRubi.setFont(new Font("Segoe Script", Font.BOLD, 25));
 		this.nombreRubi.setForeground(Color.WHITE);
-		this.add(this.nombreRubi);
 
 		this.addKeyListener(new KeyListener() {
 
@@ -136,78 +137,140 @@ public class PanneauJeux extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		nombreRubi.setText("" + control.getHero().getNombreRubi());
-		paintPlateau(g);
+		//paintPlateau(g);
+		paintPlateauCentrerSurHero(g);
 		heroaction = control.action(this.herodescision, heroaction);
 
 		try {
-			// Thread.sleep(1000); // 1 fps
-			Thread.sleep(fps); // 32 fps
+			 Thread.sleep(1000); // 1 fps
+			//Thread.sleep(fps); // 32 fps
 			// Thread.sleep(16,666666); // 60 fps
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		repaint();
+		//repaint();
 
 	}
 
-	private void paintPlateau(Graphics g) {
+	private void paintPlateauCentrerSurHero(Graphics g) {
 		Plateau plateau = control.getPlateau() ;
+		List<Case> listCaseAfficher = plateau.getListCaseAfficher(control.getHero()) ;
+		dessinBackground (g ,listCaseAfficher );
+		dessinForground(g,  listCaseAfficher);
+				// dessinSideBar(g, control.getPlateau().getListCase().get(0));
+	}
+	private void dessinBackground(Graphics g, List<Case> listCaseAfficher) {
+		Case c = listCaseAfficher.get(0);
+		for (int x = 0; x < 20; x++) {
+			for (int y = 0; y < 10; y++) {
+				ImageIcon icon = new ImageIcon("hyrule/grass1.png");
+
+				if ((x + y) % 2 == 1) {
+					icon = new ImageIcon("hyrule/grass3.png");
+				}
+
+				Image img = icon.getImage();
+				g.drawImage(img, x * c.getTailleCasePixel(), y * c.getTailleCasePixel() ,
+						c.getTailleCasePixel(), c.getTailleCasePixel(), null);
+			}
+		}
+
+	}
+	private void dessinForground(Graphics g, List<Case> listCaseAfficher) {
+		Plateau plateau = control.getPlateau() ;
+		int x = 0;
+		int y = 0;
+		plateau.getListCase().get(control.getHero().getNumeroCase()).afficher();
+
+		for (Case c : listCaseAfficher) {
+			c.afficher();
+
+			if ( ! (c.isEmpty() ) ) {
+				
+				g.drawImage(c.trouverTrapImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
+						y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
+					
+				g.drawImage(c.trouverItemImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
+						y*c.getTailleCasePixel()-c.getTailleCasePixel() , c.getTailleCasePixel()/2, c.getTailleCasePixel()/2, null);
+				
+				g.drawImage(c.trouverElementImage(plateau),x*c.getTailleCasePixel()-c.getTailleCasePixel(),
+						x*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
+							
+				g.drawImage(c.trouverProjectilImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
+						x*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
+				}
+			
+			x++;
+			if (x == 19) {
+				x = 0;
+				y++;
+			}
+			
+		}
+		
+
+	}
+
+	
+
+
+	private void paintPlateau(Graphics g) {
+		Plateau plateau = control.getPlateau();
+
 		for (int i = 0; i < plateau.getNombreCaseX() * plateau.getNombreCaseY(); i++) {
 			Case c = control.getPlateau().getListCase().get(i);
 			dessinBackground(g, c);
 
 		}
-			for (int y = 0; y < plateau.getNombreCaseY(); y++) {
-				for (int x = 0; x < plateau.getNombreCaseX(); x++) {
-					for (int z = 0; z < plateau.getNombreCaseZ(); z++) {
-						Case c = plateau.getListCase().get(Tool.CoordinateToNum(x, y, z));
-						dessinForgroundBlock(g, c);
-						dessinForgroundUnite(g, c);
+		for (int y = 0; y < plateau.getNombreCaseY(); y++) {
+			for (int x = 0; x < plateau.getNombreCaseX(); x++) {
+				for (int z = 0; z < plateau.getNombreCaseZ(); z++) {
+					Case c = plateau.getListCase().get(Tool.CoordinateToNum(x, y, z));
+					dessinForgroundBlock(g, c);
+					dessinForgroundUnite(g, c);
 				}
 			}
-				
+
 		}
-/**
-		for (Case c : control.getPlateau().getListCase()) {
-			dessinForgroundBlock(g, c);
-			dessinForgroundUnite(g, c);
-		}
-*/
-		//dessinDark(g);
+		/**
+		 * for (Case c : control.getPlateau().getListCase()) { dessinForgroundBlock(g,
+		 * c); dessinForgroundUnite(g, c); }
+		 */
+
+		// dessinDark(g);
 		dessinSideBar(g, control.getPlateau().getListCase().get(0));
-
-
 
 	}
 
 	private void dessinDark(Graphics g) {
-		 Graphics2D g2d = (Graphics2D) g.create();
-			ImageIcon icon = new ImageIcon( "hyrule/transparant.png");
-			Image img = icon.getImage();
+		Graphics2D g2d = (Graphics2D) g.create();
+		ImageIcon icon = new ImageIcon("hyrule/transparant.png");
+		Image img = icon.getImage();
 
-		
-         if (img != null) {
-             
-             g2d.drawImage(img, 0, 0,38*20+15,38*20+15, this);
+		if (img != null) {
 
-             Area outter = new Area(new Rectangle(0, 0, 38*20+30,38*20+30 ));
-             Case c = control.getPlateau().getListCase().get( control.getHero().getNumeroCase() );
-             int diametre = 200;
-             Ellipse2D.Double inner = new Ellipse2D.Double(c.getCoordonnee().getX()*c.getTailleCasePixel() - c.getTailleCasePixel()-diametre/3,
-            		 c.getCoordonnee().getY()*c.getTailleCasePixel() -c.getTailleCasePixel() -diametre/3, diametre, diametre);
-             outter.subtract(new Area(inner));// remove the ellipse from the original area
+			g2d.drawImage(img, 0, 0, 38 * 20 + 15, 38 * 20 + 15, this);
 
-             Ellipse2D.Double inner2 = new Ellipse2D.Double(10*c.getTailleCasePixel()-diametre/3,
-            		 10*c.getTailleCasePixel() -c.getTailleCasePixel() -diametre/3, diametre, diametre);
-             outter.subtract(new Area(inner2));
-             
-             g2d.setColor(new Color(89,89,89));
-             g2d.setColor(Color.BLACK);
+			Area outter = new Area(new Rectangle(0, 0, 38 * 20 + 30, 38 * 20 + 30));
+			Case c = control.getPlateau().getListCase().get(control.getHero().getNumeroCase());
+			int diametre = 200;
+			Ellipse2D.Double inner = new Ellipse2D.Double(
+					c.getCoordonnee().getX() * c.getTailleCasePixel() - c.getTailleCasePixel() - diametre / 3,
+					c.getCoordonnee().getY() * c.getTailleCasePixel() - c.getTailleCasePixel() - diametre / 3, diametre,
+					diametre);
+			outter.subtract(new Area(inner));// remove the ellipse from the original area
 
-             g2d.fill(outter);
-         }
-         g2d.dispose()	;
+			Ellipse2D.Double inner2 = new Ellipse2D.Double(10 * c.getTailleCasePixel() - diametre / 3,
+					10 * c.getTailleCasePixel() - c.getTailleCasePixel() - diametre / 3, diametre, diametre);
+			outter.subtract(new Area(inner2));
+
+			g2d.setColor(new Color(89, 89, 89));
+			g2d.setColor(Color.BLACK);
+
+			g2d.fill(outter);
+		}
+		g2d.dispose();
 	}
 
 	private void dessinForgroundBlock(Graphics g, Case c) {
@@ -228,14 +291,16 @@ public class PanneauJeux extends JPanel {
 		}
 
 		Image img = icon.getImage();
-		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel() +15 - c.getTailleCasePixel(),
-				c.getCoordonnee().getY()* c.getTailleCasePixel() -15, c.getTailleCasePixel(), c.getTailleCasePixel(),
+		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel() + 15 - c.getTailleCasePixel(),
+				c.getCoordonnee().getY() * c.getTailleCasePixel() - 15, c.getTailleCasePixel(), c.getTailleCasePixel(),
 				null);
 
 	}
 
 	private void dessinSideBar(Graphics g, Case c) {
 		// TODO Auto-generated method stub
+		this.add(this.nombreRubi);
+
 		ImageIcon icon = new ImageIcon("hyrule/heart/rouge.png");
 		// ImageIcon icon = new ImageIcon("img/vide.png");
 		for (int i = 0; i < control.getHero().getMaxLife(); i++) {
