@@ -64,7 +64,7 @@ public class Control {
 		Monstre.setHero(hero);
 		creationMonstre();
 
-		plateau = new Plateau(hero, generationListCase(100, 50, 1, 3), listMonstre, 100, 50);
+		plateau = new Plateau(hero, generationListCase(100, 50, 1, 20), listMonstre, 100, 50);
 		// generationPlateau();
 		// Niveau.generationMapRandom();
 	}
@@ -114,8 +114,8 @@ public class Control {
 				// System.out.println(" "+xSalle+" ,"+ySalle);
 
 				boolean peuetreplacer = true;
-				for (int y = ySalle - 1; y < ySalle + tailleSalleY + 1; y++) {
-					for (int x = xSalle - 1; x < xSalle + tailleSalleX + 1; x++) {
+				for (int y = ySalle - 4; y < ySalle + tailleSalleY + 4; y++) {
+					for (int x = xSalle - 4; x < xSalle + tailleSalleX + 4; x++) {
 						if (res.get(Tool.CoordinateToNum(x, y, 0)).getElement().getNom().equals("Vide")) {
 							peuetreplacer = false;
 						}
@@ -145,8 +145,9 @@ public class Control {
 		}
 
 		// ################## liaison salle ######################
+		
 		int[][] tableauLiaison = definirLiaison(detailSalle);
-
+		//System.out.print(tableauLiaison.length);
 		//int[][] tableauLiaison = { { 60,20,50,10 }, { 10, 25, 17, 17 } };
 		//int [][] tableauLiaison = {{50,10,60,20},{17,17,10,25}} ;
 
@@ -188,8 +189,8 @@ public class Control {
 				}
 			}
 
-			res.get(Tool.CoordinateToNum(point1x, point1y, 0)).setElement(new Vide());
-			res.get(Tool.CoordinateToNum(point2x, point2y, 0)).setElement(new Vide());
+			//res.get(Tool.CoordinateToNum(point1x, point1y, 0)).setElement(new Vide());
+			//res.get(Tool.CoordinateToNum(point2x, point2y, 0)).setElement(new Vide());
 
 		}
 
@@ -224,7 +225,7 @@ public class Control {
 
 		int[][] res = new int[nombreLiaison][4];
 		int numPoint = 0;
-		for (int n = 0; n < detailSalle.length - 1; n += 2) {
+		for (int n = 0; n < (detailSalle.length-2)*2 ; n += 2) {
 			int transX1 = detailSalleTrier[numPoint][0];
 			int transY1 = detailSalleTrier[numPoint][1];
 			int transX2 = detailSalleTrier[numPoint + 1][0];

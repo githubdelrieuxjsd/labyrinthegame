@@ -39,7 +39,7 @@ public class Plateau {
 		while (!heroplacer) {
 			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
 			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
-			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") || true) {
+			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") ) {
 				this.placerElement(hero, new Coordonnee(x, y, 0));	
 				heroplacer= true;
 			}
