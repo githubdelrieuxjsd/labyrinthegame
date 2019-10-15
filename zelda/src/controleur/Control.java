@@ -100,8 +100,8 @@ public class Control {
 		for (int i = 0; i< nombreSalle ; i++) {
 			boolean casePlacer = false ;
 			while(!casePlacer) {
-				int tailleSalleY = (int) (Math.random() * ( (12) - 5 +1 )) + 5;
-				int tailleSalleX= (int) (Math.random() * ( (12) - 5 +1 )) + 5;
+				int tailleSalleY = (int) (Math.random() * ( (12) - 4 +1 )) + 4;
+				int tailleSalleX= (int) (Math.random() * ( (12) - 4 +1 )) + 4;
 				//tailleSalleY = 10;
 				//tailleSalleX = 10;
 				
@@ -111,7 +111,7 @@ public class Control {
 				//xSalle = posx*25 +5;
 				//ySalle = posy*20 +5;
 
-				System.out.println("    "+xSalle+" ,"+ySalle);
+				//System.out.println("    "+xSalle+" ,"+ySalle);
 				
 				boolean peuetreplacer = true ;
 				for (int y = ySalle-1; y < ySalle+tailleSalleY+1; y++) {
@@ -122,7 +122,7 @@ public class Control {
 					}
 				}
 				
-				System.out.println(peuetreplacer);
+				
 				if (peuetreplacer) {
 					casePlacer = true;
 					for (int y = ySalle; y < ySalle+tailleSalleY; y++) {

@@ -35,7 +35,16 @@ public class Plateau {
 		this.nombreCaseY = nombreCaseY;
 		this.nombreCaseZ = 1;
 		this.listCase = listCase;
-		this.placerElement(hero, new Coordonnee(30, 10, 0));
+		boolean heroplacer = false;
+		while (!heroplacer) {
+			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
+			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
+			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide")) {
+				this.placerElement(hero, new Coordonnee(x, y, 0));	
+				heroplacer= true;
+			}
+		}
+		
 	}
 	
 	public Plateau(Hero hero, List<Block> listBlock, List<Monstre> listMonstre) {
