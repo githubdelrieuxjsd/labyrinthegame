@@ -2,11 +2,9 @@ package model;
 
 public class Stairs extends Trap{
 	
-	private Coordonnee coordonnee;
-	public Stairs(Coordonnee coordonnee ) {
+	public Stairs() {
 		super();
 		this.setNom("Stairs");
-		this.coordonnee = coordonnee;
 	}
 	
 	
@@ -45,8 +43,4 @@ public class Stairs extends Trap{
 		return 3*c.getTailleCasePixel();
 	}
 
-	public Coordonnee getCoordonnee() {
-		return coordonnee;
-	}
-	
 }

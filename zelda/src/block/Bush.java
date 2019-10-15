@@ -44,7 +44,7 @@ public class Bush extends Block implements DropItem {
 		@Override
 		public void dropItem(Case c) {
 			if (c.getItem().getNom().equals("Rien")) {
-				c.setItem(new Key());
+				//c.setItem(new Rubi());
 				/**
 				 * 
 				int x = (int) (Math.random() * (100 + 1 - 1)) + 1;

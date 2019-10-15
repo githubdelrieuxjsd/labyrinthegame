@@ -186,11 +186,6 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	@Override
 	public void deplacer(Plateau plateau, Case caseAvant, Case caseApres) {
 		
-		if (caseApres.getTrap().getNom().equals("Stairs")) {
-
-			caseApres = plateau.getListCase().get(Tool.CoordinateToNum(((Stairs) caseApres.getTrap()).getCoordonnee()));
-			
-		}
 		
 		if (this.hold()) {
 			this.setCurentAction("movingHolding");
@@ -205,6 +200,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 			this.perdreVie(p.getDamage(), plateau);
 		}
 
+		
 		Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
 
 		int num = Tool.CoordinateToNum(caseAvant.getCoordonnee());
@@ -219,13 +215,38 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		
 		if (caseApres.getTrap().getNom().equals("Stairs")) {
 			int random = (int) (Math.random() * (plateau.getNombreCaseX()*plateau.getNombreCaseY() - 0 +1 )) + 0;
-			Control.generationPlateau();
+			Control.creerNouveauPlateau();
 			//caseApres = plateau.getListCase().get(random);
 			
 		}
 
 	}
 
+	public void bougerSurPlateau (Plateau plateau) {
+
+		Case caseAvant = plateau.getListCase().get(this.getNumeroCase());
+		Case caseApres = plateau.getCaseDevant(caseAvant, this.getDirection());
+
+		
+		Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
+
+		int num = Tool.CoordinateToNum(caseAvant.getCoordonnee());
+		Vide v = new Vide();
+		plateau.getListCase().get(num).setElement(v);
+
+		num = Tool.CoordinateToNum(caseApres.getCoordonnee());
+
+		plateau.getListCase().get(num).setElement(this);
+		this.setNumeroCase(num);
+		this.Ramasser(caseApres);
+		
+		if (caseApres.getTrap().getNom().equals("Stairs")) {
+			int random = (int) (Math.random() * (plateau.getNombreCaseX()*plateau.getNombreCaseY() - 0 +1 )) + 0;
+			//caseApres = plateau.getListCase().get(random);
+			
+		}
+	}
+	
 	@Override
 	public void interactionDeplacement(Plateau plateau, Case caseAvant, Direction direction) {
 		this.setDirection(direction);
@@ -442,6 +463,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothing");
+				//this.bougerSurPlateau(plateau);
 			}
 			break;
 		case "movingHolding":
@@ -640,9 +662,6 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		this.nombreRubi = nombreRubi;
 	}
 
-	public Coordonnee getCoordonneeVisuel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

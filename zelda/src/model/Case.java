@@ -31,7 +31,8 @@ public class Case {
 	
 
 	public Case(Coordonnee coordonnee ) {
-		this.tailleCasePixel = 14;
+		this.tailleCasePixel = 60;
+		//14 pour map complete
 		
 		this.coordonnee = coordonnee;
 		this.num = compt;

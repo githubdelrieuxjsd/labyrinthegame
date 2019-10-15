@@ -30,7 +30,7 @@ public class Plateau {
 	private int nombreCaseY;
 	private int nombreCaseZ;
 
-	public Plateau(Hero hero, List<Case>listCase ,List<Monstre> listMonstre, int nombreCaseX,int nombreCaseY  ) {
+	public Plateau(Hero hero, List<Case>listCase ,List<Monstre> listMonstre,List<Block>listBlock, int nombreCaseX,int nombreCaseY  ) {
 		this.nombreCaseX = nombreCaseX;
 		this.nombreCaseY = nombreCaseY;
 		this.nombreCaseZ = 1;
@@ -44,9 +44,49 @@ public class Plateau {
 				heroplacer= true;
 			}
 		}
+		placerMonstre(listMonstre);
+		placerBlock(listBlock);
 		
+		heroplacer = false;
+		while (!heroplacer) {
+			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
+			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
+			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") ) {
+				this.placerTrap(new Stairs() , new Coordonnee(x, y, 0));	
+				heroplacer= true;
+			}
+		}
 	}
 	
+	private void placerBlock(List<Block> listBlock) {
+		// TODO Auto-generated method stub
+		for (Element m : listBlock) {
+			boolean heroplacer = false;
+		while (!heroplacer) {
+			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
+			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
+			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") ) {
+				this.placerElement(m, new Coordonnee(x, y, 0));	
+				heroplacer= true;
+			}
+		}		
+		}
+	}
+
+	private void placerMonstre(List<Monstre> listMonstre) {
+		for (Element m : listMonstre) {
+			boolean heroplacer = false;
+		while (!heroplacer) {
+			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
+			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
+			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") ) {
+				this.placerElement(m, new Coordonnee(x, y, 0));	
+				heroplacer= true;
+			}
+		}		
+		}
+	}
+
 	public Plateau(Hero hero, List<Block> listBlock, List<Monstre> listMonstre) {
 
 		this.nombreCaseX = 60;
@@ -456,7 +496,7 @@ public class Plateau {
 
 	public List<Case> getListCaseAfficher(Hero hero) {
 		Coordonnee heroCoordonnee = this.getListCase().get(hero.getNumeroCase()).getCoordonnee();
-		//Coordonnee heroCoordonneeVisuel = hero.getCoordonneeVisuel();
+		//Coordonnee heroCoordonnee2 = hero.getCoordonneeVisuel(this);
 
 		List<Case> res = new ArrayList<Case>();
 

@@ -61,15 +61,30 @@ public class Control {
 		listBlock = new ArrayList<Block>();
 		listProjectil = new ArrayList<Projectil>();
 
+
 		Monstre.setHero(hero);
+		creationBlock();
 		creationMonstre();
 
-		plateau = new Plateau(hero, generationListCase(100, 50, 1, 10), listMonstre, 100, 50);
+		plateau = new Plateau(hero, generationListCase(100, 50, 1, 10), listMonstre,listBlock, 100, 50);
 		// generationPlateau();
 		// Niveau.generationMapRandom();
+		timer = 0;
 	}
 
-	private List<Case> generationListCase(int nombreCaseX, int nombreCaseY, int nombreCaseZ, int nombreSalle) {
+	public static void creerNouveauPlateau() {
+		listMonstre = new ArrayList<Monstre>();
+		listBlock = new ArrayList<Block>();
+		listProjectil = new ArrayList<Projectil>();
+
+		creationBlock();
+		creationMonstre();
+
+		plateau = new Plateau(hero, generationListCase(100, 50, 1, 10), listMonstre,listBlock, 100, 50);
+		timer = 0;
+	}
+	
+	private static List<Case> generationListCase(int nombreCaseX, int nombreCaseY, int nombreCaseZ, int nombreSalle) {
 		List<Case> res = new ArrayList<Case>();
 
 		// ################## ajout Arbre sur tt la map ######################
@@ -197,7 +212,7 @@ public class Control {
 		return res;
 	}
 
-	private int[][] definirLiaison(int[][] detailSalle) {
+	private static int[][] definirLiaison(int[][] detailSalle) {
 		int nombreLiaison = (detailSalle.length - 2) * 2;
 		int[][] detailSalleTrier = new int[detailSalle.length][4];
 
@@ -316,16 +331,16 @@ public class Control {
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
 		creationBush(100);
-		creationArbre(100);
-		creationRock(100);
-		creationChest(100);
+		creationArbre(0);
+		creationRock(10);
+		creationChest(1);
 	}
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationKnight(0);
-		creationChicken(0);
-		creationGoblin(0);
+		creationKnight(1);
+		creationChicken(1);
+		creationGoblin(1);
 		creationTomato(0);
 	}
 
