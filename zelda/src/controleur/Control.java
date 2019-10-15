@@ -86,6 +86,8 @@ public class Control {
 	
 	private static List<Case> generationListCase(int nombreCaseX, int nombreCaseY, int nombreCaseZ, int nombreSalle) {
 		List<Case> res = new ArrayList<Case>();
+		Case c = new Case (new Coordonnee(0,0,0));
+		c.setCompt(0);
 
 		// ################## ajout Arbre sur tt la map ######################
 

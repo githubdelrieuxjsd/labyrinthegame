@@ -35,6 +35,7 @@ public class Plateau {
 		this.nombreCaseY = nombreCaseY;
 		this.nombreCaseZ = 1;
 		this.listCase = listCase;
+		System.out.print("nombre case sur le plateau : " +listCase.size());
 		boolean heroplacer = false;
 		while (!heroplacer) {
 			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
