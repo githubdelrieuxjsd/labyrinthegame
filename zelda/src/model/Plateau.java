@@ -456,6 +456,8 @@ public class Plateau {
 
 	public List<Case> getListCaseAfficher(Hero hero) {
 		Coordonnee heroCoordonnee = this.getListCase().get(hero.getNumeroCase()).getCoordonnee();
+		Coordonnee heroCoordonneeVisuel = hero.getCoordonneeVisuel();
+
 		List<Case> res = new ArrayList<Case>();
 
 		for (int y = heroCoordonnee.getY() - 4; y < heroCoordonnee.getY() + 6; y++) {

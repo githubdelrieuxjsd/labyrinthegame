@@ -204,8 +204,8 @@ public class PanneauJeux extends JPanel {
 				g.drawImage(c.trouverTrapImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
 						y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
 					
-				g.drawImage(c.trouverItemImage(plateau), x*c.getTailleCasePixel(),
-						y*c.getTailleCasePixel() , c.getTailleCasePixel()/2, c.getTailleCasePixel()/2, null);
+				g.drawImage(c.trouverItemImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
+						y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(), 3*c.getTailleCasePixel(), null);
 				
 				g.drawImage(c.trouverElementImage(plateau),x*c.getTailleCasePixel()-c.getTailleCasePixel(),
 						y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);

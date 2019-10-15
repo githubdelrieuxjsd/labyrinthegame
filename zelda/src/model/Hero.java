@@ -640,4 +640,9 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		this.nombreRubi = nombreRubi;
 	}
 
+	public Coordonnee getCoordonneeVisuel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
