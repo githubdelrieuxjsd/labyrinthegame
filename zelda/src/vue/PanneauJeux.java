@@ -137,8 +137,8 @@ public class PanneauJeux extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		nombreRubi.setText("" + control.getHero().getNombreRubi());
-		//paintPlateau(g);
-		paintPlateauCentrerSurHero(g);
+		paintPlateau(g);
+		//paintPlateauCentrerSurHero(g);
 		heroaction = control.action(this.herodescision, heroaction);
 
 		try {
@@ -164,12 +164,26 @@ public class PanneauJeux extends JPanel {
 		Case c = listCaseAfficher.get(0);
 		for (int x = 0; x < 20; x++) {
 			for (int y = 0; y < 10; y++) {
+				
 				ImageIcon icon = new ImageIcon("hyrule/grass1.png");
-
+				
+				
 				if ((x + y) % 2 == 1) {
 					icon = new ImageIcon("hyrule/grass3.png");
 				}
-
+				
+				/**
+				if (control.getTimer()%32 < 16) {
+					icon = new ImageIcon("hyrule/grass3.png");
+					
+					
+					if ((x + y) % 2 == 1) {
+						icon = new ImageIcon("hyrule/grass1.png");
+					}
+				}*/
+			
+				
+				
 				Image img = icon.getImage();
 				g.drawImage(img, x * c.getTailleCasePixel(), y * c.getTailleCasePixel() ,
 						c.getTailleCasePixel(), c.getTailleCasePixel(), null);
@@ -238,7 +252,7 @@ public class PanneauJeux extends JPanel {
 		 */
 
 		// dessinDark(g);
-		dessinSideBar(g, control.getPlateau().getListCase().get(0));
+		//dessinSideBar(g, control.getPlateau().getListCase().get(0));
 
 	}
 
@@ -290,8 +304,8 @@ public class PanneauJeux extends JPanel {
 		}
 
 		Image img = icon.getImage();
-		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel() + 15 - c.getTailleCasePixel(),
-				c.getCoordonnee().getY() * c.getTailleCasePixel() - 15, c.getTailleCasePixel(), c.getTailleCasePixel(),
+		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel() +3 ,
+				c.getCoordonnee().getY() * c.getTailleCasePixel() +3, c.getTailleCasePixel(), c.getTailleCasePixel(),
 				null);
 
 	}

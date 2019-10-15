@@ -13,12 +13,14 @@ import block.Rock;
 import block.Vide;
 import item.Bomb;
 import item.Key;
+import item.Rien;
 import model.Case;
 import model.Coordonnee;
 import model.Direction;
 import model.Element;
 import model.Hero;
 import model.Plateau;
+import model.TrapVide;
 import monstre.Chicken;
 import monstre.Goblin;
 import monstre.Knight;
@@ -60,16 +62,59 @@ public class Control {
 		listProjectil = new ArrayList<Projectil>();
 
 		Monstre.setHero(hero);
-		generationPlateau();
+		creationMonstre();
+
+		plateau = new Plateau(hero, generationListCase(200,100,1,10,18) ,listMonstre,200,100) ;
+		//generationPlateau();
 		// Niveau.generationMapRandom();
+	}
+
+	private List<Case> generationListCase(int nombreCaseX, int nombreCaseY,int nombreCaseZ,
+			int nombreSalle,int tailleSalle) {
+		List<Case> res = new ArrayList<Case>();
+		
+		
+		for (int z = 0; z < nombreCaseZ; z++) {
+			for (int y = 0; y < nombreCaseY; y++) {
+				for (int x = 0; x < nombreCaseX; x++) {
+					Case caseVide = new Case(new Coordonnee(x, y, z));
+					caseVide.setElement(new Arbre());
+					//caseVide.setElement(new Bush());
+					caseVide.setItem(new Rien());
+					//caseVide.setItem(new Rubi());
+					caseVide.setProjectil(new Aire());
+					caseVide.setTrap(new TrapVide());
+					/**			
+					if ( y<5 || y>nombreCaseY-5 || x<5 || x>nombreCaseX-5) {
+						caseVide.setElement(new Arbre());
+					}
+					*/
+					res.add(caseVide);
+				}
+			}
+		}
+		
+		for (int i = 0; i< nombreSalle ; i++) {
+			int xSalle = (int) (Math.random() * ( (nombreCaseX-6-tailleSalle) - 6 +1 )) + 6;
+			int ySalle = (int) (Math.random() * ( (nombreCaseY-6-tailleSalle) - 6 +1 )) + 6;
+			
+			for (int y = ySalle; y < ySalle+tailleSalle; y++) {
+				for (int x = xSalle; x < xSalle+tailleSalle; x++) {
+					res.get(Tool.CoordinateToNum(x, y, 0)).setElement(new Vide());
+				}
+			}
+
+		}
+		
+		
+		return res;
 	}
 
 	/**
 	 * ajout dans la liste de block des object block (rock , tree , bush ) ajout
 	 * dans la liste des monstre (knight , goblin tomato , chicken) appele du
 	 * constructeur du plateau
-	 * 
-	 * @throws IOException
+	 *
 	 */
 
 	public static void generationPlateau() {
@@ -131,7 +176,7 @@ public class Control {
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
 		creationKnight(0);
-		creationChicken(100);
+		creationChicken(0);
 		creationGoblin(0);
 		creationTomato(0);
 	}
@@ -315,6 +360,11 @@ public class Control {
 
 	public void setHero(Hero hero) {
 		this.hero = hero;
+	}
+
+	public int getTimer() {
+		// TODO Auto-generated method stub
+		return timer;
 	}
 
 }

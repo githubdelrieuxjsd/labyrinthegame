@@ -30,6 +30,14 @@ public class Plateau {
 	private int nombreCaseY;
 	private int nombreCaseZ;
 
+	public Plateau(Hero hero, List<Case>listCase ,List<Monstre> listMonstre, int nombreCaseX,int nombreCaseY  ) {
+		this.nombreCaseX = nombreCaseX;
+		this.nombreCaseY = nombreCaseY;
+		this.nombreCaseZ = 1;
+		this.listCase = listCase;
+		this.placerElement(hero, new Coordonnee(30, 10, 0));
+	}
+	
 	public Plateau(Hero hero, List<Block> listBlock, List<Monstre> listMonstre) {
 
 		this.nombreCaseX = 60;

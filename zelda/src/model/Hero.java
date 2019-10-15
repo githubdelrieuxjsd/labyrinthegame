@@ -582,7 +582,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 
 	@Override
 	public int trouverX(Case c) {
-		int res = c.getCoordonnee().getX() * c.getTailleCasePixel() - 2 * c.getTailleCasePixel() + 15;
+		int res = c.getCoordonnee().getX() * c.getTailleCasePixel() - c.getTailleCasePixel() + 3;
 		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
 			int num = this.getFrame() + 1;
 			res = res + num * c.getTailleCasePixel() / 3 - c.getTailleCasePixel();
@@ -596,7 +596,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 
 	@Override
 	public int trouverY(Case c) {
-		int res = c.getCoordonnee().getY() * c.getTailleCasePixel() -15-c.getTailleCasePixel()
+		int res = c.getCoordonnee().getY() * c.getTailleCasePixel() +3 - c.getTailleCasePixel()
 				- c.getCoordonnee().getZ() * c.getTailleCasePixel() / 2;
 		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
 			int num = this.getFrame() + 1;
