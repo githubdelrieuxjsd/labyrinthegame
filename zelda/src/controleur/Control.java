@@ -64,87 +64,198 @@ public class Control {
 		Monstre.setHero(hero);
 		creationMonstre();
 
-		plateau = new Plateau(hero, generationListCase(100,50,1,20) ,listMonstre,100,50) ;
-		//generationPlateau();
+		plateau = new Plateau(hero, generationListCase(100, 50, 1, 3), listMonstre, 100, 50);
+		// generationPlateau();
 		// Niveau.generationMapRandom();
 	}
 
-	private List<Case> generationListCase(int nombreCaseX, int nombreCaseY,int nombreCaseZ,
-		int nombreSalle) {
+	private List<Case> generationListCase(int nombreCaseX, int nombreCaseY, int nombreCaseZ, int nombreSalle) {
 		List<Case> res = new ArrayList<Case>();
-		
-		
+
+		// ################## ajout Arbre sur tt la map ######################
+
 		for (int z = 0; z < nombreCaseZ; z++) {
 			for (int y = 0; y < nombreCaseY; y++) {
 				for (int x = 0; x < nombreCaseX; x++) {
 					Case caseVide = new Case(new Coordonnee(x, y, z));
 					caseVide.setElement(new Arbre());
-					//caseVide.setElement(new Bush());
+					// caseVide.setElement(new Bush());
 					caseVide.setItem(new Rien());
-					//caseVide.setItem(new Rubi());
+					// caseVide.setItem(new Rubi());
 					caseVide.setProjectil(new Aire());
 					caseVide.setTrap(new TrapVide());
-					/**			
-					if ( y<5 || y>nombreCaseY-5 || x<5 || x>nombreCaseX-5) {
-						caseVide.setElement(new Arbre());
-					}
-					*/
+					/**
+					 * if ( y<5 || y>nombreCaseY-5 || x<5 || x>nombreCaseX-5) {
+					 * caseVide.setElement(new Arbre()); }
+					 */
 					res.add(caseVide);
 				}
 			}
 		}
-		
+		// ################## ajout salle ######################
 		int posx = 0;
 		int posy = 0;
+		int[][] detailSalle = new int[nombreSalle][4];
 
-		for (int i = 0; i< nombreSalle ; i++) {
-			boolean casePlacer = false ;
-			while(!casePlacer) {
-				int tailleSalleY = (int) (Math.random() * ( (12) - 4 +1 )) + 4;
-				int tailleSalleX= (int) (Math.random() * ( (12) - 4 +1 )) + 4;
-				//tailleSalleY = 10;
-				//tailleSalleX = 10;
-				
-				int xSalle = (int) (Math.random() * ( (nombreCaseX-6-tailleSalleX) - 6+1 )) + 6;
-				int ySalle = (int) (Math.random() * ( (nombreCaseY-6-tailleSalleY) - 6+1 )) + 6;
-				
-				//xSalle = posx*25 +5;
-				//ySalle = posy*20 +5;
+		for (int i = 0; i < nombreSalle; i++) {
+			boolean casePlacer = false;
+			while (!casePlacer) {
+				int tailleSalleY = (int) (Math.random() * ((12) - 4 + 1)) + 4;
+				int tailleSalleX = (int) (Math.random() * ((12) - 4 + 1)) + 4;
+				// tailleSalleY = 10;
+				// tailleSalleX = 10;
 
-				//System.out.println("    "+xSalle+" ,"+ySalle);
-				
-				boolean peuetreplacer = true ;
-				for (int y = ySalle-1; y < ySalle+tailleSalleY+1; y++) {
-					for (int x = xSalle-1; x < xSalle+tailleSalleX+1; x++) {
-						if (res.get(Tool.CoordinateToNum(x, y, 0)).getElement().getNom().equals("Vide") ) {
+				int xSalle = (int) (Math.random() * ((nombreCaseX - 6 - tailleSalleX) - 6 + 1)) + 6;
+				int ySalle = (int) (Math.random() * ((nombreCaseY - 6 - tailleSalleY) - 6 + 1)) + 6;
+
+				// xSalle = posx*25 +5;
+				// ySalle = posy*20 +5;
+
+				// System.out.println(" "+xSalle+" ,"+ySalle);
+
+				boolean peuetreplacer = true;
+				for (int y = ySalle - 1; y < ySalle + tailleSalleY + 1; y++) {
+					for (int x = xSalle - 1; x < xSalle + tailleSalleX + 1; x++) {
+						if (res.get(Tool.CoordinateToNum(x, y, 0)).getElement().getNom().equals("Vide")) {
 							peuetreplacer = false;
 						}
 					}
 				}
-				
-				
+
 				if (peuetreplacer) {
+					detailSalle[i][0] = xSalle + tailleSalleX / 2;
+					detailSalle[i][1] = ySalle + tailleSalleY / 2;
+
 					casePlacer = true;
-					for (int y = ySalle; y < ySalle+tailleSalleY; y++) {
-						for (int x = xSalle; x < xSalle+tailleSalleX; x++) {
+					for (int y = ySalle; y < ySalle + tailleSalleY; y++) {
+						for (int x = xSalle; x < xSalle + tailleSalleX; x++) {
 							res.get(Tool.CoordinateToNum(x, y, 0)).setElement(new Vide());
 						}
 					}
-					
-					posx ++;
+
+					res.get(Tool.CoordinateToNum(detailSalle[i][0], detailSalle[i][1], 0)).setElement(new Arbre());
+
+					posx++;
 					if (posx == 8) {
-						posx=0;
+						posx = 0;
 						posy++;
 					}
 				}
-				
-				
 			}
+		}
+
+		// ################## liaison salle ######################
+		int[][] tableauLiaison = definirLiaison(detailSalle);
+
+		//int[][] tableauLiaison = { { 60,20,50,10 }, { 10, 25, 17, 17 } };
+		//int [][] tableauLiaison = {{50,10,60,20},{17,17,10,25}} ;
+
+		for (int i = 0; i < tableauLiaison.length; i++) {
+			int point1x = tableauLiaison[i][0];
+			int point1y = tableauLiaison[i][1];
+			int point2x = tableauLiaison[i][2];
+			int point2y = tableauLiaison[i][3];
+
 			
+			if (point1x < point2x && point1y < point2y ) {
+				for (int x = point1x; x < point2x+1; x++) {
+					res.get(Tool.CoordinateToNum(x, point1y, 0)).setElement(new Vide());
+				}
+				for (int y = point1y; y < point2y; y++) {
+					res.get(Tool.CoordinateToNum(point2x, y, 0)).setElement(new Vide());
+				}
+				
+			} else if (point1x > point2x && point1y < point2y) {
+				for (int x = point2x; x < point1x+1; x++) {
+					res.get(Tool.CoordinateToNum(x, point2y, 0)).setElement(new Vide());
+				}
+				for (int y = point1y; y < point2y; y++) {
+					res.get(Tool.CoordinateToNum(point1x, y, 0)).setElement(new Vide());
+				}
+			} else if (point1x > point2x && point1y > point2y) {
+				for (int x = point2x; x < point1x+1; x++) {
+					res.get(Tool.CoordinateToNum(x, point2y, 0)).setElement(new Vide());
+				}
+				for (int y = point2y; y < point1y; y++) {
+					res.get(Tool.CoordinateToNum(point1x, y, 0)).setElement(new Vide());
+				}
+			} else {
+				for (int x = point1x; x < point2x+1; x++) {
+					res.get(Tool.CoordinateToNum(x, point1y, 0)).setElement(new Vide());
+				}
+				for (int y = point2y; y < point1y; y++) {
+					res.get(Tool.CoordinateToNum(point2x, y, 0)).setElement(new Vide());
+				}
+			}
+
+			res.get(Tool.CoordinateToNum(point1x, point1y, 0)).setElement(new Vide());
+			res.get(Tool.CoordinateToNum(point2x, point2y, 0)).setElement(new Vide());
 
 		}
-		
-		
+
+		return res;
+	}
+
+	private int[][] definirLiaison(int[][] detailSalle) {
+		int nombreLiaison = (detailSalle.length - 2) * 2;
+		int[][] detailSalleTrier = new int[detailSalle.length][4];
+
+		for (int n = 0; n < detailSalle.length; n++) {
+			int minSalle = 0;
+			double minDistance = Math.sqrt(Math.pow(detailSalle[0][0], 2) + Math.pow(detailSalle[0][1], 2));
+
+			for (int i = 1; i < detailSalle.length; i++) {
+				double distance = Math.sqrt(Math.pow(detailSalle[i][0], 2) + Math.pow(detailSalle[i][1], 2));
+				if (distance < minDistance) {
+					minDistance = distance;
+					minSalle = i;
+				}
+			}
+			// System.out.println(minDistance);
+			int transX = detailSalle[minSalle][0];
+			int transY = detailSalle[minSalle][1];
+
+			detailSalleTrier[n][0] = transX;
+			detailSalleTrier[n][1] = transY;
+
+			detailSalle[minSalle][0] = 8000;
+			detailSalle[minSalle][1] = 8000;
+		}
+
+		int[][] res = new int[nombreLiaison][4];
+		int numPoint = 0;
+		for (int n = 0; n < detailSalle.length - 1; n += 2) {
+			int transX1 = detailSalleTrier[numPoint][0];
+			int transY1 = detailSalleTrier[numPoint][1];
+			int transX2 = detailSalleTrier[numPoint + 1][0];
+			int transY2 = detailSalleTrier[numPoint + 1][1];
+			int transX3 = detailSalleTrier[numPoint + 2][0];
+			int transY3 = detailSalleTrier[numPoint + 2][1];
+
+			res[n][0] = transX1;
+			res[n][1] = transY1;
+			res[n][2] = transX2;
+			res[n][3] = transY2;
+
+			res[n + 1][0] = transX1;
+			res[n + 1][1] = transY1;
+			res[n + 1][2] = transX3;
+			res[n + 1][3] = transY3;
+
+			numPoint++;
+		}
+/**
+		System.out.println();
+		System.out.println();
+
+		for (int n = 0; n < res.length; n++) {
+			System.out.print(res[n][0] + ", ");
+			System.out.print(res[n][1] + ", ");
+			System.out.print(res[n][2] + ", ");
+			System.out.print(res[n][3] + ", ");
+			System.out.println();
+		}
+*/
 		return res;
 	}
 
@@ -162,9 +273,9 @@ public class Control {
 
 		creationBlock();
 		creationMonstre();
-		plateau = new Plateau(hero , listBlock, listMonstre);
+		plateau = new Plateau(hero, listBlock, listMonstre);
 
-		//plateau = new Plateau(hero, getMapNum());
+		// plateau = new Plateau(hero, getMapNum());
 		if (!plateau.getListCase().isEmpty()) {
 			plateau.getListCase().get(0).setCompt(0);
 		}
@@ -181,24 +292,22 @@ public class Control {
 			res = res + 3;
 			break;
 		case "left":
-			if (numPlateau == 4 || numPlateau == 7 ) {
+			if (numPlateau == 4 || numPlateau == 7) {
 				res = 0;
-			}
-			else {
+			} else {
 				res = res - 1;
 			}
 			break;
 		case "right":
-			if (numPlateau == 3 || numPlateau == 6 ) {
+			if (numPlateau == 3 || numPlateau == 6) {
 				res = 0;
-			}
-			else {
+			} else {
 				res = res + 1;
 			}
 			break;
 		default:
 		}
-		//System.out.println("numPlateau :" + res);
+		// System.out.println("numPlateau :" + res);
 		numPlateau = res;
 		return res;
 	}
@@ -251,10 +360,9 @@ public class Control {
 		for (int i = 0; i < nombre; i++) {
 			listBlock.add(new Chest());
 
-		}		
+		}
 	}
 
-	
 	private static void creationBush(int nombre) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < nombre; i++) {
