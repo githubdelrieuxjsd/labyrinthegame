@@ -64,13 +64,13 @@ public class Control {
 		Monstre.setHero(hero);
 		creationMonstre();
 
-		plateau = new Plateau(hero, generationListCase(200,100,1,10,18) ,listMonstre,200,100) ;
+		plateau = new Plateau(hero, generationListCase(100,50,1,20) ,listMonstre,100,50) ;
 		//generationPlateau();
 		// Niveau.generationMapRandom();
 	}
 
 	private List<Case> generationListCase(int nombreCaseX, int nombreCaseY,int nombreCaseZ,
-			int nombreSalle,int tailleSalle) {
+		int nombreSalle) {
 		List<Case> res = new ArrayList<Case>();
 		
 		
@@ -94,15 +94,53 @@ public class Control {
 			}
 		}
 		
+		int posx = 0;
+		int posy = 0;
+
 		for (int i = 0; i< nombreSalle ; i++) {
-			int xSalle = (int) (Math.random() * ( (nombreCaseX-6-tailleSalle) - 6 +1 )) + 6;
-			int ySalle = (int) (Math.random() * ( (nombreCaseY-6-tailleSalle) - 6 +1 )) + 6;
-			
-			for (int y = ySalle; y < ySalle+tailleSalle; y++) {
-				for (int x = xSalle; x < xSalle+tailleSalle; x++) {
-					res.get(Tool.CoordinateToNum(x, y, 0)).setElement(new Vide());
+			boolean casePlacer = false ;
+			while(!casePlacer) {
+				int tailleSalleY = (int) (Math.random() * ( (12) - 5 +1 )) + 5;
+				int tailleSalleX= (int) (Math.random() * ( (12) - 5 +1 )) + 5;
+				//tailleSalleY = 10;
+				//tailleSalleX = 10;
+				
+				int xSalle = (int) (Math.random() * ( (nombreCaseX-6-tailleSalleX) - 6+1 )) + 6;
+				int ySalle = (int) (Math.random() * ( (nombreCaseY-6-tailleSalleY) - 6+1 )) + 6;
+				
+				//xSalle = posx*25 +5;
+				//ySalle = posy*20 +5;
+
+				System.out.println("    "+xSalle+" ,"+ySalle);
+				
+				boolean peuetreplacer = true ;
+				for (int y = ySalle-1; y < ySalle+tailleSalleY+1; y++) {
+					for (int x = xSalle-1; x < xSalle+tailleSalleX+1; x++) {
+						if (res.get(Tool.CoordinateToNum(x, y, 0)).getElement().getNom().equals("Vide") ) {
+							peuetreplacer = false;
+						}
+					}
 				}
+				
+				System.out.println(peuetreplacer);
+				if (peuetreplacer) {
+					casePlacer = true;
+					for (int y = ySalle; y < ySalle+tailleSalleY; y++) {
+						for (int x = xSalle; x < xSalle+tailleSalleX; x++) {
+							res.get(Tool.CoordinateToNum(x, y, 0)).setElement(new Vide());
+						}
+					}
+					
+					posx ++;
+					if (posx == 8) {
+						posx=0;
+						posy++;
+					}
+				}
+				
+				
 			}
+			
 
 		}
 		
