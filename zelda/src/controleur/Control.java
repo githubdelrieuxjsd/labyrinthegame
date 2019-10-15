@@ -64,7 +64,7 @@ public class Control {
 		Monstre.setHero(hero);
 		creationMonstre();
 
-		plateau = new Plateau(hero, generationListCase(100, 50, 1, 20), listMonstre, 100, 50);
+		plateau = new Plateau(hero, generationListCase(100, 50, 1, 10), listMonstre, 100, 50);
 		// generationPlateau();
 		// Niveau.generationMapRandom();
 	}
