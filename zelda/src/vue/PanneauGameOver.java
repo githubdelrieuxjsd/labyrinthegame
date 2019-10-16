@@ -4,35 +4,39 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import tool.Tool;
 
 
-public class PanneauStart extends JPanel {
-	PanneauJeux jeux ;
-	JTextArea petit = new JTextArea("a");
-	//JTextArea c = new JTextArea("a");
+public class PanneauGameOver extends JPanel {
+	PanneauJeux jeux = new PanneauJeux();
 
-
-	JTextArea txt_NomJeux = new JTextArea("Labyrinthe");
+	JTextField txt_NomJeux = new JTextField("GAME OVER") {
+		@Override
+		public void setBorder(Border border) {
+			// No!
+		}
+	};
 	 
-	JButton btn_start = new JButton("Start");
+	JButton btn_start = new JButton("RESTART");
 	
 
 	
-	public PanneauStart () {
+	public PanneauGameOver () {
 		
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
 		
-		this.setBackground(Color.PINK);
+		this.setBackground(Color.BLACK);
 		ajouter();
-
+		
 		btn_start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setBackground(Color.WHITE);
@@ -46,26 +50,20 @@ public class PanneauStart extends JPanel {
 
 	private void ajouter() {
 		// TODO Auto-generated method stub
-		petit.setBounds(0,0,4,4);
-		petit.setBackground(Color.PINK);
-		petit.setLineWrap(false);
-
-		this.add(petit);
+		
 		
 		btn_start.setBounds(450,400,100,50);
 		this.add(btn_start); 
-		txt_NomJeux.setBounds(200,100,1000,200);
-		txt_NomJeux.setLineWrap(false);
-		txt_NomJeux.setBackground(Color.PINK);
+		txt_NomJeux.setBounds(200,100,700,200);
+		txt_NomJeux.setBackground(Color.BLACK);
 		txt_NomJeux.setFont(new Font ("Segoe Script", Font.BOLD , 90 ));
-		txt_NomJeux.setForeground(Color.BLUE);
+		txt_NomJeux.setForeground(Color.WHITE);
 		this.add(txt_NomJeux); 
 		
 	}
 
 	private void remove() {
 		// TODO Auto-generated method stub
-		this.remove(petit);
 		this.remove(txt_NomJeux);
 		this.remove(btn_start);
 		
@@ -74,13 +72,14 @@ public class PanneauStart extends JPanel {
 
 	private void start() {
 		// TODO Auto-generated method stub
-		jeux = new PanneauJeux();
-		jeux.setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
 		
+		jeux.setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
 		this.add(jeux);
-		this.updateUI();
+		jeux.requestFocus();// SUPER IMPORTANT 
+		this.updateUI();// SUPER IMPORTANT 
 		
 		remove();
 		
 	}
 }
+

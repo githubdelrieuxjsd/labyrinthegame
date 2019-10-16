@@ -33,7 +33,7 @@ import tool.Tool;
 
 public class Control {
 
-	private boolean freegame = true;
+	private static boolean freegame = true;
 
 	private static Plateau plateau;
 
@@ -43,6 +43,11 @@ public class Control {
 	private static List<Projectil> listProjectil;
 
 	private static int numPlateau = 0;
+	
+	private static int nombreEtage ; 
+	
+	private static boolean gameOver ;
+
 	private static int timer;
 
 	/**
@@ -54,7 +59,9 @@ public class Control {
 	 */
 	public Control() {
 		super();
-
+		nombreEtage = 0;
+		gameOver = false ;
+		
 		hero = new Hero();
 		Monstre.setHero(hero);		
 		
@@ -403,9 +410,9 @@ public class Control {
 
 	}
 
-	public boolean action(String herodescision, boolean heroaction) {
+	public static boolean action(String herodescision, boolean heroaction) {
 
-		if (this.listMonstre.isEmpty() && false) {
+		if (Control.listMonstre.isEmpty() && false) {
 			freegame = true;
 			int x = (int) (Math.random() * (plateau.getNombreCaseX() - 1 + 1 - 0)) + 0;
 			int y = (int) (Math.random() * (plateau.getNombreCaseY() - 1 + 1 - 0)) + 0;
@@ -414,22 +421,22 @@ public class Control {
 		}
 
 		removeProjectil();
-		this.timer++;
+		Control.timer++;
 
-		if (this.timer % 2 == 0) {
+		if (Control.timer % 2 == 0) {
 			deplacerProjectil();
 		}
 
-		if (this.timer % 16 == 0) {
+		if (Control.timer % 16 == 0) {
 
-			for (Monstre monstre : this.listMonstre) {
+			for (Monstre monstre : Control.listMonstre) {
 				monstre.action(plateau);
 			}
 		}
 		// change betwen 3 and 16
-		if (this.timer % 16 == 0 || freegame) {
+		if (Control.timer % 16 == 0 || freegame) {
 			if (heroaction) {
-				this.hero.action(this.plateau, herodescision);
+				Control.hero.action(Control.plateau, herodescision);
 				// this.plateau.afficher();
 			}
 			return false;
@@ -438,8 +445,8 @@ public class Control {
 		return heroaction;
 	}
 
-	private void deplacerProjectil() {
-		for (Projectil p : this.listProjectil) {
+	private static void deplacerProjectil() {
+		for (Projectil p : Control.listProjectil) {
 			p.interactionDeplacement(plateau, plateau.getListCase().get(p.getNumeroCase()), p.getDirection());
 		}
 	}
@@ -455,9 +462,9 @@ public class Control {
 
 	}
 
-	public void removeProjectil() {
+	public static void removeProjectil() {
 		List<Projectil> listProjectildead = new ArrayList<Projectil>();
-		for (Projectil p : this.listProjectil) {
+		for (Projectil p : Control.listProjectil) {
 			if (p.getCurentAction().equals("detruir")) {
 				listProjectildead.add(p);
 			}
@@ -473,6 +480,8 @@ public class Control {
 		plateau.placerProjectil(projectil, c.getCoordonnee());
 		listProjectil.add(projectil);
 	}
+	
+
 
 	// ########################### Affichage des informations ##################
 	public void information() {
@@ -495,19 +504,19 @@ public class Control {
 
 	// ######################## GETTER SETTER ################################
 
-	public List<Monstre> getListMonstre() {
+	public static List<Monstre> getListMonstre() {
 		return listMonstre;
 	}
 
-	public List<Block> getListBlock() {
+	public static List<Block> getListBlock() {
 		return listBlock;
 	}
 
-	public void setListBlock(List<Block> listBlock) {
-		this.listBlock = listBlock;
+	public static void setListBlock(List<Block> listBlock) {
+		Control.listBlock = listBlock;
 	}
 
-	public Plateau getPlateau() {
+	public static Plateau getPlateau() {
 		return plateau;
 	}
 
@@ -515,17 +524,44 @@ public class Control {
 		this.plateau = plateau;
 	}
 
-	public Hero getHero() {
+	public static  Hero getHero() {
 		return hero;
 	}
 
-	public void setHero(Hero hero) {
-		this.hero = hero;
+	public static void setHero(Hero hero) {
+		Control.hero = hero;
 	}
 
 	public int getTimer() {
 		// TODO Auto-generated method stub
 		return timer;
 	}
+	
+	public static int getNombreEtage() {
+		return nombreEtage;
+	}
+
+	public static void setNombreEtage(int nombreEtage) {
+		Control.nombreEtage = nombreEtage;
+	}
+
+	public static boolean isFreegame() {
+		return freegame;
+	}
+
+	public static void setFreegame(boolean freegame) {
+		Control.freegame = freegame;
+	}
+
+	public static boolean isGameOver() {
+		return gameOver;
+	}
+
+	public static void setGameOver(boolean gameOver) {
+		Control.gameOver = gameOver;
+	}
+
+	
+
 
 }

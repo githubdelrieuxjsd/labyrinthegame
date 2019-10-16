@@ -29,12 +29,16 @@ import tool.Tool;
 
 public class PanneauJeux extends JPanel {
 
-	private Control control = new Control();
+	private Control control ;
 	// 31,25
-	private long fps = 31;
-	private String herodescision = "nothing";
-	private boolean heroaction = false;
+	private long fps ;
+	private String herodescision ;
+	private boolean heroaction ;
 
+	KeyListener key  ;
+
+		
+	
 	private JTextField nombreRubi = new JTextField("" + 0) {
 		@Override
 		public void setBorder(Border border) {
@@ -43,7 +47,15 @@ public class PanneauJeux extends JPanel {
 	};
 
 	public PanneauJeux() {
-
+		Control control = new Control();
+		fps = 31;
+		herodescision = "nothing";
+		heroaction = false;
+		
+		
+		
+		System.out.println("here"+  control.getHero().getNombreRubi());
+		
 		this.setLayout(null);
 		this.setBackground(new Color(14, 137, 56));
 		this.setBackground(new Color(147, 117, 56));
@@ -53,9 +65,9 @@ public class PanneauJeux extends JPanel {
 		this.nombreRubi.setFont(new Font("Segoe Script", Font.BOLD, 25));
 		this.nombreRubi.setForeground(Color.WHITE);
 
-		this.addKeyListener(new KeyListener() {
+		
+		this.addKeyListener(key= new KeyListener() {
 
-			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				switch (e.getKeyCode()) {
@@ -117,32 +129,48 @@ public class PanneauJeux extends JPanel {
 					}
 					control.information();
 					break;
+				case KeyEvent.VK_G:
+					GameOver();
+					
+					break;
+				
 				default:
 					;
 				}
 			}
-
-			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
 			}
 
-			@Override
 			public void keyTyped(KeyEvent e) {
 
 			}
 
-		});
-		this.setFocusable(true);
+		} );
+		this.setFocusable(true);// SUPER IMPORTANT 
 
+
+		System.out.println("here2"+  control.getHero().getNombreRubi());
+
+		repaint();
+		System.out.println("here3"+  control.getHero().getNombreRubi());
+
+		
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		nombreRubi.setText("" + control.getHero().getNombreRubi());
+	
+		if (Control.isGameOver() ) {
+			this.GameOver();
+		}
+		
+		//System.out.println("here4"+  control.getHero().getNombreRubi());
+
+		nombreRubi.setText("" + Control.getNombreEtage());
 		// paintPlateau(g);
 		paintPlateauCentrerSurHero(g);
-		heroaction = control.action(this.herodescision, heroaction);
+		heroaction = Control.action(this.herodescision, heroaction);
 
 		try {
 			// Thread.sleep(1000); // 1 fps
@@ -418,5 +446,16 @@ public class PanneauJeux extends JPanel {
 		this.updateUI();
 
 	}
+	
+
+	private void GameOver() {
+		//this.removeKeyListener(key);
+		PanneauGameOver jeux = new PanneauGameOver ();
+		jeux.setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+		
+		this.add(jeux);
+		this.updateUI();		
+	}
+
 
 }

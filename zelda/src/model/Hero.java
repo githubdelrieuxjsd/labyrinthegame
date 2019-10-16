@@ -62,7 +62,9 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	@Override
 	public void mourir() {
 		this.nombreRubi = 0;
-		this.soigner(this.getMaxLife());
+		//this.soigner(this.getMaxLife());
+		//Control.setNombreEtage(0);
+		Control.setGameOver(true);
 	}
 
 	// ######################### A FAIRE
@@ -220,7 +222,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 			int random = (int) (Math.random() * (plateau.getNombreCaseX()*plateau.getNombreCaseY() - 0 +1 )) + 0;
 			Control.creerNouveauPlateau();
 			//caseApres = plateau.getListCase().get(random);
-			
+			Control.setNombreEtage(Control.getNombreEtage() +1);
 		}
 
 	}
@@ -513,7 +515,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		case "animationLift":
 			icon = this.imagelift();
 			this.setFrame((getFrame() + 1) % 5);
-
+			
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothingHolding");
 			}
