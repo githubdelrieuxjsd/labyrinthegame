@@ -16,6 +16,8 @@ public class Rock extends Block implements Deplacement {
 
 	public Rock() {
 		super();
+		this.setSpawnable(false);
+
 		this.setFrame(0);
 		this.setCurentAction("nothing");
 		this.setDirection(new Direction("down"));
@@ -37,11 +39,11 @@ public class Rock extends Block implements Deplacement {
 
 		Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
 
-		int num = Tool.CoordinateToNum(caseAvant.getCoordonnee());
+		int num = plateau.coordinateToNum(caseAvant.getCoordonnee());
 		Vide v = new Vide( );
 		plateau.getListCase().get(num).setElement(v);
 
-		num = Tool.CoordinateToNum(caseApres.getCoordonnee());
+		num = plateau.coordinateToNum(caseApres.getCoordonnee());
 		
 		plateau.getListCase().get(num).setElement(this);
 		this.setNumeroCase(num);

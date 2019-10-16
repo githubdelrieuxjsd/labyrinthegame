@@ -39,7 +39,7 @@ public class Pierre  extends Projectil {
 
 	@Override
 	public String trouverImage(Plateau plateau , Case c) {
-		String icon = "hyrule/tomato/tirer/pierre1.png";
+		String icon = "hyrule/tomato/tirer/pierre.png";
 		return icon;
 	}
 

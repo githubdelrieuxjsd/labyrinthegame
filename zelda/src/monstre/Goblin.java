@@ -21,6 +21,8 @@ public class Goblin extends Monstre implements Deplacement,DropItem,Attaque{
 
 	public Goblin() {
 		super();
+		this.setSpawnable(false);
+
 		this.setExist(true);
 		this.setFrame(0);
 		this.setCurentAction("nothing");
@@ -83,11 +85,11 @@ public class Goblin extends Monstre implements Deplacement,DropItem,Attaque{
 			
 			Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
 
-			int num = Tool.CoordinateToNum(caseAvant.getCoordonnee());
+			int num = plateau.coordinateToNum(caseAvant.getCoordonnee());
 			Vide v = new Vide();
 			plateau.getListCase().get(num).setElement(v);
 
-			num = Tool.CoordinateToNum(caseApres.getCoordonnee());
+			num = plateau.coordinateToNum(caseApres.getCoordonnee());
 
 			plateau.getListCase().get(num).setElement(this);
 			this.setNumeroCase(num);

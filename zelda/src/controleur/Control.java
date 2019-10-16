@@ -56,20 +56,9 @@ public class Control {
 		super();
 
 		hero = new Hero();
-
-		listMonstre = new ArrayList<Monstre>();
-		listBlock = new ArrayList<Block>();
-		listProjectil = new ArrayList<Projectil>();
-
-
-		Monstre.setHero(hero);
-		creationBlock();
-		creationMonstre();
-
-		plateau = new Plateau(hero, generationListCase(100, 50, 1, 10), listMonstre,listBlock, 100, 50);
-		// generationPlateau();
-		// Niveau.generationMapRandom();
-		timer = 0;
+		Monstre.setHero(hero);		
+		
+		creerNouveauPlateau();
 	}
 
 	public static void creerNouveauPlateau() {
@@ -79,8 +68,10 @@ public class Control {
 
 		creationBlock();
 		creationMonstre();
-
+		//plateau = new Plateau(100,50);
 		plateau = new Plateau(hero, generationListCase(100, 50, 1, 10), listMonstre,listBlock, 100, 50);
+		// generationPlateau();
+		// Niveau.generationMapRandom();
 		timer = 0;
 	}
 	
@@ -133,7 +124,9 @@ public class Control {
 				boolean peuetreplacer = true;
 				for (int y = ySalle - 4; y < ySalle + tailleSalleY + 4; y++) {
 					for (int x = xSalle - 4; x < xSalle + tailleSalleX + 4; x++) {
-						if (res.get(Tool.CoordinateToNum(x, y, 0)).getElement().getNom().equals("Vide")) {
+						
+						int num = x + nombreCaseX * y;
+						if (res.get(num).getElement().getNom().equals("Vide")) {
 							peuetreplacer = false;
 						}
 					}
@@ -146,11 +139,12 @@ public class Control {
 					casePlacer = true;
 					for (int y = ySalle; y < ySalle + tailleSalleY; y++) {
 						for (int x = xSalle; x < xSalle + tailleSalleX; x++) {
-							res.get(Tool.CoordinateToNum(x, y, 0)).setElement(new Vide());
+							int num = x + nombreCaseX * y;
+							res.get(num).setElement(new Vide(true));
 						}
 					}
-
-					res.get(Tool.CoordinateToNum(detailSalle[i][0], detailSalle[i][1], 0)).setElement(new Arbre());
+					int num = detailSalle[i][0] + nombreCaseX * detailSalle[i][1];
+					res.get(num).setElement(new Arbre());
 
 					posx++;
 					if (posx == 8) {
@@ -177,32 +171,35 @@ public class Control {
 			
 			if (point1x < point2x && point1y < point2y ) {
 				for (int x = point1x; x < point2x+1; x++) {
-					res.get(Tool.CoordinateToNum(x, point1y, 0)).setElement(new Vide());
+					
+
+					res.get(x + nombreCaseX * point1y).setElement(new Vide());
 				}
 				for (int y = point1y; y < point2y; y++) {
-					res.get(Tool.CoordinateToNum(point2x, y, 0)).setElement(new Vide());
+
+					res.get(point2x + nombreCaseX * y).setElement(new Vide());
 				}
 				
 			} else if (point1x > point2x && point1y < point2y) {
 				for (int x = point2x; x < point1x+1; x++) {
-					res.get(Tool.CoordinateToNum(x, point2y, 0)).setElement(new Vide());
+					res.get(x + nombreCaseX * point2y).setElement(new Vide());
 				}
 				for (int y = point1y; y < point2y; y++) {
-					res.get(Tool.CoordinateToNum(point1x, y, 0)).setElement(new Vide());
+					res.get(point1x + nombreCaseX * y).setElement(new Vide());
 				}
 			} else if (point1x > point2x && point1y > point2y) {
 				for (int x = point2x; x < point1x+1; x++) {
-					res.get(Tool.CoordinateToNum(x, point2y, 0)).setElement(new Vide());
+					res.get(x + nombreCaseX * point2y).setElement(new Vide());
 				}
 				for (int y = point2y; y < point1y; y++) {
-					res.get(Tool.CoordinateToNum(point1x, y, 0)).setElement(new Vide());
+					res.get(point1x + nombreCaseX * y).setElement(new Vide());
 				}
 			} else {
 				for (int x = point1x; x < point2x+1; x++) {
-					res.get(Tool.CoordinateToNum(x, point1y, 0)).setElement(new Vide());
+					res.get(x + nombreCaseX * point1y).setElement(new Vide());
 				}
 				for (int y = point2y; y < point1y; y++) {
-					res.get(Tool.CoordinateToNum(point2x, y, 0)).setElement(new Vide());
+					res.get(point2x + nombreCaseX * y).setElement(new Vide());
 				}
 			}
 
@@ -334,16 +331,16 @@ public class Control {
 		// TODO Auto-generated method stub
 		creationBush(100);
 		creationArbre(0);
-		creationRock(10);
-		creationChest(1);
+		creationRock(100);
+		creationChest(100);
 	}
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationKnight(1);
-		creationChicken(1);
-		creationGoblin(1);
-		creationTomato(0);
+		creationKnight(10);
+		creationChicken(50);
+		creationGoblin(10);
+		creationTomato(10);
 	}
 
 	private static void creationTomato(int nombre) {

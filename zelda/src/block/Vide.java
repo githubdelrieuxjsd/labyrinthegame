@@ -13,9 +13,19 @@ import model.Plateau;
 
 public class Vide extends Element {
 
+	
 	public Vide( ) {
 		super();
-
+		this.setSpawnable(false);
+		this.setNom("Vide") ;
+		this.setFrame(0);
+		this.setCurentAction("nothing") ;
+		this.setDirection(new Direction ("down" ));
+	}
+	
+	public Vide(boolean spawnable ) {
+		super();
+		this.setSpawnable(spawnable);
 		this.setNom("Vide") ;
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
@@ -62,6 +72,9 @@ public class Vide extends Element {
 		return c.getTailleCasePixel()*3;
 	}
 
+
+	
+	
 	
 
 	

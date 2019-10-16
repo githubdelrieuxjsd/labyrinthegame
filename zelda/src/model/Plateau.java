@@ -30,61 +30,59 @@ public class Plateau {
 	private int nombreCaseY;
 	private int nombreCaseZ;
 
-	public Plateau(Hero hero, List<Case>listCase ,List<Monstre> listMonstre,List<Block>listBlock, int nombreCaseX,int nombreCaseY  ) {
+	public Plateau(Hero hero, List<Case> listCase, List<Monstre> listMonstre, List<Block> listBlock, int nombreCaseX,
+			int nombreCaseY) {
 		this.nombreCaseX = nombreCaseX;
 		this.nombreCaseY = nombreCaseY;
 		this.nombreCaseZ = 1;
 		this.listCase = listCase;
-		System.out.print("nombre case sur le plateau : " +listCase.size());
-		boolean heroplacer = false;
-		while (!heroplacer) {
-			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
-			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
-			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") ) {
-				this.placerElement(hero, new Coordonnee(x, y, 0));	
-				heroplacer= true;
+		System.out.println("nombre case sur le plateau : " + listCase.size());
+
+		List<Case> listCaseSpawnable = new ArrayList<Case>();
+		for (Case c : listCase) {
+			if (c.getElement().isSpawnable()) {
+				Case cSpawnable = new Case(c.getCoordonnee());
+				listCaseSpawnable.add(cSpawnable);
 			}
 		}
+		System.out.println("nombre case spawnable " + listCaseSpawnable.size());
+
 		placerMonstre(listMonstre);
-		placerBlock(listBlock);
+		placerBlock(listBlock, listCaseSpawnable);
+
 		
-		heroplacer = false;
-		while (!heroplacer) {
-			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
-			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
-			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") ) {
-				this.placerTrap(new Stairs() , new Coordonnee(x, y, 0));	
-				heroplacer= true;
-			}
-		}
+		int num = (int) (Math.random() * ((listCaseSpawnable.size() - 1) - 0 + 1)) + 0;
+		this.placerElement(hero, listCaseSpawnable.get(num).getCoordonnee());
+		listCaseSpawnable.remove(num);
+
+
+
+		num = (int) (Math.random() * ((listCaseSpawnable.size() - 1) - 0 + 1)) + 0;
+		this.placerTrap(new Stairs(), listCaseSpawnable.get(num).getCoordonnee());
+		listCaseSpawnable.remove(num);
+
 	}
-	
-	private void placerBlock(List<Block> listBlock) {
+
+	private void placerBlock(List<Block> listBlock, List<Case> listCaseSpawnable) {
 		// TODO Auto-generated method stub
 		for (Element m : listBlock) {
-			boolean heroplacer = false;
-		while (!heroplacer) {
-			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
-			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
-			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") ) {
-				this.placerElement(m, new Coordonnee(x, y, 0));	
-				heroplacer= true;
-			}
-		}		
+			int num = (int) (Math.random() * ((listCaseSpawnable.size() - 1) - 0 + 1)) + 0;
+			this.placerElement(m, listCaseSpawnable.get(num).getCoordonnee());
+			listCaseSpawnable.remove(num);
 		}
 	}
 
 	private void placerMonstre(List<Monstre> listMonstre) {
 		for (Element m : listMonstre) {
 			boolean heroplacer = false;
-		while (!heroplacer) {
-			int x = (int) (Math.random() * ( (nombreCaseX-6) - 6+1 )) + 6;
-			int y = (int) (Math.random() * ( (nombreCaseY-6) - 6+1 )) + 6;
-			if (this.getListCase().get(Tool.CoordinateToNum(x,y, 0)).getElement().getNom().equals("Vide") ) {
-				this.placerElement(m, new Coordonnee(x, y, 0));	
-				heroplacer= true;
+			while (!heroplacer) {
+				int x = (int) (Math.random() * ((nombreCaseX - 6) - 6 + 1)) + 6;
+				int y = (int) (Math.random() * ((nombreCaseY - 6) - 6 + 1)) + 6;
+				if (this.getListCase().get(this.coordinateToNum(x, y, 0)).getElement().getNom().equals("Vide")) {
+					this.placerElement(m, new Coordonnee(x, y, 0));
+					heroplacer = true;
+				}
 			}
-		}		
 		}
 	}
 
@@ -135,6 +133,12 @@ public class Plateau {
 		}
 		contourTrap();
 	}
+
+	public Plateau(int nombreCaseX, int nombreCaseY) {
+		this.nombreCaseX = nombreCaseX;
+		this.nombreCaseY = nombreCaseY;
+		this.listCase = new ArrayList<Case>();
+		}
 
 	private void placerBlockBaseDonne(int[][] tabBlock) {
 		for (int i = 0; i < tabBlock.length; i++) {
@@ -213,9 +217,9 @@ public class Plateau {
 				for (int j = 0; j < nombreCaseX; j++) {
 					Case caseVide = new Case(new Coordonnee(j, i, z));
 					caseVide.setElement(new Vide());
-					//caseVide.setElement(new Bush());
+					// caseVide.setElement(new Bush());
 					caseVide.setItem(new Rien());
-					//caseVide.setItem(new Rubi());
+					// caseVide.setItem(new Rubi());
 					caseVide.setProjectil(new Aire());
 					caseVide.setTrap(new TrapVide());
 					listCase.add(caseVide);
@@ -225,7 +229,7 @@ public class Plateau {
 	}
 
 	public void placerElement(Element element, Coordonnee coordonnee) {
-		int num = Tool.CoordinateToNum(coordonnee);
+		int num = this.coordinateToNum(coordonnee);
 		Case c = this.listCase.get(num);
 		c.setElement(element);
 		element.setNumeroCase(num);
@@ -238,7 +242,7 @@ public class Plateau {
 	}
 
 	public void placerItem(Item item, Coordonnee coordonnee) {
-		int num = Tool.CoordinateToNum(coordonnee);
+		int num = this.coordinateToNum(coordonnee);
 		this.listCase.get(num).setItem(item);
 	}
 
@@ -249,7 +253,7 @@ public class Plateau {
 	}
 
 	public void placerTrap(Trap trap, Coordonnee coordonnee) {
-		int num = Tool.CoordinateToNum(coordonnee);
+		int num = this.coordinateToNum(coordonnee);
 		this.listCase.get(num).setTrap(trap);
 	}
 
@@ -260,7 +264,7 @@ public class Plateau {
 	}
 
 	public void placerProjectil(Projectil projectil, Coordonnee coordonnee) {
-		int num = Tool.CoordinateToNum(coordonnee);
+		int num = this.coordinateToNum(coordonnee);
 		this.listCase.get(num).setProjectil(projectil);
 		projectil.setNumeroCase(num);
 
@@ -308,7 +312,7 @@ public class Plateau {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == 0) {
 			return this.getCase(coordonnee);
 		}
-		Case res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1, coordonnee.getZ()));
+		Case res = this.listCase.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY() - 1, coordonnee.getZ()));
 		return res;
 	}
 
@@ -316,7 +320,7 @@ public class Plateau {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == this.nombreCaseY - 1) {
 			return this.getCase(coordonnee);
 		}
-		Case res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1, coordonnee.getZ()));
+		Case res = this.listCase.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY() + 1, coordonnee.getZ()));
 		return res;
 	}
 
@@ -324,7 +328,7 @@ public class Plateau {
 		if (this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		Case res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY(), coordonnee.getZ()));
+		Case res = this.listCase.get(this.coordinateToNum(coordonnee.getX() - 1, coordonnee.getY(), coordonnee.getZ()));
 		return res;
 	}
 
@@ -332,7 +336,7 @@ public class Plateau {
 		if (this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);
 		}
-		Case res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY(), coordonnee.getZ()));
+		Case res = this.listCase.get(this.coordinateToNum(coordonnee.getX() + 1, coordonnee.getY(), coordonnee.getZ()));
 		return res;
 	}
 
@@ -361,12 +365,12 @@ public class Plateau {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == 0) {
 			return this.getCase(coordonnee);
 		}
-		Case res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1));
+		Case res = this.listCase.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY() - 1));
 		int z = 0;
 		while (z < coordonnee.getZ() + 1 && z < this.nombreCaseZ - 1) {
 			Case caseAuDessus = this.listCase
-					.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1, z + 1));
-			Case caseAuDessous = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() - 1, z));
+					.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY() - 1, z + 1));
+			Case caseAuDessous = this.listCase.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY() - 1, z));
 
 			if (caseAuDessus.getElement().getNom().equals("Vide")
 					&& caseAuDessous.getElement().getNom().equals("Rock")) {
@@ -382,12 +386,12 @@ public class Plateau {
 		if (this.getCase(coordonnee).getCoordonnee().getY() == this.nombreCaseY - 1) {
 			return this.getCase(coordonnee);
 		}
-		Case res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1));
+		Case res = this.listCase.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY() + 1));
 		int z = 0;
 		while (z < coordonnee.getZ() + 1 && z < this.nombreCaseZ - 1) {
 			Case caseAuDessus = this.listCase
-					.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1, z + 1));
-			Case caseAuDessous = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY() + 1, z));
+					.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY() + 1, z + 1));
+			Case caseAuDessous = this.listCase.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY() + 1, z));
 
 			if (caseAuDessus.getElement().getNom().equals("Vide")
 					&& caseAuDessous.getElement().getNom().equals("Rock")) {
@@ -402,12 +406,12 @@ public class Plateau {
 		if (this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		Case res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY()));
+		Case res = this.listCase.get(this.coordinateToNum(coordonnee.getX() - 1, coordonnee.getY()));
 		int z = 0;
 		while (z < coordonnee.getZ() + 1 && z < this.nombreCaseZ - 1) {
 			Case caseAuDessus = this.listCase
-					.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY(), z + 1));
-			Case caseAuDessous = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY(), z));
+					.get(this.coordinateToNum(coordonnee.getX() - 1, coordonnee.getY(), z + 1));
+			Case caseAuDessous = this.listCase.get(this.coordinateToNum(coordonnee.getX() - 1, coordonnee.getY(), z));
 
 			if (caseAuDessus.getElement().getNom().equals("Vide")
 					&& caseAuDessous.getElement().getNom().equals("Rock")) {
@@ -423,13 +427,13 @@ public class Plateau {
 		if (this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);
 		}
-		Case res = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY()));
+		Case res = this.listCase.get(this.coordinateToNum(coordonnee.getX() + 1, coordonnee.getY()));
 		int z = 0;
 
 		while (z < coordonnee.getZ() + 1 && z < this.nombreCaseZ - 1) {
 			Case caseAuDessus = this.listCase
-					.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY(), z + 1));
-			Case caseAuDessous = this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY(), z));
+					.get(this.coordinateToNum(coordonnee.getX() + 1, coordonnee.getY(), z + 1));
+			Case caseAuDessous = this.listCase.get(this.coordinateToNum(coordonnee.getX() + 1, coordonnee.getY(), z));
 			if (caseAuDessus.getElement().getNom().equals("Vide")
 					&& caseAuDessous.getElement().getNom().equals("Rock")) {
 				return caseAuDessus;
@@ -445,7 +449,7 @@ public class Plateau {
 				|| this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() - 1, coordonnee.getZ()));
+		return this.listCase.get(this.coordinateToNum(coordonnee.getX() - 1, coordonnee.getY() - 1, coordonnee.getZ()));
 	}
 
 	public Case getCaseDownLeftMemeZ(Coordonnee coordonnee) {
@@ -453,7 +457,7 @@ public class Plateau {
 				|| this.getCase(coordonnee).getCoordonnee().getX() == 0) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() - 1, coordonnee.getY() + 1, coordonnee.getZ()));
+		return this.listCase.get(this.coordinateToNum(coordonnee.getX() - 1, coordonnee.getY() + 1, coordonnee.getZ()));
 
 	}
 
@@ -462,7 +466,7 @@ public class Plateau {
 				|| this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() - 1, coordonnee.getZ()));
+		return this.listCase.get(this.coordinateToNum(coordonnee.getX() + 1, coordonnee.getY() - 1, coordonnee.getZ()));
 	}
 
 	public Case getCaseDownRightMemeZ(Coordonnee coordonnee) {
@@ -470,11 +474,11 @@ public class Plateau {
 				|| this.getCase(coordonnee).getCoordonnee().getX() == this.nombreCaseX - 1) {
 			return this.getCase(coordonnee);
 		}
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX() + 1, coordonnee.getY() + 1, coordonnee.getZ()));
+		return this.listCase.get(this.coordinateToNum(coordonnee.getX() + 1, coordonnee.getY() + 1, coordonnee.getZ()));
 	}
 
 	public Case getCase(Coordonnee coordonnee) {
-		return this.listCase.get(Tool.CoordinateToNum(coordonnee.getX(), coordonnee.getY(), coordonnee.getZ()));
+		return this.listCase.get(this.coordinateToNum(coordonnee.getX(), coordonnee.getY(), coordonnee.getZ()));
 	}
 
 	public int getNombreCaseX() {
@@ -497,17 +501,29 @@ public class Plateau {
 
 	public List<Case> getListCaseAfficher(Hero hero) {
 		Coordonnee heroCoordonnee = this.getListCase().get(hero.getNumeroCase()).getCoordonnee();
-		//Coordonnee heroCoordonnee2 = hero.getCoordonneeVisuel(this);
+		// Coordonnee heroCoordonnee2 = hero.getCoordonneeVisuel(this);
 
 		List<Case> res = new ArrayList<Case>();
 
 		for (int y = heroCoordonnee.getY() - 4; y < heroCoordonnee.getY() + 6; y++) {
 			for (int x = heroCoordonnee.getX() - 9; x < heroCoordonnee.getX() + 11; x++) {
-				Case c = this.listCase.get(Tool.CoordinateToNum(x, y, 0));
+				Case c = this.listCase.get(this.coordinateToNum(x, y, 0));
 				res.add(c);
 			}
 		}
 		return res;
+	}
+
+	public int coordinateToNum(Coordonnee c) {
+		return c.getX() + this.nombreCaseX * c.getY() + c.getZ() * this.nombreCaseX * this.nombreCaseY;
+	}
+
+	public int coordinateToNum(int x, int y) {
+		return x + this.nombreCaseX * y;
+	}
+
+	public int coordinateToNum(int x, int y, int z) {
+		return this.nombreCaseX * this.nombreCaseY * z + x + this.nombreCaseX * y;
 	}
 
 	public void end() {

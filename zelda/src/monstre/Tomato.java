@@ -19,6 +19,8 @@ public class Tomato extends Monstre implements DropItem, Tirer {
 
 	public Tomato() {
 		super();
+		this.setSpawnable(false);
+
 		this.setExist(true);
 		this.setFrame(0);
 		this.setCurentAction("disappear");

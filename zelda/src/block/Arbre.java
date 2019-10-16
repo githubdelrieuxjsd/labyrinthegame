@@ -11,6 +11,7 @@ public class Arbre extends  Block {
 	
 	public Arbre( ) {
 		super();
+		this.setSpawnable(false);
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setDirection( new Direction ("down" ) );		

@@ -1,22 +1,47 @@
 package block;
 import damage.Damage;
+import item.Key;
+import item.Rubi;
+import mobInterface.DropItem;
 import model.Case;
 import model.Coordonnee;
 import model.Direction;
 import model.Plateau;
 
-public class Chest extends  Block {
+public class Chest extends  Block implements DropItem {
 
 	
 	public Chest( ) {
 		super();
+		this.setSpawnable(false);
+
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setDirection( new Direction ("down" ) );		
 		this.setNom("Chest"); 
+		
 	}
-
 	
+	public void ouvrir( Plateau plateau) {
+			dropItem(plateau.getListCase().get(this.getNumeroCase()));
+			this.detruir();
+	}
+	
+//#################### PERDRE VIE ######################
+
+	@Override
+	public void perdreVie(Damage damage, Plateau plateau) {
+	}
+	
+	// ######################### DROP ITEM #########################################
+
+		@Override
+		public void dropItem(Case c) {
+			if (c.getItem().getNom().equals("Rien")) {
+				c.setItem(new Key());
+			}
+		}
+
 	// #################### IMAGE ######################
 
 	
@@ -51,13 +76,7 @@ public class Chest extends  Block {
 	}
 
 
-	@Override
-	public void perdreVie(Damage damage, Plateau plateau) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+	
 
 	
 	

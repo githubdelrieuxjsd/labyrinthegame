@@ -16,6 +16,8 @@ public class Bush extends Block implements DropItem {
 
 	public Bush() {
 		super();
+		this.setSpawnable(false);
+
 		this.setFrame(0);
 		this.setCurentAction("nothing");
 		this.setDirection(new Direction("down"));
@@ -44,16 +46,13 @@ public class Bush extends Block implements DropItem {
 		@Override
 		public void dropItem(Case c) {
 			if (c.getItem().getNom().equals("Rien")) {
-				//c.setItem(new Rubi());
-				/**
-				 * 
+				c.setItem(new Heart());
 				int x = (int) (Math.random() * (100 + 1 - 1)) + 1;
-				if (x > 30) {
+				if (x < 50) {
 					c.setItem(new Rubi());
-				} else if (x < 10) {
+				} else if (x < 100) {
 					c.setItem(new Heart());
 				}
-				*/
 			}
 
 		}
@@ -74,13 +73,13 @@ public class Bush extends Block implements DropItem {
 	@Override
 	public int trouverX(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getX()*c.getTailleCasePixel()+15-2*c.getTailleCasePixel();
+		return c.getCoordonnee().getX()*c.getTailleCasePixel()+3 - c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverY(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getY()*c.getTailleCasePixel() -15 -c.getTailleCasePixel();
+		return c.getCoordonnee().getY()*c.getTailleCasePixel()+3 -c.getTailleCasePixel();
 	}
 
 	@Override

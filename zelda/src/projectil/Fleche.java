@@ -34,13 +34,13 @@ public class Fleche extends Projectil {
 
 		if (getExist() ) {
 			if (getDirection().equals("up")) {
-				icon = "image/link/arrowUp24x24.png";
+				icon = "hyrule/arrow/U.png";
 			} else if (getDirection().equals("down")) {
-				icon = "image/link/arrowDown24x24.png";
+				icon = "hyrule/arrow/D.png";
 			} else if (getDirection().equals("left")) {
-				icon = "image/link/arrowLeft24x24.png";
+				icon = "hyrule/arrow/L.png";
 			} else if (getDirection().equals("right")) {
-				icon = "image/link/arrowRight24x24.png";
+				icon = "hyrule/arrow/R.png";
 			}
 		}
 		//System.out.println("frame:"+ getFrame());

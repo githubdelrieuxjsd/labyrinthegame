@@ -23,6 +23,8 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 	
 	public Knight( ) {
 		super();
+		this.setSpawnable(false);
+
 		this.setExist(true);
 		this.setMaxLife(5);
 		this.setFrame(0);
@@ -119,11 +121,11 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 			
 			Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
 
-			int num = Tool.CoordinateToNum(caseAvant.getCoordonnee());
+			int num = plateau.coordinateToNum(caseAvant.getCoordonnee());
 			Vide v = new Vide( );
 			plateau.getListCase().get(num).setElement(v);
 
-			num = Tool.CoordinateToNum(caseApres.getCoordonnee());
+			num = plateau.coordinateToNum(caseApres.getCoordonnee());
 			
 			plateau.getListCase().get(num).setElement(this);
 			this.setNumeroCase(num);

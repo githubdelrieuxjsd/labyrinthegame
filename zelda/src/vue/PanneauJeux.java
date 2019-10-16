@@ -24,6 +24,7 @@ import controleur.Control;
 import model.Case;
 import model.Hero;
 import model.Plateau;
+import monstre.Monstre;
 import tool.Tool;
 
 public class PanneauJeux extends JPanel {
@@ -44,7 +45,7 @@ public class PanneauJeux extends JPanel {
 	public PanneauJeux() {
 
 		this.setLayout(null);
-		this.setBackground(new Color(14,137,56));
+		this.setBackground(new Color(14, 137, 56));
 		// this.setBackground(Color.green);
 		this.nombreRubi.setOpaque(false);
 		this.nombreRubi.setBounds(5, 35, 100, 30);
@@ -138,12 +139,12 @@ public class PanneauJeux extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		nombreRubi.setText("" + control.getHero().getNombreRubi());
-		//paintPlateau(g);
+		// paintPlateau(g);
 		paintPlateauCentrerSurHero(g);
 		heroaction = control.action(this.herodescision, heroaction);
 
 		try {
-			//Thread.sleep(1000); // 1 fps
+			// Thread.sleep(1000); // 1 fps
 			Thread.sleep(fps); // 32 fps
 			// Thread.sleep(16,666666); // 60 fps
 		} catch (InterruptedException e) {
@@ -155,73 +156,153 @@ public class PanneauJeux extends JPanel {
 	}
 
 	private void paintPlateauCentrerSurHero(Graphics g) {
-		Plateau plateau = control.getPlateau() ;
-		List<Case> listCaseAfficher = plateau.getListCaseAfficher(control.getHero()) ;
-		//dessinBackground (g ,listCaseAfficher );
-		dessinForground(g,  listCaseAfficher);
-		// dessinSideBar(g, control.getPlateau().getListCase().get(0));
+		Plateau plateau = control.getPlateau();
+		List<Case> listCaseAfficher = plateau.getListCaseAfficher(control.getHero());
+		// dessinBackground (g ,listCaseAfficher );
+		dessinForground(g, listCaseAfficher);
+
+		// dessinDark(g);
+		 dessinSideBar(g, control.getPlateau().getListCase().get(0));
 	}
+
 	private void dessinBackground(Graphics g, List<Case> listCaseAfficher) {
 		Case c = listCaseAfficher.get(0);
-		for (int x = 0; x < 20+2; x++) {
-			for (int y = 0; y < 10+2; y++) {
-				
+		for (int x = 0; x < 20 + 2; x++) {
+			for (int y = 0; y < 10 + 2; y++) {
 				ImageIcon icon = new ImageIcon("hyrule/grass1.png");
-				
-				
 				if ((x + y) % 2 == 1) {
 					icon = new ImageIcon("hyrule/grass3.png");
 				}
-				
 				/**
-				if (control.getTimer()%32 < 16) {
-					icon = new ImageIcon("hyrule/grass3.png");
-					
-					
-					if ((x + y) % 2 == 1) {
-						icon = new ImageIcon("hyrule/grass1.png");
-					}
-				}*/
-			
-				
-				
+				 * if (control.getTimer()%32 < 16) { icon = new ImageIcon("hyrule/grass3.png");
+				 * 
+				 * 
+				 * if ((x + y) % 2 == 1) { icon = new ImageIcon("hyrule/grass1.png"); } }
+				 */
 				Image img = icon.getImage();
-				//g.drawImage(img,c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0]-c.getTailleCasePixel(),
-					//	c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1] , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
-							
-				g.drawImage(img, x * c.getTailleCasePixel() , y * c.getTailleCasePixel() ,
-						c.getTailleCasePixel() , c.getTailleCasePixel(), null);
+				// g.drawImage(img,c.getElement().getCoordonneeVisuel(x, y, c,
+				// control.getHero())[0]-c.getTailleCasePixel(),
+				// c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1] ,
+				// 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
+
+				g.drawImage(img, x * c.getTailleCasePixel(), y * c.getTailleCasePixel(), c.getTailleCasePixel(),
+						c.getTailleCasePixel(), null);
 			}
 		}
-
 	}
+
 	private void dessinForground(Graphics g, List<Case> listCaseAfficher) {
-		Plateau plateau = control.getPlateau() ;
+		Plateau plateau = control.getPlateau();
 		int x = 0;
 		int y = 0;
-		//plateau.getListCase().get(control.getHero().getNumeroCase()).afficher();
-		//System.out.println(listCaseAfficher.size());
+		// plateau.getListCase().get(control.getHero().getNumeroCase()).afficher();
+		// System.out.println(listCaseAfficher.size());
 		for (Case c : listCaseAfficher) {
-			//System.out.println(x+" , "+y);
-			if ( ! (c.isEmpty() ) ) {
-				if (c.getElement().getNom().equals("Hero") ) {
-					g.drawImage(c.trouverElementImage(plateau),x*c.getTailleCasePixel()-c.getTailleCasePixel(),
-							y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
-				}else {
-					g.drawImage(c.trouverTrapImage(plateau),c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1] , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
-							
-				g.drawImage(c.trouverItemImage(plateau), x*c.getTailleCasePixel()- c.getTailleCasePixel(),
-						y*c.getTailleCasePixel()- c.getTailleCasePixel() , 3*c.getTailleCasePixel(), 3*c.getTailleCasePixel(), null);
+			// System.out.println(x+" , "+y);
+			if (!(c.isEmpty())) {
 				
-				//g.drawImage(c.trouverElementImage(plateau),x*c.getTailleCasePixel()-c.getTailleCasePixel(),
-						//y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
-			
-				g.drawImage(c.trouverElementImage(plateau),c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-						c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1] , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
-							
-				g.drawImage(c.trouverProjectilImage(plateau), x*c.getTailleCasePixel()-c.getTailleCasePixel(),
-						y*c.getTailleCasePixel()-c.getTailleCasePixel() , 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
+				if (c.getElement().getNom().equals("Hero")) {
+					g.drawImage(c.trouverElementImage(plateau), x * c.getTailleCasePixel() - c.getTailleCasePixel(),
+							y * c.getTailleCasePixel() - c.getTailleCasePixel(), 3 * c.getTailleCasePixel(),
+							3 * c.getTailleCasePixel(), null);
+					g.drawImage(c.trouverItemImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+					g.drawImage(c.trouverProjectilImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
+					if (((Hero) c.getElement()).hold()) {
+						ImageIcon icon = new ImageIcon("hyrule/block/rock.png");
+						Image img = icon.getImage();
+						g.drawImage(img, x * c.getTailleCasePixel() - c.getTailleCasePixel(),
+								y * c.getTailleCasePixel() - c.getTailleCasePixel() - c.getTailleCasePixel() * 2 / 3
+										- (((Hero) c.getElement()).getFrame() + 1) * c.getTailleCasePixel() / 10,
+								3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
+					}
+					
+				} else if (c.getElement().isMonstre()) {
+					g.drawImage(c.trouverTrapImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
+					g.drawImage(c.trouverItemImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+					g.drawImage(c.trouverElementImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
+					g.drawImage(c.trouverProjectilImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+					
+					if (c.getElement().isMonstre()) {
+						if (((Monstre) c.getElement()).getLife() < ((Monstre) c.getElement()).getMaxLife()
+								&& ((Monstre) c.getElement()).getLife() > 0) {
+							for (int i = 0; i < ((Monstre) c.getElement()).getMaxLife(); i++) {
+								ImageIcon icon = new ImageIcon("hyrule/heart/noir.png");
+
+								if (i < ((Monstre) c.getElement()).getLife()) {
+									icon = new ImageIcon("hyrule/heart/rouge.png");
+								}
+								Image img = icon.getImage();
+								int barreVieY = 3; 
+								switch (c.getElement().getNom()) {
+								case "Knight":
+									barreVieY = 10;
+									break;
+								case "Chicken":
+									barreVieY = 3/2;
+									break;
+								case "Goblin":
+									barreVieY = 2;
+									break;
+								case "Tomato":
+									barreVieY = 2;
+									break;
+								default:
+									break;
+								}
+								
+								g.drawImage(img,
+										c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0]+c.getTailleCasePixel()+ 15 * i,
+										c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1]+c.getTailleCasePixel()/barreVieY,
+										15, 15, null);
+							}
+						}
+					}
+				} else {
+					g.drawImage(c.trouverTrapImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
+					g.drawImage(c.trouverItemImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
+					// g.drawImage(c.trouverElementImage(plateau),x*c.getTailleCasePixel()-c.getTailleCasePixel(),
+					// y*c.getTailleCasePixel()-c.getTailleCasePixel() ,
+					// 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
+
+					g.drawImage(c.trouverElementImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
+					g.drawImage(c.trouverProjectilImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
 				}
 			}
 			x++;
@@ -230,12 +311,8 @@ public class PanneauJeux extends JPanel {
 				y++;
 			}
 		}
-		
 
 	}
-
-	
-
 
 	private void paintPlateau(Graphics g) {
 		Plateau plateau = control.getPlateau();
@@ -248,7 +325,7 @@ public class PanneauJeux extends JPanel {
 		for (int y = 0; y < plateau.getNombreCaseY(); y++) {
 			for (int x = 0; x < plateau.getNombreCaseX(); x++) {
 				for (int z = 0; z < plateau.getNombreCaseZ(); z++) {
-					Case c = plateau.getListCase().get(Tool.CoordinateToNum(x, y, z));
+					Case c = plateau.getListCase().get(plateau.coordinateToNum(x, y, z));
 					dessinForgroundBlock(g, c);
 					dessinForgroundUnite(g, c);
 				}
@@ -261,7 +338,7 @@ public class PanneauJeux extends JPanel {
 		 */
 
 		// dessinDark(g);
-		//dessinSideBar(g, control.getPlateau().getListCase().get(0));
+		// dessinSideBar(g, control.getPlateau().getListCase().get(0));
 
 	}
 
@@ -313,8 +390,8 @@ public class PanneauJeux extends JPanel {
 		}
 
 		Image img = icon.getImage();
-		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel() +3 ,
-				c.getCoordonnee().getY() * c.getTailleCasePixel() +3, c.getTailleCasePixel(), c.getTailleCasePixel(),
+		g.drawImage(img, c.getCoordonnee().getX() * c.getTailleCasePixel() + 3,
+				c.getCoordonnee().getY() * c.getTailleCasePixel() + 3, c.getTailleCasePixel(), c.getTailleCasePixel(),
 				null);
 
 	}

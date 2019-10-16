@@ -35,11 +35,11 @@ public abstract class Projectil implements Dessin, Deplacement {
 	public void deplacer(Plateau plateau, Case caseAvant, Case caseApres) {
 
 		Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
-		int num = Tool.CoordinateToNum(caseAvant.getCoordonnee());
+		int num = plateau.coordinateToNum(caseAvant.getCoordonnee());
 		Aire aire = new Aire();
 		plateau.getListCase().get(num).setProjectil(aire);
 
-		num = Tool.CoordinateToNum(caseApres.getCoordonnee());
+		num = plateau.coordinateToNum(caseApres.getCoordonnee());
 
 		plateau.getListCase().get(num).setProjectil(this);
 		

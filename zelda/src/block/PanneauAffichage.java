@@ -10,6 +10,8 @@ public class PanneauAffichage extends Block{
 	
 	public PanneauAffichage ( ) {
 		super();
+		this.setSpawnable(false);
+
 		this.setFrame(0);
 		this.setCurentAction("nothing") ;
 		this.setDirection( new Direction ("down" ) );		

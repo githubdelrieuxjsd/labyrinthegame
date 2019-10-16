@@ -86,63 +86,63 @@ public class Case {
 	}
 	
 	
-	private int trouverElementX() {
+	public int trouverElementX() {
 		return this.getElement().trouverX(this) ;
 	}
-	private int trouverElementY() {
+	public int trouverElementY() {
 		int res = this.getElement().trouverY(this) ;
 		return res ;
 	}
-	private int trouverElementLongeur() {
+	public int trouverElementLongeur() {
 		int res = this.getElement().trouverlargeur(this) ;
 		return res ;
 	}
-	private int trouverElementLargeur() {
+	public int trouverElementLargeur() {
 		int res = this.getElement().trouverlongeur(this) ;
 		return res ;
 	}
-	private int trouverProjectilX() {
+	public int trouverProjectilX() {
 		return this.getProjectil().trouverX(this) ;
 	}
-	private int trouverProjectilY() {
+	public int trouverProjectilY() {
 		int res = this.getProjectil().trouverY(this) ;
 		return res ;
 	}
-	private int trouverProjectilLongeur() {
+	public int trouverProjectilLongeur() {
 		int res = this.getProjectil().trouverlargeur(this) ;
 		return res ;
 	}
-	private int trouverProjectilLargeur() {
+	public int trouverProjectilLargeur() {
 		int res = this.getProjectil().trouverlongeur(this) ;
 		return res ;
 	}
-	private int trouverItemX() {
+	public int trouverItemX() {
 		return this.getItem().trouverX(this) ;
 	}
-	private int trouverItemY() {
+	public int trouverItemY() {
 		int res = this.getItem().trouverY(this) ;
 		return res ;
 	}
-	private int trouverItemLongeur() {
+	public int trouverItemLongeur() {
 		int res = this.getItem().trouverlargeur(this) ;
 		return res ;
 	}
-	private int trouverItemLargeur() {
+	public int trouverItemLargeur() {
 		int res = this.getItem().trouverlongeur(this) ;
 		return res ;
 	}
-	private int trouverTrapX() {
+	public int trouverTrapX() {
 		return this.getTrap().trouverX(this) ;
 	}
-	private int trouverTrapY() {
+	public int trouverTrapY() {
 		int res = this.getTrap().trouverY(this) ;
 		return res ;
 	}
-	private int trouverTrapLongeur() {
+	public int trouverTrapLongeur() {
 		int res = this.getTrap().trouverlargeur(this) ;
 		return res ;
 	}
-	private int trouverTrapLargeur() {
+	public int trouverTrapLargeur() {
 		int res = this.getTrap().trouverlongeur(this) ;
 		return res ;
 	}

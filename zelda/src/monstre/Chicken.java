@@ -24,6 +24,8 @@ public class Chicken extends Monstre implements Deplacement, DropItem {
 
 	public Chicken() {
 		super();
+		this.setSpawnable(false);
+
 		this.setExist(true);
 		this.setFrame(0);
 		this.setCurentAction("nothing");
@@ -93,11 +95,11 @@ public class Chicken extends Monstre implements Deplacement, DropItem {
 		
 		Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
 
-		int num = Tool.CoordinateToNum(caseAvant.getCoordonnee());
+		int num = plateau.coordinateToNum(caseAvant.getCoordonnee());
 		Vide v = new Vide();
 		plateau.getListCase().get(num).setElement(v);
 
-		num = Tool.CoordinateToNum(caseApres.getCoordonnee());
+		num = plateau.coordinateToNum(caseApres.getCoordonnee());
 
 		plateau.getListCase().get(num).setElement(this);
 		this.setNumeroCase(num);
@@ -173,7 +175,7 @@ public class Chicken extends Monstre implements Deplacement, DropItem {
 			break;
 		case "moving":
 			icon = this.imageNothing();
-			this.setFrame((getFrame() + 1) % 8);
+			this.setFrame((getFrame() + 1) % 6);
 
 			if (this.getFrame() == 0) {
 				this.setCurentAction("nothing");

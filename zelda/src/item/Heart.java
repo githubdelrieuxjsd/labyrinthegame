@@ -17,7 +17,7 @@ public class Heart extends Item{
 	@Override
 	public String trouverImage(Plateau plateau, Case c) {
 		// TODO Auto-generated method stub
-		return "hyrule/heart/rouge.png";
+		return "hyrule/item/heart.png";
 	}
 
 	@Override
