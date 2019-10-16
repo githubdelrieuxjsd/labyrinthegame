@@ -55,8 +55,6 @@ public class Plateau {
 		this.placerElement(hero, listCaseSpawnable.get(num).getCoordonnee());
 		listCaseSpawnable.remove(num);
 
-
-
 		num = (int) (Math.random() * ((listCaseSpawnable.size() - 1) - 0 + 1)) + 0;
 		this.placerTrap(new Stairs(), listCaseSpawnable.get(num).getCoordonnee());
 		listCaseSpawnable.remove(num);

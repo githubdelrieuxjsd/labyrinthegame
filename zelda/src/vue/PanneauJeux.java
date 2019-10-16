@@ -46,6 +46,7 @@ public class PanneauJeux extends JPanel {
 
 		this.setLayout(null);
 		this.setBackground(new Color(14, 137, 56));
+		this.setBackground(new Color(147, 117, 56));
 		// this.setBackground(Color.green);
 		this.nombreRubi.setOpaque(false);
 		this.nombreRubi.setBounds(5, 35, 100, 30);
@@ -201,19 +202,20 @@ public class PanneauJeux extends JPanel {
 			// System.out.println(x+" , "+y);
 			if (!(c.isEmpty())) {
 				
+				g.drawImage(c.trouverTrapImage(plateau),
+						c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+						c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+						3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+				
 				if (c.getElement().getNom().equals("Hero")) {
 					g.drawImage(c.trouverElementImage(plateau), x * c.getTailleCasePixel() - c.getTailleCasePixel(),
 							y * c.getTailleCasePixel() - c.getTailleCasePixel(), 3 * c.getTailleCasePixel(),
 							3 * c.getTailleCasePixel(), null);
 					g.drawImage(c.trouverItemImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[1],
 							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
-					g.drawImage(c.trouverProjectilImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
-							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
-
+					
 					if (((Hero) c.getElement()).hold()) {
 						ImageIcon icon = new ImageIcon("hyrule/block/rock.png");
 						Image img = icon.getImage();
@@ -225,25 +227,16 @@ public class PanneauJeux extends JPanel {
 					}
 					
 				} else if (c.getElement().isMonstre()) {
-					g.drawImage(c.trouverTrapImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
-							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
-
 					g.drawImage(c.trouverItemImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
-							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
-					g.drawImage(c.trouverElementImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
-							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
-
-					g.drawImage(c.trouverProjectilImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[1],
 							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
 					
+				g.drawImage(c.trouverElementImage(plateau),
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
 					if (c.getElement().isMonstre()) {
 						if (((Monstre) c.getElement()).getLife() < ((Monstre) c.getElement()).getMaxLife()
 								&& ((Monstre) c.getElement()).getLife() > 0) {
@@ -280,16 +273,10 @@ public class PanneauJeux extends JPanel {
 						}
 					}
 				} else {
-					g.drawImage(c.trouverTrapImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
-							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
-
 					g.drawImage(c.trouverItemImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+							c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+							c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[1],
 							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
-
 					// g.drawImage(c.trouverElementImage(plateau),x*c.getTailleCasePixel()-c.getTailleCasePixel(),
 					// y*c.getTailleCasePixel()-c.getTailleCasePixel() ,
 					// 3*c.getTailleCasePixel(),3*c.getTailleCasePixel(), null);
@@ -298,12 +285,16 @@ public class PanneauJeux extends JPanel {
 							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
 							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
 							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
-
-					g.drawImage(c.trouverProjectilImage(plateau),
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[0],
-							c.getElement().getCoordonneeVisuel(x, y, c, control.getHero())[1],
-							3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+					
 				}
+				
+				
+				
+				g.drawImage(c.trouverProjectilImage(plateau),
+						c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[0],
+						c.getItem().getCoordonneeVisuel(x, y, c, control.getHero())[1],
+						3 * c.getTailleCasePixel(), 3 * c.getTailleCasePixel(), null);
+
 			}
 			x++;
 			if (x == 20) {
