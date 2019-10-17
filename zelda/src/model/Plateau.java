@@ -48,6 +48,8 @@ public class Plateau {
 		System.out.println("nombre case spawnable " + listCaseSpawnable.size());
 
 		placerMonstre(listMonstre);
+		
+		
 		placerBlock(listBlock, listCaseSpawnable);
 
 		

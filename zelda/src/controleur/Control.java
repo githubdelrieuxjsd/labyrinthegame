@@ -26,6 +26,7 @@ import monstre.Goblin;
 import monstre.Knight;
 import monstre.Monstre;
 import monstre.Tomato;
+import option.Cheat;
 import projectil.Aire;
 import projectil.Fleche;
 import projectil.Projectil;
@@ -33,7 +34,6 @@ import tool.Tool;
 
 public class Control {
 
-	private static boolean freegame = true;
 
 	private static Plateau plateau;
 
@@ -336,17 +336,17 @@ public class Control {
 
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(100);
+		creationBush(50);
 		creationArbre(0);
-		creationRock(100);
-		creationChest(100);
+		creationRock(50);
+		creationChest(5);
 	}
 
 	private static void creationMonstre() {
 		// TODO Auto-generated method stub
-		creationKnight(10);
-		creationChicken(50);
-		creationGoblin(10);
+		creationKnight(20);
+		creationChicken(70);
+		creationGoblin(100);
 		creationTomato(10);
 	}
 
@@ -413,7 +413,6 @@ public class Control {
 	public static boolean action(String herodescision, boolean heroaction) {
 
 		if (Control.listMonstre.isEmpty() && false) {
-			freegame = true;
 			int x = (int) (Math.random() * (plateau.getNombreCaseX() - 1 + 1 - 0)) + 0;
 			int y = (int) (Math.random() * (plateau.getNombreCaseY() - 1 + 1 - 0)) + 0;
 			plateau.getCase(new Coordonnee(x, y, 0)).setElement(new Vide());
@@ -427,14 +426,14 @@ public class Control {
 			deplacerProjectil();
 		}
 
-		if (Control.timer % 16 == 0) {
+		if (Control.timer % 16 == 0 && Cheat.monstreCanDoAction() ) {
 
 			for (Monstre monstre : Control.listMonstre) {
 				monstre.action(plateau);
 			}
 		}
 		// change betwen 3 and 16
-		if (Control.timer % 16 == 0 || freegame) {
+		if (Control.timer % 16 == 0 || Cheat.heroCanDoActionEvryTick()) {
 			if (heroaction) {
 				Control.hero.action(Control.plateau, herodescision);
 				// this.plateau.afficher();
@@ -543,14 +542,6 @@ public class Control {
 
 	public static void setNombreEtage(int nombreEtage) {
 		Control.nombreEtage = nombreEtage;
-	}
-
-	public static boolean isFreegame() {
-		return freegame;
-	}
-
-	public static void setFreegame(boolean freegame) {
-		Control.freegame = freegame;
 	}
 
 	public static boolean isGameOver() {

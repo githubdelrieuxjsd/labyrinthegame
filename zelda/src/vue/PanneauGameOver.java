@@ -12,13 +12,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import controleur.Control;
 import tool.Tool;
 
 
 public class PanneauGameOver extends JPanel {
 	PanneauJeux jeux = new PanneauJeux();
 
-	JTextField txt_NomJeux = new JTextField("GAME OVER") {
+	JTextField txt_NomJeux = new JTextField("GAME OVER : "+Control.getNombreEtage()) {
 		@Override
 		public void setBorder(Border border) {
 			// No!
@@ -54,7 +55,7 @@ public class PanneauGameOver extends JPanel {
 		
 		btn_start.setBounds(450,400,100,50);
 		this.add(btn_start); 
-		txt_NomJeux.setBounds(200,100,700,200);
+		txt_NomJeux.setBounds(100,100,1000,200);
 		txt_NomJeux.setBackground(Color.BLACK);
 		txt_NomJeux.setFont(new Font ("Segoe Script", Font.BOLD , 90 ));
 		txt_NomJeux.setForeground(Color.WHITE);

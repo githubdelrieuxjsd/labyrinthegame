@@ -23,7 +23,7 @@ public class Tomato extends Monstre implements DropItem, Tirer {
 
 		this.setExist(true);
 		this.setFrame(0);
-		this.setCurentAction("disappear");
+		this.setCurentAction("appear");
 		this.setDirection(new Direction("up"));
 		this.setNom("Tomato");
 		this.setMaxLife(3);
@@ -150,7 +150,7 @@ public class Tomato extends Monstre implements DropItem, Tirer {
 			this.setFrame((getFrame() + 1) % 4);
 			nombreAction++;
 			if (nombreAction > 4 * 8 && this.getFrame() == 0) {
-				this.setCurentAction("disappear");
+				this.setCurentAction("appear");
 				nombreAction = 0;
 			}
 			break;

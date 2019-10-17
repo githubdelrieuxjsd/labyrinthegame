@@ -28,7 +28,7 @@ public class Goblin extends Monstre implements Deplacement,DropItem,Attaque{
 		this.setCurentAction("nothing");
 		this.setDirection(new Direction("down"));
 		this.setNom("Goblin");
-		this.setMaxLife(3);
+		this.setMaxLife(2);
 		this.setLife(this.getMaxLife() );
 		this.setDamageMonstre(1, 0, 0, 0);
 	}
@@ -94,7 +94,7 @@ public class Goblin extends Monstre implements Deplacement,DropItem,Attaque{
 			plateau.getListCase().get(num).setElement(this);
 			this.setNumeroCase(num);
 			
-			this.attaquer(plateau, caseApres);
+		//	this.attaquer(plateau, caseApres);
 		}
 
 		@Override

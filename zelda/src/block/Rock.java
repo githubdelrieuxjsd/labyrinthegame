@@ -8,6 +8,7 @@ import model.Case;
 import model.Coordonnee;
 import model.Direction;
 import model.Plateau;
+import option.Cheat;
 import tool.Tool;
 
 public class Rock extends Block implements Deplacement {
@@ -68,7 +69,10 @@ public class Rock extends Block implements Deplacement {
 	
 	@Override
 	public void perdreVie(Damage damage, Plateau plateau) {
-		if (damage.doDamage(this)) {
+		if (Cheat.heroCanDestroyRock()) {
+			this.detruir();
+		}
+		if (damage.doDamage(this) ) {
 			this.life = life - damage.getExplosion();
 		}
 		if (life < 0) {

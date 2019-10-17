@@ -28,6 +28,7 @@ import mobInterface.Dessin;
 import mobInterface.PerdreVie;
 import mobInterface.Soigner;
 import mobInterface.Tirer;
+import option.Cheat;
 import projectil.Fleche;
 import projectil.Projectil;
 import tool.Tool;
@@ -55,6 +56,9 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		this.setLife(this.getMaxLife());
 
 		this.setDamageHero(2, 0, 0);
+		if (Cheat.heroEpeeInfintDamage()) {
+			this.setDamageHero(8000, 0, 0);
+		}
 
 	}
 
@@ -183,7 +187,9 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	}
 
 	private boolean canDoAction() {
-		return this.getCurentAction().equals("nothing") || this.getCurentAction().equals("nothingHolding");
+		return this.getCurentAction().equals("nothing") || this.getCurentAction().equals("nothingHolding") 
+				|| this.getCurentAction().equals("animationAttaque")&&this.getFrame() == 4
+				|| Cheat.heroCanDoActionNoMatterCurentAction();
 	}
 
 	// ######################### DEPLACEMENT
@@ -224,33 +230,14 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 			//caseApres = plateau.getListCase().get(random);
 			Control.setNombreEtage(Control.getNombreEtage() +1);
 		}
-
-	}
-
-	public void bougerSurPlateau (Plateau plateau) {
-
-		Case caseAvant = plateau.getListCase().get(this.getNumeroCase());
-		Case caseApres = plateau.getCaseDevant(caseAvant, this.getDirection());
-
 		
-		Coordonnee cordApres = new Coordonnee(caseApres.getCoordonnee());
-
-		int num = plateau.coordinateToNum(caseAvant.getCoordonnee());
-		Vide v = new Vide();
-		plateau.getListCase().get(num).setElement(v);
-
-		num = plateau.coordinateToNum(caseApres.getCoordonnee());
-
-		plateau.getListCase().get(num).setElement(this);
-		this.setNumeroCase(num);
-		this.Ramasser(caseApres);
-		
-		if (caseApres.getTrap().getNom().equals("Stairs")) {
-			int random = (int) (Math.random() * (plateau.getNombreCaseX()*plateau.getNombreCaseY() - 0 +1 )) + 0;
-			//caseApres = plateau.getListCase().get(random);
-			
+		if (Cheat.heroAutoAttaqueWhenMoving()) {
+			this.attaquer(plateau, caseApres);
 		}
+
 	}
+
+	
 	
 	@Override
 	public void interactionDeplacement(Plateau plateau, Case caseAvant, Direction direction) {
@@ -264,23 +251,29 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		else {
 
 
-			switch (caseApres.getElement().getNom()) {
-
-			case "Vide":
+			if (caseApres.getElement().isMonstre() && caseApres.getElement().getCurentAction().equals("animationDeath")) {
 				this.deplacer(plateau, caseAvant, caseApres);
-				break;
-			case "Rock":
-				((Rock) caseApres.getElement()).interactionDeplacement(plateau, caseApres, this.getDirection());
+			}else {
+				switch (caseApres.getElement().getNom()) {
 
-				if (caseApres.getElement().getNom().equals("Vide")) {
+				case "Vide":
 					this.deplacer(plateau, caseAvant, caseApres);
+					break;
+				case "Rock":
+					((Rock) caseApres.getElement()).interactionDeplacement(plateau, caseApres, this.getDirection());
+
+					if (caseApres.getElement().getNom().equals("Vide")) {
+						this.deplacer(plateau, caseAvant, caseApres);
+					}
+					break;
+				default:
+					// System.out.println("hero est rentrer dans " + c.getElement().getNom());
+					break;
 				}
-				break;
-			default:
-				// System.out.println("hero est rentrer dans " + c.getElement().getNom());
-				break;
 			}
-		}
+			}
+			
+			
 	}
 	}
 
@@ -419,7 +412,7 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	@Override
 	public void perdreVie(Damage damage, Plateau p) {
 
-		if (damage.doDamage(this)) {
+		if (damage.doDamage(this) && Cheat.heroLoseLife()) {
 			this.setLife(this.getLife() - damage.getExplosion() - damage.getEpee() - damage.getMagie()
 					- damage.getProjectil());
 			this.setCurentAction("hurt");
@@ -490,7 +483,10 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 		case "animationAttaque":
 			icon = this.imageAttaque();
 			this.setFrame((getFrame() + 1) % 7);
-
+			
+			if (this.getFrame() == 1 && Cheat.heroEpeeDoDamageFirstFrame()) {
+				this.attaquer(plateau, c);
+			}
 			if (this.getFrame() == 2) {
 				this.attaquer(plateau, c);
 			}
@@ -651,11 +647,18 @@ public class Hero extends Unite implements Deplacement, Attaque, Tirer, Soigner 
 	// ######################### INFORMATION
 	// #########################################
 
-	@Override
-	public void afficher() {
-		// TODO Auto-generated method stub
-		System.out.println(this.getNom() + "," + this.getLife() + "," + this.isExist() + "," + this.getDamage());
-	}
+	public void afficher () {
+		System.out.println("#####  "+this.getNom()+"  ######");
+		System.out.println("Case: " +this.getNumeroCase());
+
+		System.out.println("Life : " +this.getLife());
+		System.out.println("Damage : " +this.getDamage());
+		System.out.println("Frame : " +this.getFrame());
+		System.out.println("Action : " +this.getCurentAction());
+		System.out.println("		###########");
+		
+		}
+	
 
 	// ######################### GETTER SETTER
 	// #########################################

@@ -5,6 +5,7 @@ import model.Case;
 import model.Coordonnee;
 import model.Direction;
 import model.Plateau;
+import option.Cheat;
 
 public class Arbre extends  Block {
 
@@ -21,6 +22,13 @@ public class Arbre extends  Block {
 	
 	// #################### IMAGE ######################
 
+	@Override
+	public void perdreVie(Damage damage, Plateau plateau) {
+		if (damage.doDamage(this) && Cheat.treeCanBeDestroyed()) {
+			this.detruir();
+		}		
+	}
+	
 	
 	@Override
 	public String trouverImage(Plateau plateau ,Case c) {
@@ -53,11 +61,7 @@ public class Arbre extends  Block {
 	}
 
 
-	@Override
-	public void perdreVie(Damage damage, Plateau plateau) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 

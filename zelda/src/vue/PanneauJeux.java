@@ -52,10 +52,7 @@ public class PanneauJeux extends JPanel {
 		herodescision = "nothing";
 		heroaction = false;
 		
-		
-		
-		System.out.println("here"+  control.getHero().getNombreRubi());
-		
+				
 		this.setLayout(null);
 		this.setBackground(new Color(14, 137, 56));
 		this.setBackground(new Color(147, 117, 56));
@@ -150,10 +147,8 @@ public class PanneauJeux extends JPanel {
 		this.setFocusable(true);// SUPER IMPORTANT 
 
 
-		System.out.println("here2"+  control.getHero().getNombreRubi());
 
-		repaint();
-		System.out.println("here3"+  control.getHero().getNombreRubi());
+		
 
 		
 	}
@@ -190,8 +185,8 @@ public class PanneauJeux extends JPanel {
 		// dessinBackground (g ,listCaseAfficher );
 		dessinForground(g, listCaseAfficher);
 
-		// dessinDark(g);
-		 dessinSideBar(g, control.getPlateau().getListCase().get(0));
+		dessinDark(g);
+		dessinSideBar(g, control.getPlateau().getListCase().get(0));
 	}
 
 	private void dessinBackground(Graphics g, List<Case> listCaseAfficher) {
@@ -368,23 +363,21 @@ public class PanneauJeux extends JPanel {
 
 		if (img != null) {
 
-			g2d.drawImage(img, 0, 0, 38 * 20 + 15, 38 * 20 + 15, this);
+			g2d.drawImage(img, 0, 0, this.getWidth(),this.getHeight(), this);
 
-			Area outter = new Area(new Rectangle(0, 0, 38 * 20 + 30, 38 * 20 + 30));
+			Area outter = new Area(new Rectangle(0, 0,  this.getWidth(), this.getHeight()));
 			Case c = control.getPlateau().getListCase().get(control.getHero().getNumeroCase());
-			int diametre = 200;
+			int diametre = 400;
 			Ellipse2D.Double inner = new Ellipse2D.Double(
-					c.getCoordonnee().getX() * c.getTailleCasePixel() - c.getTailleCasePixel() - diametre / 3,
-					c.getCoordonnee().getY() * c.getTailleCasePixel() - c.getTailleCasePixel() - diametre / 3, diametre,
+					this.getWidth()/2 -diametre/2- c.getTailleCasePixel()/2,
+					this.getHeight()/2 -diametre/2 - c.getTailleCasePixel()/2, diametre,
 					diametre);
 			outter.subtract(new Area(inner));// remove the ellipse from the original area
 
-			Ellipse2D.Double inner2 = new Ellipse2D.Double(10 * c.getTailleCasePixel() - diametre / 3,
-					10 * c.getTailleCasePixel() - c.getTailleCasePixel() - diametre / 3, diametre, diametre);
-			outter.subtract(new Area(inner2));
+		
 
 			g2d.setColor(new Color(89, 89, 89));
-			g2d.setColor(Color.BLACK);
+			g2d.setColor(new Color(0,0,0,.7f));
 
 			g2d.fill(outter);
 		}
