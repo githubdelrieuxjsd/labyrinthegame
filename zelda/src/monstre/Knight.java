@@ -422,10 +422,10 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 		int res= c.getCoordonnee().getX()*c.getTailleCasePixel()+3 - c.getTailleCasePixel();
 		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
 			int num =    this.getFrame()   +1;
-			res = res + num * 6 - c.getTailleCasePixel() ;
+			res = res + num * c.getTailleCasePixel()/6 - c.getTailleCasePixel() ;
 		} else if (this.getDirection().equals("left") && this.getCurentAction().equals("moving")) {
 			int num =    this.getFrame() +1;
-			res = res - num * 6 +c.getTailleCasePixel() ;
+			res = res - num * c.getTailleCasePixel()/6 +c.getTailleCasePixel() ;
 		}
 		return res;
 	}
@@ -435,13 +435,13 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 		int res = c.getCoordonnee().getY()*c.getTailleCasePixel()+3 -c.getTailleCasePixel();
 		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
 			int num =    this.getFrame()   +1;
-			res = res - num * 6 +c.getTailleCasePixel() ;
+			res = res - num * c.getTailleCasePixel()/6 +c.getTailleCasePixel() ;
 		} else if (this.getDirection().equals("down") && this.getCurentAction().equals("moving")) {
 			int num =    this.getFrame()   +1;
-			res = res + num * 6 - c.getTailleCasePixel();
+			res = res + num * c.getTailleCasePixel()/6 - c.getTailleCasePixel();
 		} else if (this.getCurentAction().equals("moving")) {
 			int num =  - ( this.getFrame() -3 )* ( this.getFrame() -3 ) + 10 ;
-			res = res - num  ;
+			//res = res - num  ;
 			//System.out.println(this.getFrame() +","+ (num) );
 		}
 		return res;

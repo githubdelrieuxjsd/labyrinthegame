@@ -71,7 +71,7 @@ public class PanneauGameOver extends JPanel {
 		// TODO Auto-generated method stub
 		remove();
 		Principale.getFrame().setPreferredSize(new Dimension(60*20,60*10));
-		Principale.getFrame().setContentPane(new PanneauStart () );
+		Principale.getFrame().setContentPane(start );
 		Principale.getFrame().pack();
 		start.requestFocus();// SUPER IMPORTANT 
 		this.updateUI();// SUPER IMPORTANT 

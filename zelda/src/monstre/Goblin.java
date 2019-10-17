@@ -315,10 +315,10 @@ public class Goblin extends Monstre implements Deplacement,DropItem,Attaque{
 		int res = c.getCoordonnee().getX()*c.getTailleCasePixel()+3 - c.getTailleCasePixel();
 		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
 			int num = this.getFrame() + 1;
-			res = res + num * 5 - c.getTailleCasePixel();
+			res = res + num * c.getTailleCasePixel()/6 - c.getTailleCasePixel();
 		} else if (this.getDirection().equals("left") && this.getCurentAction().equals("moving")) {
 			int num = this.getFrame() + 1;
-			res = res - num * 5 + c.getTailleCasePixel();
+			res = res - num * c.getTailleCasePixel()/6 + c.getTailleCasePixel();
 		}
 		return res;
 	}
@@ -334,7 +334,7 @@ public class Goblin extends Monstre implements Deplacement,DropItem,Attaque{
 			res = res + num * c.getTailleCasePixel()/6 - c.getTailleCasePixel();
 		} else if (this.getCurentAction().equals("moving")) {
 			int num = -(this.getFrame() - 6) * (this.getFrame() - 6) + 10;
-			res = res - num;
+			//res = res - num;
 			// System.out.println(this.getFrame() +","+ (num) );
 		}
 		return res;

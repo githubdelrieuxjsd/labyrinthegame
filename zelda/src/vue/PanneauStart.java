@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -14,83 +15,83 @@ import javax.swing.JTextField;
 
 import tool.Tool;
 
-
 public class PanneauStart extends JPanel {
-	PanneauJeux jeux ;
-	//JTextArea c = new JTextArea("a");
+	PanneauJeux jeux;
+	// JTextArea c = new JTextArea("a");
 
+	JLabel titreLab;
 
-	JLabel titreLab ;
-	 
-	JButton modeJeuxBtn ;
-	JButton modeDebugBtn ;	
+	JButton modeJeuxBtn;
+	JButton modeDebugBtn;
 
-	
-	public PanneauStart () {
-		
+	private JComboBox combo;
+
+	public PanneauStart() {
+
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
-		
+
 		this.setBackground(Color.PINK);
 		ajouter();
-	
+
 	}
 
 	private void ajouter() {
 		// TODO Auto-generated method stub
-		
-		
-		titreLab = new JLabel ("Zeldo Adventur") ;
-		titreLab.setBounds(50,100,1500,200);
+		combo = new JComboBox();
+		combo.addItem("ROND");
+		combo.addItem("CARRE");
+		combo.addItem("TRIANGLE");
+		combo.addItem("ETOILE");
+		combo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(combo.getSelectedItem());
+			}
+		});
+
+		titreLab = new JLabel("Zeldo Adventur");
+		titreLab.setBounds(50, 100, 1500, 200);
 		titreLab.setBackground(Color.PINK);
-		titreLab.setFont(new Font ("Segoe Script", Font.BOLD , 120 ));
+		titreLab.setFont(new Font("Segoe Script", Font.BOLD, 120));
 		titreLab.setForeground(Color.BLUE);
-		this.add(titreLab); 
-		
-		
-		
+		this.add(titreLab);
+
 		modeJeuxBtn = new JButton("Jeux");
-		modeJeuxBtn.setBounds(400,350,300,70);
-		this.add(modeJeuxBtn); 
+		modeJeuxBtn.setBounds(400, 350, 300, 70);
+		this.add(modeJeuxBtn);
 		modeJeuxBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setBackground(Color.WHITE);
-				start("jeux");	
+				start("jeux");
 			}
 
 		});
-		
-		
-		
+
 		modeDebugBtn = new JButton("Debug");
-		modeDebugBtn.setBounds(400,450,300,70);
-		this.add(modeDebugBtn); 
+		modeDebugBtn.setBounds(400, 450, 300, 70);
+		this.add(modeDebugBtn);
 		modeDebugBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setBackground(Color.WHITE);
-				start("debug");	
+				start("debug");
 			}
 
 		});
 
 	}
-
-
-	
 
 	private void start(String gameMode) {
 		// TODO Auto-generated method stub
 		remove();
 		jeux = new PanneauJeux(gameMode);
-		if(gameMode.equals("jeux")) {
-			Principale.getFrame().setPreferredSize(new Dimension(60*20,60*10));
-			Principale.getFrame().setContentPane( jeux);
+		if (gameMode.equals("jeux")) {
+			Principale.getFrame().setPreferredSize(new Dimension(60 * 20, 60 * 10));
+			Principale.getFrame().setContentPane(jeux);
 			Principale.getFrame().pack();
-			
 
-		}else {
-			Principale.getFrame().setPreferredSize(new Dimension(7*201+100,7*101));
-			Principale.getFrame().setContentPane(jeux );
+		} else {
+			Principale.getFrame().setPreferredSize(new Dimension(7 * 201 + 100, 7 * 101));
+			Principale.getFrame().setContentPane(jeux);
 			Principale.getFrame().pack();
 		}
 		jeux.requestFocus();// SUPER IMPORTANT
@@ -105,6 +106,5 @@ public class PanneauStart extends JPanel {
 		remove(modeDebugBtn);
 
 	}
-
 
 }

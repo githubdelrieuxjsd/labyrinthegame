@@ -14,7 +14,7 @@ import projectil.Projectil;
 
 public class Case {
 
-	private int tailleCasePixel ;
+	private static int tailleCasePixel ;
 
 	
 	private Coordonnee coordonnee ;
@@ -31,8 +31,7 @@ public class Case {
 	
 
 	public Case(Coordonnee coordonnee ) {
-		this.tailleCasePixel = 14;
-		//14 pour map complete
+		
 		
 		this.coordonnee = coordonnee;
 		this.num = compt;
@@ -327,6 +326,12 @@ public class Case {
 	public int getTailleCasePixel() {
 		return tailleCasePixel;
 	}
+
+
+	public static void setTailleCasePixel(int tailleCasePixel) {
+		Case.tailleCasePixel = tailleCasePixel;
+	}
+
 
 
 	public static void setCompt(int compt) {
