@@ -27,13 +27,13 @@ public class PanneauAffichage extends Block{
 	@Override
 	public int trouverX(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getX()*c.getTailleCasePixel()+15-2*c.getTailleCasePixel();
+		return c.getCoordonnee().getX()*c.getTailleCasePixel()+3 - c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverY(Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getY()*c.getTailleCasePixel() -15 ;
+		return c.getCoordonnee().getY()*c.getTailleCasePixel()+3 -c.getTailleCasePixel();
 	}
 
 	@Override

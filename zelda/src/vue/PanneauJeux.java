@@ -163,8 +163,8 @@ public class PanneauJeux extends JPanel {
 		//System.out.println("here4"+  control.getHero().getNombreRubi());
 
 		nombreRubi.setText("" + Control.getNombreEtage());
-		// paintPlateau(g);
-		paintPlateauCentrerSurHero(g);
+		 paintPlateau(g);
+	//	paintPlateauCentrerSurHero(g);
 		heroaction = Control.action(this.herodescision, heroaction);
 
 		try {

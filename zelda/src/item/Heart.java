@@ -28,25 +28,25 @@ public class Heart extends Item{
 	@Override
 	public int trouverX( Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getX()*c.getTailleCasePixel()+15- c.getTailleCasePixel() ;
+		return c.getCoordonnee().getX()*c.getTailleCasePixel()+3 - c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverY( Case c) {
 		// TODO Auto-generated method stub
-		return c.getCoordonnee().getY()*c.getTailleCasePixel() -15 ;
+		return c.getCoordonnee().getY()*c.getTailleCasePixel()+3 -c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverlongeur(Case c) {
 		// TODO Auto-generated method stub
-		return c.getTailleCasePixel()/2;
+		return 3*c.getTailleCasePixel();
 	}
 
 	@Override
 	public int trouverlargeur(Case c) {
 		// TODO Auto-generated method stub
-		return c.getTailleCasePixel()/2;
+		return 3*c.getTailleCasePixel();
 	}
 
 	

@@ -419,7 +419,7 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 	
 	@Override
 	public int trouverX(Case c) {
-		int res = c.getCoordonnee().getX()*c.getTailleCasePixel()+15-2*c.getTailleCasePixel();
+		int res= c.getCoordonnee().getX()*c.getTailleCasePixel()+3 - c.getTailleCasePixel();
 		if (this.getDirection().equals("right") && this.getCurentAction().equals("moving")) {
 			int num =    this.getFrame()   +1;
 			res = res + num * 6 - c.getTailleCasePixel() ;
@@ -432,7 +432,7 @@ public class Knight extends Monstre implements Attaque,Deplacement{
 
 	@Override
 	public int trouverY(Case c) {
-		int res = c.getCoordonnee().getY() * c.getTailleCasePixel() -2*c.getTailleCasePixel();
+		int res = c.getCoordonnee().getY()*c.getTailleCasePixel()+3 -c.getTailleCasePixel();
 		if (this.getDirection().equals("up") && this.getCurentAction().equals("moving")) {
 			int num =    this.getFrame()   +1;
 			res = res - num * 6 +c.getTailleCasePixel() ;
