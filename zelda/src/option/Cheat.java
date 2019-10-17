@@ -2,18 +2,18 @@ package option;
 
 public abstract class Cheat {
 
-	private static boolean monstreAction = false ;
+	private static boolean monstreAction = true ;
 	
-	private  static boolean heroCanDoActionNoMatterCurentAction = true ;
-	private static boolean heroCanDoActionEvryTick = true ;
-	private static boolean heroEpeeInfintDamage = true ;
+	private  static boolean heroCanDoActionNoMatterCurentAction = false ;
+	private static boolean heroCanDoActionEvryTick = false ;
+	private static boolean heroEpeeInfintDamage = false ;
 	private static boolean heroEpeeDoDamageFirstFrame = false ;
-	private static boolean heroAutoAttaqueWhenMoving = true ;
-	private static boolean heroCanDestroyRock = true ;
-	private static boolean heroLoseLife = false ;
+	private static boolean heroAutoAttaqueWhenMoving = false ;
+	private static boolean heroCanDestroyRock = false ;
+	private static boolean heroLoseLife = true ;
 	private static boolean heroInfinitFleche = false ;
 	
-	private static boolean treeCanBeDestroyed = true ;
+	private static boolean treeCanBeDestroyed = false ;
 	
 	
 	public static  boolean monstreCanDoAction() {

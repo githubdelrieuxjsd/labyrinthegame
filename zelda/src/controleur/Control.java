@@ -336,7 +336,7 @@ public class Control {
 
 	private static void creationBlock() {
 		// TODO Auto-generated method stub
-		creationBush(50);
+		creationBush(100);
 		creationArbre(0);
 		creationRock(50);
 		creationChest(5);
@@ -433,7 +433,7 @@ public class Control {
 			}
 		}
 		// change betwen 3 and 16
-		if (Control.timer % 16 == 0 || Cheat.heroCanDoActionEvryTick()) {
+		if (Control.timer % 3 == 0 || Cheat.heroCanDoActionEvryTick()) {
 			if (heroaction) {
 				Control.hero.action(Control.plateau, herodescision);
 				// this.plateau.afficher();

@@ -1,12 +1,14 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -17,15 +19,10 @@ import tool.Tool;
 
 
 public class PanneauGameOver extends JPanel {
-	PanneauJeux jeux = new PanneauJeux();
+	PanneauStart start = new PanneauStart();
 
-	JTextField txt_NomJeux = new JTextField("GAME OVER : "+Control.getNombreEtage()) {
-		@Override
-		public void setBorder(Border border) {
-			// No!
-		}
-	};
-	 
+	JLabel txt_NomJeux = new JLabel("GAME OVER : "+Control.getNombreEtage());
+	
 	JButton btn_start = new JButton("RESTART");
 	
 
@@ -68,18 +65,17 @@ public class PanneauGameOver extends JPanel {
 		this.remove(txt_NomJeux);
 		this.remove(btn_start);
 		
-		
 	}	
 
 	private void start() {
 		// TODO Auto-generated method stub
-		
-		jeux.setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
-		this.add(jeux);
-		jeux.requestFocus();// SUPER IMPORTANT 
+		remove();
+		Principale.getFrame().setPreferredSize(new Dimension(60*20,60*10));
+		Principale.getFrame().setContentPane(new PanneauStart () );
+		Principale.getFrame().pack();
+		start.requestFocus();// SUPER IMPORTANT 
 		this.updateUI();// SUPER IMPORTANT 
 		
-		remove();
 		
 	}
 }

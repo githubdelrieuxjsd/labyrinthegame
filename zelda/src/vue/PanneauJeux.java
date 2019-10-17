@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -22,8 +23,10 @@ import javax.swing.border.Border;
 import controleur.Control;
 
 import model.Case;
+import model.Coordonnee;
 import model.Hero;
 import model.Plateau;
+import monstre.Goblin;
 import monstre.Monstre;
 import tool.Tool;
 
@@ -46,7 +49,8 @@ public class PanneauJeux extends JPanel {
 		}
 	};
 
-	public PanneauJeux() {
+	public PanneauJeux(String gameMode) {
+		
 		Control control = new Control();
 		fps = 31;
 		herodescision = "nothing";
@@ -54,8 +58,10 @@ public class PanneauJeux extends JPanel {
 		
 				
 		this.setLayout(null);
-		this.setBackground(new Color(14, 137, 56));
-		this.setBackground(new Color(147, 117, 56));
+		
+		//this.setBackground(new Color(14, 137, 56));
+		
+		//this.setBackground(new Color(147, 117, 56));
 		// this.setBackground(Color.green);
 		this.nombreRubi.setOpaque(false);
 		this.nombreRubi.setBounds(5, 35, 100, 30);
@@ -128,13 +134,15 @@ public class PanneauJeux extends JPanel {
 					break;
 				case KeyEvent.VK_G:
 					GameOver();
-					
 					break;
-				
+				case KeyEvent.VK_ESCAPE:
+					backToStartingMenu();
+					break;
 				default:
 					;
 				}
 			}
+		
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
 			}
@@ -145,11 +153,6 @@ public class PanneauJeux extends JPanel {
 
 		} );
 		this.setFocusable(true);// SUPER IMPORTANT 
-
-
-
-		
-
 		
 	}
 
@@ -198,10 +201,10 @@ public class PanneauJeux extends JPanel {
 					icon = new ImageIcon("hyrule/grass3.png");
 				}
 				/**
-				 * if (control.getTimer()%32 < 16) { icon = new ImageIcon("hyrule/grass3.png");
-				 * 
-				 * 
-				 * if ((x + y) % 2 == 1) { icon = new ImageIcon("hyrule/grass1.png"); } }
+				  if (control.getTimer()%32 < 16) { icon = new ImageIcon("hyrule/grass3.png");
+				  
+				  
+				  if ((x + y) % 2 == 1) { icon = new ImageIcon("hyrule/grass1.png"); } }
 				 */
 				Image img = icon.getImage();
 				// g.drawImage(img,c.getElement().getCoordonneeVisuel(x, y, c,
@@ -346,10 +349,7 @@ public class PanneauJeux extends JPanel {
 			}
 
 		}
-		/**
-		 * for (Case c : control.getPlateau().getListCase()) { dessinForgroundBlock(g,
-		 * c); dessinForgroundUnite(g, c); }
-		 */
+	
 
 		// dessinDark(g);
 		// dessinSideBar(g, control.getPlateau().getListCase().get(0));
@@ -428,25 +428,22 @@ public class PanneauJeux extends JPanel {
 
 	}
 
-	private void gameOver(String reson) {
+	private void backToStartingMenu() {
 		// TODO Auto-generated method stub
-		System.out.println(reson);
-		// this.removeKeyListener( keykeykey);
-
-		PanneauStart jeux = new PanneauStart();
-		jeux.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		this.add(jeux);
-		this.updateUI();
-
+		remove(this.nombreRubi);
+		Principale.getFrame().setPreferredSize(new Dimension(60*20,60*10));
+		Principale.getFrame().setContentPane(new PanneauStart () );
+		Principale.getFrame().pack();
+		this.updateUI();	
 	}
 	
 
 	private void GameOver() {
 		//this.removeKeyListener(key);
-		PanneauGameOver jeux = new PanneauGameOver ();
-		jeux.setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
-		
-		this.add(jeux);
+		remove(this.nombreRubi);
+		Principale.getFrame().setPreferredSize(new Dimension(60*20,60*10));
+		Principale.getFrame().setContentPane(new PanneauGameOver () );
+		Principale.getFrame().pack();
 		this.updateUI();		
 	}
 

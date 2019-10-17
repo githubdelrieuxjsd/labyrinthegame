@@ -1,11 +1,13 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -15,14 +17,13 @@ import tool.Tool;
 
 public class PanneauStart extends JPanel {
 	PanneauJeux jeux ;
-	JTextArea petit = new JTextArea("a");
 	//JTextArea c = new JTextArea("a");
 
 
-	JTextArea txt_NomJeux = new JTextArea("Labyrinthe");
+	JLabel titreLab ;
 	 
-	JButton btn_start = new JButton("Start");
-	
+	JButton modeJeuxBtn ;
+	JButton modeDebugBtn ;	
 
 	
 	public PanneauStart () {
@@ -32,55 +33,78 @@ public class PanneauStart extends JPanel {
 		
 		this.setBackground(Color.PINK);
 		ajouter();
+	
+	}
 
-		btn_start.addActionListener(new ActionListener() {
+	private void ajouter() {
+		// TODO Auto-generated method stub
+		
+		
+		titreLab = new JLabel ("Zeldo Adventur") ;
+		titreLab.setBounds(50,100,1500,200);
+		titreLab.setBackground(Color.PINK);
+		titreLab.setFont(new Font ("Segoe Script", Font.BOLD , 120 ));
+		titreLab.setForeground(Color.BLUE);
+		this.add(titreLab); 
+		
+		
+		
+		modeJeuxBtn = new JButton("Jeux");
+		modeJeuxBtn.setBounds(400,350,300,70);
+		this.add(modeJeuxBtn); 
+		modeJeuxBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setBackground(Color.WHITE);
-				start();	
+				start("jeux");	
 			}
 
 		});
 		
 		
+		
+		modeDebugBtn = new JButton("Debug");
+		modeDebugBtn.setBounds(400,450,300,70);
+		this.add(modeDebugBtn); 
+		modeDebugBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setBackground(Color.WHITE);
+				start("debug");	
+			}
+
+		});
+
 	}
 
-	private void ajouter() {
-		// TODO Auto-generated method stub
-		petit.setBounds(0,0,4,4);
-		petit.setBackground(Color.PINK);
-		petit.setLineWrap(false);
 
-		this.add(petit);
-		
-		btn_start.setBounds(450,400,100,50);
-		this.add(btn_start); 
-		txt_NomJeux.setBounds(200,100,1000,200);
-		txt_NomJeux.setLineWrap(false);
-		txt_NomJeux.setBackground(Color.PINK);
-		txt_NomJeux.setFont(new Font ("Segoe Script", Font.BOLD , 90 ));
-		txt_NomJeux.setForeground(Color.BLUE);
-		this.add(txt_NomJeux); 
-		
+	
+
+	private void start(String gameMode) {
+		// TODO Auto-generated method stub
+		remove();
+		jeux = new PanneauJeux(gameMode);
+		if(gameMode.equals("jeux")) {
+			Principale.getFrame().setPreferredSize(new Dimension(60*20,60*10));
+			Principale.getFrame().setContentPane( jeux);
+			Principale.getFrame().pack();
+			
+
+		}else {
+			Principale.getFrame().setPreferredSize(new Dimension(7*201+100,7*101));
+			Principale.getFrame().setContentPane(jeux );
+			Principale.getFrame().pack();
+		}
+		jeux.requestFocus();// SUPER IMPORTANT
+		this.updateUI();
+
 	}
 
 	private void remove() {
 		// TODO Auto-generated method stub
-		this.remove(petit);
-		this.remove(txt_NomJeux);
-		this.remove(btn_start);
-		
-		
-	}	
+		remove(titreLab);
+		remove(modeJeuxBtn);
+		remove(modeDebugBtn);
 
-	private void start() {
-		// TODO Auto-generated method stub
-		jeux = new PanneauJeux();
-		jeux.setBounds(this.getX(),this.getY(),this.getWidth(),this.getHeight());
-		
-		this.add(jeux);
-		this.updateUI();
-		
-		remove();
-		
 	}
+
+
 }
